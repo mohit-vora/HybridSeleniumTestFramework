@@ -3,14 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Testng.Cyclos_Login">
+      <class name="ApplicationModules.Login">
         <methods>
-          <include name="HomePage"/>
-          <include name="CloseBrowser"/>
-          <include name="before"/>
-          <include name="Login"/>
+          <include name="mainTest"/>
+          <include name="browser"/>
         </methods>
-      </class> <!-- Testng.Cyclos_Login -->
+      </class> <!-- ApplicationModules.Login -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
