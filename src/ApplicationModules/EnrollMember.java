@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import PageObjects.Driverdemo;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
-import Utils.LeftNavigationPane;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -31,7 +30,7 @@ VerifyPopUp popup = new VerifyPopUp();
   
   @BeforeSuite
   public void Browser(){
-	  //BrowserUtils bu = new BrowserUtils();
+	  //BrowserUtils bu = new BrowserUtils();-----
 	  this.driver = bu.openbrowserChrome();
 	  System.out.println("inside before method");
   }
