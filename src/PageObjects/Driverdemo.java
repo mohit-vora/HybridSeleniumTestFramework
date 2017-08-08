@@ -31,7 +31,7 @@ public class Driverdemo  {
 //		System.out.println("inside after");
 //	}
 	
-	Map<String, Map<String, ByAll>> input = new TreeMap<String, Map<String, ByAll>>();
+	public static Map<String, Map<String, ByAll>> input = new TreeMap<String, Map<String, ByAll>>();
 	ReadSheet rd1 = new ReadSheet();
 	   	
 	
@@ -47,8 +47,7 @@ public class Driverdemo  {
 
 			//driver.quit();
 
-			LeftNavigationPane left = new LeftNavigationPane();
-			left.NavigateTo(driver);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

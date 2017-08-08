@@ -1,58 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="104150" started-at="2017-08-08T06:30:51Z" finished-at="2017-08-08T06:32:36Z">
+  <suite name="Default suite" duration-ms="9583" started-at="2017-08-08T13:52:09Z" finished-at="2017-08-08T13:52:18Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="104150" started-at="2017-08-08T06:30:51Z" finished-at="2017-08-08T06:32:36Z">
-      <class name="ApplicationModules.Login">
-        <test-method status="PASS" signature="browser()[pri:0, instance:ApplicationModules.Login@55f3ddb1]" name="browser" is-config="true" duration-ms="56999" started-at="2017-08-08T12:00:52Z" finished-at="2017-08-08T12:01:49Z">
+    <test name="Default test" duration-ms="9583" started-at="2017-08-08T13:52:09Z" finished-at="2017-08-08T13:52:18Z">
+      <class name="ApplicationModules.EnrollMember">
+        <test-method status="PASS" signature="Browser()[pri:0, instance:ApplicationModules.EnrollMember@46d56d67]" name="Browser" is-config="true" duration-ms="12641" started-at="2017-08-08T19:21:56Z" finished-at="2017-08-08T19:22:09Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- browser -->
-        <test-method status="FAIL" signature="mainTest()[pri:0, instance:ApplicationModules.Login@55f3ddb1]" name="mainTest" duration-ms="46752" started-at="2017-08-08T12:01:49Z" finished-at="2017-08-08T12:02:36Z">
-          <exception class="java.lang.ClassCastException">
-            <message>
-              <![CDATA[org.openqa.selenium.Dimension cannot be cast to org.openqa.selenium.WebElement]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.ClassCastException: org.openqa.selenium.Dimension cannot be cast to org.openqa.selenium.WebElement
-	at Utils.LeftNavigationPane.NavigateTo(LeftNavigationPane.java:18)
-	at PageObjects.Driverdemo.Login(Driverdemo.java:51)
-	at ApplicationModules.Login.mainTest(Login.java:16)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.ClassCastException -->
+        </test-method> <!-- Browser -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:ApplicationModules.EnrollMember@46d56d67]" name="beforeMethod" is-config="true" duration-ms="2151" started-at="2017-08-08T19:22:09Z" finished-at="2017-08-08T19:22:11Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- mainTest -->
-      </class> <!-- ApplicationModules.Login -->
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="Register()[pri:0, instance:ApplicationModules.EnrollMember@46d56d67]" name="Register" duration-ms="7294" started-at="2017-08-08T19:22:11Z" finished-at="2017-08-08T19:22:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Register -->
+        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:ApplicationModules.EnrollMember@46d56d67]" name="PopUpMethod" is-config="true" duration-ms="118" started-at="2017-08-08T19:22:18Z" finished-at="2017-08-08T19:22:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- PopUpMethod -->
+        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:ApplicationModules.EnrollMember@46d56d67]" name="CloseBrowser" is-config="true" duration-ms="1574" started-at="2017-08-08T19:22:18Z" finished-at="2017-08-08T19:22:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CloseBrowser -->
+      </class> <!-- ApplicationModules.EnrollMember -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
