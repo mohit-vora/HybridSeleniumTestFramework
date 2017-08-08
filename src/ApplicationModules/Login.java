@@ -19,7 +19,7 @@ WebDriver driver = null;
   public void browser(){
 		BrowserUtils bu = new BrowserUtils();
 		this.driver = bu.openbrowserChrome();
-		//System.out.println("inside before method");
+		System.out.println("inside before method");
 	}
 
 }
