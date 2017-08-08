@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import PageObjects.Driverdemo;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
+import Utils.LeftNavigationPane;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -40,13 +41,21 @@ VerifyPopUp popup = new VerifyPopUp();
   }
 
   @AfterMethod
-  public void afterMethod() {
-	 String Msg = popup.PopUpAccept(driver,PopUpMsg);
-	 System.out.println(Msg);
-	
-	  
-  }
+  public void PopUpMethod() {
+	 popup.PopUpAccept(driver);
+	// System.out.println(Msg);
+	 }
 
+/*  @Test(dependsOnMethods={"PopUpMethod"})
+  public void leftNavigate(){
+	  LeftNavigationPane leftpane = new LeftNavigationPane();
+	  leftpane.NavigateTo(driver, "Logout", "");
+  }
+  @Test(dependsOnMethods={"leftNavigate"})
+  public void PopUpMethod1() {
+	 popup.PopUpAccept(driver);
+//	 System.out.println(Msg);
+	 }*/
   @AfterSuite()
   public void CloseBrowser(){
 		  this.driver = bu.Closebrowser();

@@ -3,12 +3,17 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="ApplicationModules.Login">
+      <class name="ApplicationModules.EnrollMember">
         <methods>
-          <include name="mainTest"/>
-          <include name="browser"/>
+          <include name="Browser"/>
+          <include name="CloseBrowser"/>
+          <include name="Register"/>
+          <include name="PopUpMethod"/>
+          <include name="leftNavigate"/>
+          <include name="PopUpMethod1"/>
+          <include name="beforeMethod"/>
         </methods>
-      </class> <!-- ApplicationModules.Login -->
+      </class> <!-- ApplicationModules.EnrollMember -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
