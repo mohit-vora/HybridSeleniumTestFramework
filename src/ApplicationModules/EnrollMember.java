@@ -8,6 +8,7 @@ import Utils.LeftNavigationPane;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.apache.james.mime4j.message.Message;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -22,14 +23,15 @@ private static final String PopUpMsg = null;
 WebDriver driver = null;	
 BrowserUtils bu = new BrowserUtils(); 
 VerifyPopUp popup = new VerifyPopUp();
+Driverdemo dd=new Driverdemo();
   @Test
   public void Register() throws Exception {
 	  PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
 	  Em.RegisterMember(driver);
   }
-  @BeforeMethod
+  @BeforeTest
   public void beforeMethod() throws Exception {
-	  Driverdemo dd=new Driverdemo();
+	 
 	  dd.Login(driver);
   }
   
@@ -37,25 +39,30 @@ VerifyPopUp popup = new VerifyPopUp();
   public void Browser(){
 	  //BrowserUtils bu = new BrowserUtils();
 	  this.driver = bu.openbrowserChrome();
-	  System.out.println("inside before method");
+	//  System.out.println("inside before method");
   }
 
-  @AfterMethod
+  @Test(dependsOnMethods={"Register"})
   public void PopUpMethod() {
 	 popup.PopUpAccept(driver);
 	// System.out.println(Msg);
 	 }
 
-/*  @Test(dependsOnMethods={"PopUpMethod"})
+  
+  @Test(dependsOnMethods={"PopUpMethod"})
   public void leftNavigate(){
 	  LeftNavigationPane leftpane = new LeftNavigationPane();
 	  leftpane.NavigateTo(driver, "Logout", "");
   }
   @Test(dependsOnMethods={"leftNavigate"})
-  public void PopUpMethod1() {
+  public void PopUpMethod1() {	  
 	 popup.PopUpAccept(driver);
 //	 System.out.println(Msg);
-	 }*/
+	 }
+  @Test (dependsOnMethods={"PopUpMethod1"})
+  public void Login() throws Exception{
+	  dd.Login(driver);	  
+  }
   @AfterSuite()
   public void CloseBrowser(){
 		  this.driver = bu.Closebrowser();
