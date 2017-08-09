@@ -2,22 +2,34 @@ package Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
 public class PropRead {
 	
-	public PropRead(String parm) throws IOException
+	public static String getVal(String parm)
 	{
 		File file = new File(System.getProperty("user.dir")+"\\resources\\path.properties");
 		  
-		FileInputStream fileInput = new FileInputStream(file);
+		FileInputStream fileInput = null;
+		try {
+			fileInput = new FileInputStream(file);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	
 		Properties prop = new Properties();
 
-		prop.load(fileInput);
+		try {
+			prop.load(fileInput);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
-		parm = prop.getProperty(parm);
+		return prop.getProperty(parm);
 	}
 
 }

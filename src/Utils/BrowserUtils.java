@@ -9,8 +9,10 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class BrowserUtils {
 	public static WebDriver driver = null;
-
 	
+
+	String Url = PropRead.getVal("url");
+
 
 	/*public WebDriver driver(){
 		return driver;
