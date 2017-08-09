@@ -6,9 +6,7 @@
       <class name="ApplicationModules.EnrollMember">
         <methods>
           <include name="Browser"/>
-          <include name="CloseBrowser"/>
           <include name="Register"/>
-          <include name="PopUpMethod"/>
           <include name="beforeMethod"/>
         </methods>
       </class> <!-- ApplicationModules.EnrollMember -->

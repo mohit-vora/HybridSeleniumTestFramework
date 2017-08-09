@@ -13,7 +13,6 @@ public class BrowserUtils {
 
 	String Url = PropRead.getVal("url");
 
-
 	/*public WebDriver driver(){
 		return driver;
 	}*/
@@ -24,6 +23,7 @@ public class BrowserUtils {
 	    System.setProperty("webdriver.ie.driver",
 				"D:\\Reference Selenium\\Jars and Drivers\\IEDriverServer_x64_2.53.1\\IEDriverServer.exe");
 		driver = new InternetExplorerDriver();
+	
 		driver.get(Url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
@@ -32,7 +32,7 @@ public class BrowserUtils {
   
   public WebDriver openbrowserChrome() {
 	    System.setProperty("webdriver.chrome.driver",
-	    		"C:\\Users\\mohit_vora\\Desktop\\Selenium\\jars\\new ones\\chromedriver.exe");
+	    		PropRead.getVal("chromeDriver"));
 		driver = new ChromeDriver();
 		driver.get(Url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

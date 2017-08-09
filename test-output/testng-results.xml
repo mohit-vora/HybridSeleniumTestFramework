@@ -2,28 +2,28 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="10500" started-at="2017-08-08T22:00:02Z" finished-at="2017-08-08T22:00:13Z">
+  <suite name="Default suite" duration-ms="12152" started-at="2017-08-09T07:51:40Z" finished-at="2017-08-09T07:51:52Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="10500" started-at="2017-08-08T22:00:02Z" finished-at="2017-08-08T22:00:13Z">
+    <test name="Default test" duration-ms="12152" started-at="2017-08-09T07:51:40Z" finished-at="2017-08-09T07:51:52Z">
       <class name="ApplicationModules.EnrollMember">
-        <test-method status="PASS" signature="Browser()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="Browser" is-config="true" duration-ms="7771" started-at="2017-08-09T03:29:55Z" finished-at="2017-08-09T03:30:02Z">
+        <test-method status="PASS" signature="Browser()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="Browser" is-config="true" duration-ms="8741" started-at="2017-08-09T13:21:31Z" finished-at="2017-08-09T13:21:40Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Browser -->
-        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="beforeMethod" is-config="true" duration-ms="2496" started-at="2017-08-09T03:30:02Z" finished-at="2017-08-09T03:30:05Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="beforeMethod" is-config="true" duration-ms="4131" started-at="2017-08-09T13:21:40Z" finished-at="2017-08-09T13:21:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="Register()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="Register" duration-ms="7985" started-at="2017-08-09T03:30:05Z" finished-at="2017-08-09T03:30:13Z">
+        <test-method status="PASS" signature="Register()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="Register" duration-ms="7994" started-at="2017-08-09T13:21:44Z" finished-at="2017-08-09T13:21:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Register -->
-        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="PopUpMethod" is-config="true" duration-ms="0" started-at="2017-08-09T03:30:13Z" finished-at="2017-08-09T03:30:13Z">
+        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="PopUpMethod" is-config="true" duration-ms="0" started-at="2017-08-09T13:21:52Z" finished-at="2017-08-09T13:21:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- PopUpMethod -->
-        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="CloseBrowser" is-config="true" duration-ms="4611" started-at="2017-08-09T03:30:13Z" finished-at="2017-08-09T03:30:17Z">
+        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:ApplicationModules.EnrollMember@402f32ff]" name="CloseBrowser" is-config="true" duration-ms="5183" started-at="2017-08-09T13:21:52Z" finished-at="2017-08-09T13:21:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CloseBrowser -->
