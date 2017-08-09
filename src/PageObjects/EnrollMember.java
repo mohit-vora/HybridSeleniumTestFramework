@@ -5,8 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import ApplicationMap.ReadSheet;
-import DataMap.Data_Map_Tryout;
+import ApplicationMap.ReadLocators;
+import DataMap.ReadData;
 
 
 public class EnrollMember  {
@@ -17,7 +17,7 @@ public class EnrollMember  {
 	public void RegisterMember(WebDriver driver) throws InterruptedException, IOException {
 
 		
-		ReadSheet rd1 = new ReadSheet("RegisterMember");
+		ReadLocators rd1 = new ReadLocators("RegisterMember");
 		driver.findElement(By.xpath(".//*[@id='menu5']/span[2]")).click();
         driver.findElement(By.xpath(".//*[@id='submenu5.0']/span[2]")).click();
         
@@ -26,7 +26,7 @@ public class EnrollMember  {
        new Select(Createmem).selectByVisibleText("Full members");      
 
         Thread.sleep(1000);
-        Data_Map_Tryout dm = new Data_Map_Tryout("MemberDetails","MEM001");
+        ReadData dm = new ReadData("MemberDetails","MEM001");
         driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
 		driver.findElement(rd1.getLocator( "TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
 		driver.findElement(rd1.getLocator( "TXB_Email")).sendKeys(dm.getData("EMAIL_ADDRESS"));

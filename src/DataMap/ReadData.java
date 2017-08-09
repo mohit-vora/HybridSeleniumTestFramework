@@ -10,7 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
-public class Data_Map_Tryout {
+public class ReadData {
 
 	 private String DSName = null;
 	 private String initSheet = null;
@@ -30,7 +30,7 @@ public class Data_Map_Tryout {
 //
 //	 }
 	 
-	 public Data_Map_Tryout(String name, String id) throws IOException
+	 public ReadData(String name, String id) throws IOException
 	 {
 		 DSName = name;
 		 this.id = id;

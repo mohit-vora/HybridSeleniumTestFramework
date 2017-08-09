@@ -5,7 +5,7 @@ import Utils.dummy;
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 
-import ApplicationMap.ReadSheet;
+import ApplicationMap.ReadLocators;
 
 public class Login  {
 
@@ -16,12 +16,12 @@ public class Login  {
 
         	System.out.println("Login");
         	
-			ReadSheet rd1 = new ReadSheet("Login");
+			ReadLocators rd1 = new ReadLocators("Login");
 			
 
         	
         	
-			Data_Map_Tryout dm = new Data_Map_Tryout("MemberDetails","MEM004");
+			ReadData dm = new ReadData("MemberDetails","MEM004");
 			
 			driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("Login_Name"));
 			driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("Password"));
