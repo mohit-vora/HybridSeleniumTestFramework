@@ -1,6 +1,7 @@
 package TestCases;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.Test;
 import PageObjects.Login;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
@@ -29,8 +30,7 @@ VerifyPopUp popup = new VerifyPopUp();
   public void beforeMethod() throws Exception {
 	  Login dd=new Login();
 	  dd.performLogin(driver);
-	  
-	  System.out.println("sometext:"+dummy.map.get("TXB_USERNAME"));
+
   }
   
   @BeforeSuite

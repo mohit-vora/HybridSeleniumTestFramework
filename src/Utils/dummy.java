@@ -12,7 +12,7 @@ public class dummy{
 	
 	static ReadSheet rd = new ReadSheet("Login");
 	
-	static public HashMap<String, ByAll> map = rd.getMap();
+
 	
 //	public dummy()
 //	{
