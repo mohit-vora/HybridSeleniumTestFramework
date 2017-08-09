@@ -6,9 +6,11 @@
       <class name="ApplicationModules.EnrollMember">
         <methods>
           <include name="Browser"/>
-          <include name="CloseBrowser"/>
           <include name="Register"/>
+<<<<<<< HEAD
           <include name="PopUpMethod"/>
+=======
+>>>>>>> 1993f27ae47b7cb6392532e9fe938c8e7d60d68d
           <include name="beforeMethod"/>
         </methods>
       </class> <!-- ApplicationModules.EnrollMember -->

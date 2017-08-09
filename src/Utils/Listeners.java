@@ -38,7 +38,6 @@ public class Listeners implements WebDriverEventListener {
 		
 	}
 
-	@Override
 	public void afterNavigateRefresh(WebDriver arg0) {
 		// TODO Auto-generated method stub
 		
@@ -86,7 +85,6 @@ public class Listeners implements WebDriverEventListener {
 		
 	}
 
-	@Override
 	public void beforeNavigateRefresh(WebDriver arg0) {
 		// TODO Auto-generated method stub
 		

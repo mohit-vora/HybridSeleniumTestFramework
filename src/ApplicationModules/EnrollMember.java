@@ -4,15 +4,17 @@ import org.testng.annotations.Test;
 import PageObjects.Driverdemo;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
-import Utils.LeftNavigationPane;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+<<<<<<< HEAD
 import org.testng.annotations.BeforeTest;
 import org.apache.james.mime4j.message.Message;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+=======
+>>>>>>> 1993f27ae47b7cb6392532e9fe938c8e7d60d68d
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -37,14 +39,14 @@ Driverdemo dd=new Driverdemo();
   
   @BeforeSuite
   public void Browser(){
-	  //BrowserUtils bu = new BrowserUtils();
+	  //BrowserUtils bu = new BrowserUtils();-----
 	  this.driver = bu.openbrowserChrome();
 	//  System.out.println("inside before method");
   }
 
   @Test(dependsOnMethods={"Register"})
   public void PopUpMethod() {
-	 popup.PopUpAccept(driver);
+//	 popup.PopUpAccept(driver);
 	// System.out.println(Msg);
 	 }
 
@@ -64,9 +66,9 @@ Driverdemo dd=new Driverdemo();
 	  dd.Login(driver);	  
   }
   @AfterSuite()
-  public void CloseBrowser(){
-		  this.driver = bu.Closebrowser();
-		  System.out.println("inside before method");
+  public void CloseBrowser() throws InterruptedException{
+		  bu.Closebrowser();
+		  System.out.println("inside aftersuit method");
 	  }
   }
 
