@@ -2,17 +2,22 @@ package DataMap;
 import java.awt.List;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.pagefactory.ByAll;
 
 
-public class Data_Map_Tryout {
-	 static Map<String, List> MEM = new HashMap<String, List>();
-	 static Map<String, String> ACC = new HashMap<String, String>();
+public class Data_Map_Tryout2 {
+
+	String DSName = null;
+	
 //	 public static void main(String[] args) throws IOException
 //	 {
 //		 
@@ -26,8 +31,9 @@ public class Data_Map_Tryout {
 //
 //	 }
 	 
-	 public Data_Map_Tryout() throws IOException
+	 public Data_Map_Tryout2(String name) throws IOException
 	 {
+		 DSName = name;
 		 init();
 	 }
 	 
@@ -76,63 +82,37 @@ public class Data_Map_Tryout {
 		 
 		 FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir")+"\\Resources\\Data.xlsx");
 		 XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
-		 XSSFSheet memsheet = workbook.getSheet("MemberDetails");
-		 int rowCount = memsheet.getLastRowNum() - memsheet.getFirstRowNum();
-		 int colCount = memsheet.getRow(0).getLastCellNum();
-		 
-		 DataFormatter df = new DataFormatter();
-		
-		 	for (int i = 0; i <= rowCount; i++) {
-				List li = new List();
-				for (int j=1;j<colCount;j++)
-					li.add(df.formatCellValue(memsheet.getRow(i).getCell(j)));
+		 int NoofSheets = workbook.getNumberOfSheets();
 
-				if (i==0)
-					MEM.put(df.formatCellValue(memsheet.getRow(i).getCell(0)),li);
-				else
-					MEM.put(df.formatCellValue(memsheet.getRow(i).getCell(0)).substring(3),li);
-
+			for (int j=0; j < NoofSheets; j++){
+				String SheetName = workbook.getSheetName(j);
+				HashMap<String, ByAll> tmap = new HashMap<String, ByAll>();
+				List<By> locators = null;
+				XSSFCell mLocator, mValue, aLocator, aValue, elementName;
+				XSSFSheet sheet = workbook.getSheetAt(j);
+				int i;
+				int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
+				for (i = 1; i < rownum+1; i++) {
+					locators = new ArrayList<By>();
+					elementName = sheet.getRow(i).getCell(0);
+					mLocator = sheet.getRow(i).getCell(1);
+					mValue = sheet.getRow(i).getCell(2);
+					aLocator = sheet.getRow(i).getCell(3);
+					aValue = sheet.getRow(i).getCell(4);
+					if(mLocator!=null && mValue!=null){
+						locators.add(generator(mLocator.getStringCellValue().toLowerCase(), mValue.getStringCellValue()));
+					}
+					
+					if(aLocator!=null && aValue!=null)
+					{
+						locators.add(generator(aLocator.getStringCellValue().toLowerCase(), aValue.getStringCellValue()));
+						
+					}
+					tmap.put(elementName.getStringCellValue(), generatorAll(locators));
+				}
+				
+			 smap.put(SheetName, tmap);
 			}
-		 
-		 memsheet = workbook.getSheet("UserAccountTypes");
-		 rowCount = memsheet.getLastRowNum() - memsheet.getFirstRowNum();
-					 
-			for (int i = 0; i <= rowCount; i++) {
-				if (i==0)
-					ACC.put(df.formatCellValue(memsheet.getRow(i).getCell(0)),df.formatCellValue(memsheet.getRow(i).getCell(1)));
-				else
-					ACC.put(df.formatCellValue(memsheet.getRow(i).getCell(0)).substring(3),df.formatCellValue(memsheet.getRow(i).getCell(1)));
-			}	
-			
-		 workbook.close();
-//		 List li = new List();
-//		 li.add("Full name");
-//		 li.add("Login Name");
-//		 li.add("Password");
-//		 MEM.put("COLName",li);
-//		 li = new List();
-//		 li.add("Nick Parsons");
-//		 li.add("Nick01");
-//		 li.add("infy@123");
-//		 MEM.put("001",li);
-//		 li = new List();
-//		 li.add("Raman Jha");
-//		 li.add("Ram01");
-//		 li.add("infy@123");
-//		 MEM.put("002",li);
-//		 li = new List();
-//		 li.add("John Cage");
-//		 li.add("Cage01");
-//		 li.add("infy@123");
-//		 MEM.put("003",li); 
-//		 
-//		 
-//
-//		 ACC.put("COLName","Account type");
-//		 ACC.put("001","Savings Account");
-//		 ACC.put("002","Fixed Deposit Account");
-//		 ACC.put("003","Recurring Deposit Account"); 
-//		 ACC.put("004","Current Account"); 
 		 
 	 }
 }
