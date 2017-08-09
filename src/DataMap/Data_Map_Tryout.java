@@ -74,7 +74,7 @@ public class Data_Map_Tryout {
 	 
 	 private void init() throws IOException{
 		 
-		 FileInputStream fileStream = new FileInputStream("C:\\Users\\mohit_vora\\Desktop\\Data.xlsx");
+		 FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir")+"\\Resources\\Data.xlsx");
 		 XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 		 XSSFSheet memsheet = workbook.getSheet("MemberDetails");
 		 int rowCount = memsheet.getLastRowNum() - memsheet.getFirstRowNum();

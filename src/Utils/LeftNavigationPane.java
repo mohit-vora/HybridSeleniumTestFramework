@@ -13,7 +13,7 @@ import ApplicationMap.ReadSheet;
 
 public class LeftNavigationPane {
 	Map<String, Map<String, ByAll>> input = new TreeMap<String, Map<String, ByAll>>();
-	ReadSheet rd1 = new ReadSheet();
+
 	
 	public void NavigateTo(WebDriver driver,String mainMenu,String subMenu){		
 		 List<WebElement> listMainMenu = driver.findElements(By.xpath("//span[@class='menuText']"));
