@@ -16,6 +16,8 @@ import org.openqa.selenium.support.pagefactory.ByAll;
 
 public class Data_Map_Tryout2 {
 
+	String DSName = null;
+	
 //	 public static void main(String[] args) throws IOException
 //	 {
 //		 
@@ -29,8 +31,9 @@ public class Data_Map_Tryout2 {
 //
 //	 }
 	 
-	 public Data_Map_Tryout2() throws IOException
+	 public Data_Map_Tryout2(String name) throws IOException
 	 {
+		 DSName = name;
 		 init();
 	 }
 	 

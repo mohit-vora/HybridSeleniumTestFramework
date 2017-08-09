@@ -1,10 +1,9 @@
 package ApplicationModules;
 
 import org.testng.annotations.Test;
-import PageObjects.Driverdemo;
+import PageObjects.Login;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.openqa.selenium.WebDriver;
@@ -24,8 +23,8 @@ VerifyPopUp popup = new VerifyPopUp();
   }
   @BeforeMethod
   public void beforeMethod() throws Exception {
-	  Driverdemo dd=new Driverdemo();
-	  dd.Login(driver);
+	  Login dd=new Login();
+	  dd.performLogin(driver);
   }
   
   @BeforeSuite
