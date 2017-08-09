@@ -23,12 +23,12 @@ public class ReadSheet {
 		try {
 			init();
 			System.out.println("it read excel");
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
 	
 	private void init() throws IOException {
 		smap = new HashMap<String, ByAll>();
@@ -95,7 +95,7 @@ public class ReadSheet {
 		
 	}
 	
-	public ByAll get(String parm)
+	public ByAll getLocator(String parm)
 	{
 		return smap.get(parm);
 		

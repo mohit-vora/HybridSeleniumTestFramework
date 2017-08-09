@@ -2,6 +2,8 @@ package PageObjects;
 
 import ApplicationMap.*;
 import DataMap.*;
+import Utils.dummy;
+
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 
@@ -14,13 +16,16 @@ public class Login  {
 
         	System.out.println("Login");
         	
-			ReadSheet rd1 = new ReadSheet(this.toString());
+//			ReadSheet rd1 = new ReadSheet(this.toString());
 			
+
+        	
+        	
 			Data_Map_Tryout dm = new Data_Map_Tryout();
 			
-			driver.findElement(rd1.get("TXB_LOGINNAME")).sendKeys(dm.getData("MEM004", "Login_Name"));
-			driver.findElement(rd1.get("TXB_PASSWORD")).sendKeys(dm.getData("MEM004", "Password"));
-			driver.findElement(rd1.get("BTN_LOGIN")).click();
+			driver.findElement(dummy.map.get("TXB_LOGINNAME")).sendKeys(dm.getData("MEM004", "Login_Name"));
+			driver.findElement(dummy.map.get("TXB_PASSWORD")).sendKeys(dm.getData("MEM004", "Password"));
+			driver.findElement(dummy.map.get("BTN_LOGIN")).click();
 
 
 

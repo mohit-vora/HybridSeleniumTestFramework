@@ -8,11 +8,30 @@ import ApplicationMap.ReadSheet;
 
 public class dummy{
 	
-	static HashMap<String, ByAll> map = null;
-	
-	ReadSheet rd = new ReadSheet("Login");
 	
 	
+	static ReadSheet rd = new ReadSheet("Login");
+	
+	static public HashMap<String, ByAll> map = rd.getMap();
+	
+//	public dummy()
+//	{
+//		map = rd.getMap();
+//		
+//	}
+	
+//	public static void setMap()
+//	{
+//		
+//		System.out.println(map.size());
+//	}
+//	
+//	
+//	/*public static ByAll get(String parm)
+//	{
+//		setMap();
+//		return map.get(parm);
+//	}*/
 	
 
 }

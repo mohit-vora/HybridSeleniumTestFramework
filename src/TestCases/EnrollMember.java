@@ -1,9 +1,11 @@
-package ApplicationModules;
+package TestCases;
 
 import org.testng.annotations.Test;
 import PageObjects.Login;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
+import Utils.dummy;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.openqa.selenium.WebDriver;
@@ -21,10 +23,14 @@ VerifyPopUp popup = new VerifyPopUp();
 	  PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
 	  Em.RegisterMember(driver);
   }
+  
+  
   @BeforeMethod
   public void beforeMethod() throws Exception {
 	  Login dd=new Login();
 	  dd.performLogin(driver);
+	  
+	  System.out.println("sometext:"+dummy.map.get("TXB_USERNAME"));
   }
   
   @BeforeSuite
