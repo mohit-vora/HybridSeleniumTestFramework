@@ -39,7 +39,7 @@ public class Data_Map_Tryout {
 		 switch (whichMap.toLowerCase())
 		 {
 		 	case "mem":
-		 		List li = MEM.get("ColName");
+		 		List li = MEM.get("DATA_SET_ID");
 		 		int i=0;
 		 		boolean flag = false;
 		 		for (;i<li.getItemCount();i++){
@@ -74,7 +74,7 @@ public class Data_Map_Tryout {
 	 
 	 private void init() throws IOException{
 		 
-		 FileInputStream fileStream = new FileInputStream("D:\\Data.xlsx");
+		 FileInputStream fileStream = new FileInputStream("C:\\Users\\mohit_vora\\Desktop\\Data.xlsx");
 		 XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 		 XSSFSheet memsheet = workbook.getSheet("MemberDetails");
 		 int rowCount = memsheet.getLastRowNum() - memsheet.getFirstRowNum();

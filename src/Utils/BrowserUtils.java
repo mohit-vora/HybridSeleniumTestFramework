@@ -1,5 +1,6 @@
 package Utils;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -8,12 +9,14 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class BrowserUtils {
 	public static WebDriver driver = null;
-	String Url = "http://10.67.89.40:8080/do/login";
+
+	
+
 	/*public WebDriver driver(){
 		return driver;
 	}*/
 	
-	
+
   
   public WebDriver openbrowserie() {
 	    System.setProperty("webdriver.ie.driver",
@@ -27,7 +30,7 @@ public class BrowserUtils {
   
   public WebDriver openbrowserChrome() {
 	    System.setProperty("webdriver.chrome.driver",
-				"D:\\Reference Selenium\\Jars and Drivers\\chromedriver.exe");
+	    		"C:\\Users\\mohit_vora\\Desktop\\Selenium\\jars\\new ones\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get(Url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -36,9 +39,16 @@ public class BrowserUtils {
 }
   
   
- public WebDriver Closebrowser(){
-	 driver.quit();
-	 return driver;
+ public void Closebrowser() throws InterruptedException{
+	 Thread.sleep(3000);
+		driver.quit();
+		
+		try {
+		    Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+
  }
 	
 }

@@ -37,7 +37,7 @@ VerifyPopUp popup = new VerifyPopUp();
 
   @AfterMethod
   public void PopUpMethod() {
-	 popup.PopUpAccept(driver);
+//	 popup.PopUpAccept(driver);
 	// System.out.println(Msg);
 	 }
 
@@ -52,9 +52,9 @@ VerifyPopUp popup = new VerifyPopUp();
 //	 System.out.println(Msg);
 	 }*/
   @AfterSuite()
-  public void CloseBrowser(){
-		  this.driver = bu.Closebrowser();
-		  System.out.println("inside before method");
+  public void CloseBrowser() throws InterruptedException{
+		  bu.Closebrowser();
+		  System.out.println("inside aftersuit method");
 	  }
   }
 

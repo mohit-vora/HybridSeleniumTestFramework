@@ -41,7 +41,7 @@ public class Driverdemo  {
 			input = rd1.readsheet();			
 			Data_Map_Tryout dm = new Data_Map_Tryout();
 			
-			driver.findElement(input.get("Login").get("TXB_LOGINNAME")).sendKeys(dm.getData("MEM004", "Login Name"));
+			driver.findElement(input.get("Login").get("TXB_LOGINNAME")).sendKeys(dm.getData("MEM004", "Login_Name"));
 			driver.findElement(input.get("Login").get("TXB_PASSWORD")).sendKeys(dm.getData("MEM004", "Password"));
 			driver.findElement(input.get("Login").get("BTN_LOGIN")).click();
 

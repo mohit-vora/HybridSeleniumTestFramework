@@ -58,6 +58,8 @@ public class EnrollMember  {
 	//	driver.findElement(input.get("RegisterMember").get("LNK_ManageMembers")).click();
 	//	driver.findElement(input.get("RegisterMember").get("TXB_permissiongroups")).click();
         Thread.sleep(1000);
+        
+        System.out.println("inside this");
         //driver.findElement(By.xpath(".//*[@id='tdContents']/form/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]/input")).sendKeys("Jenny");
 		//System.out.println("text"+input.get("RegisterMember").get("TXB_LoginName"));
         driver.findElement(input.get("RegisterMember").get("TXB_LoginName")).sendKeys("John");
@@ -70,8 +72,6 @@ public class EnrollMember  {
 		driver.findElement(input.get("RegisterMember").get("TXB_City")).sendKeys("Mysore");
 		driver.findElement(input.get("RegisterMember").get("TXB_Phone")).sendKeys("98765432190");
 		driver.findElement(input.get("RegisterMember").get("TXB_MobilePhone")).sendKeys("9876570012");
-		driver.findElement(input.get("RegisterMember").get("TXB_City")).sendKeys("Mysore");
-		driver.findElement(input.get("RegisterMember").get("TXB_Phone")).sendKeys("98765432190");
 		driver.findElement(input.get("RegisterMember").get("Checkbox")).click();
 		driver.findElement(input.get("RegisterMember").get("TXB_password")).sendKeys("infy@123");
 		driver.findElement(input.get("RegisterMember").get("TXB_confirmpassword")).sendKeys("infy@123");

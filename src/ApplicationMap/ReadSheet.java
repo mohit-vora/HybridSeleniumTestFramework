@@ -56,7 +56,7 @@ public class ReadSheet {
 	
 	public Map<String, Map<String, ByAll>> readsheet() throws Exception {	
 		TreeMap<String, Map<String, ByAll>> smap = new TreeMap<String, Map<String, ByAll>>();
-		FileInputStream mapsheet = new FileInputStream("C:\\Users\\kiruthika.k02\\Desktop\\Selenium_App_Map.xlsx");
+		FileInputStream mapsheet = new FileInputStream("C:\\Users\\mohit_vora\\Desktop\\AMap.xlsx");
 		XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 		int NoofSheets = WorkBook.getNumberOfSheets();
 		//System.out.println("NoofSheets::" + NoofSheets);	
@@ -73,7 +73,6 @@ public class ReadSheet {
 			for (i = 1; i < rownum+1; i++) {
 				locators = new ArrayList<By>();
 				elementName = sheet.getRow(i).getCell(0);
-				//System.out.println(elementName);
 				mLocator = sheet.getRow(i).getCell(1);
 				mValue = sheet.getRow(i).getCell(2);
 				aLocator = sheet.getRow(i).getCell(3);

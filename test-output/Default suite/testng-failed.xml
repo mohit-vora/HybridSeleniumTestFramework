@@ -9,8 +9,6 @@
           <include name="CloseBrowser"/>
           <include name="Register"/>
           <include name="PopUpMethod"/>
-          <include name="leftNavigate"/>
-          <include name="PopUpMethod1"/>
           <include name="beforeMethod"/>
         </methods>
       </class> <!-- ApplicationModules.EnrollMember -->
