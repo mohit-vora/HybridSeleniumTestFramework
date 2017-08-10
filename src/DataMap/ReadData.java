@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -91,7 +92,7 @@ public class ReadData {
 				data.put(df.formatCellValue(sheet.getRow(i).getCell(0)).substring(3),li);
 
 		}
-					
+		workbook.close();			
 					
 	}
 		 
