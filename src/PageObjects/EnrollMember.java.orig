@@ -17,8 +17,11 @@ public class EnrollMember  {
 	public void RegisterMember(WebDriver driver, String dsid) throws InterruptedException, IOException {
 
 		
-
+<<<<<<< HEAD
+		ReadSheet rd1 = new ReadSheet("RegisterMember");
+=======
 		ReadLocators rd1 = new ReadLocators("RegisterMember");
+>>>>>>> 6d0ee8befef2ee03b4cfb68b9d30dee467f51d11
 		driver.findElement(By.xpath(".//*[@id='menu5']/span[2]")).click();
         driver.findElement(By.xpath(".//*[@id='submenu5.0']/span[2]")).click();
         
