@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="19499" started-at="2017-08-10T02:08:03Z" finished-at="2017-08-10T02:08:22Z">
+  <suite name="Default suite" duration-ms="18951" started-at="2017-08-10T01:57:41Z" finished-at="2017-08-10T01:58:00Z">
     <groups>
     </groups>
-    <test name="Test" duration-ms="19499" started-at="2017-08-10T02:08:03Z" finished-at="2017-08-10T02:08:22Z">
+    <test name="Default test" duration-ms="18951" started-at="2017-08-10T01:57:41Z" finished-at="2017-08-10T01:58:00Z">
       <class name="TestCases.EnrollMember">
-        <test-method status="PASS" signature="Browser()[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="Browser" is-config="true" duration-ms="9197" started-at="2017-08-10T07:37:53Z" finished-at="2017-08-10T07:38:03Z">
+        <test-method status="PASS" signature="Browser()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="Browser" is-config="true" duration-ms="7565" started-at="2017-08-10T07:27:34Z" finished-at="2017-08-10T07:27:41Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Browser -->
-        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="beforeMethod" is-config="true" duration-ms="2554" started-at="2017-08-10T07:38:03Z" finished-at="2017-08-10T07:38:05Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="beforeMethod" is-config="true" duration-ms="2388" started-at="2017-08-10T07:27:42Z" finished-at="2017-08-10T07:27:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="Register(java.lang.String)[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="Register" duration-ms="7488" started-at="2017-08-10T07:38:05Z" data-provider="EnrollMember" finished-at="2017-08-10T07:38:13Z">
+        <test-method status="PASS" signature="Register(java.lang.String)[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="Register" duration-ms="7414" started-at="2017-08-10T07:27:44Z" data-provider="EnrollMember" finished-at="2017-08-10T07:27:51Z">
           <params>
             <param index="0">
               <value>
@@ -26,15 +26,15 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Register -->
-        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="PopUpMethod" is-config="true" duration-ms="322" started-at="2017-08-10T07:38:13Z" finished-at="2017-08-10T07:38:13Z">
+        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="PopUpMethod" is-config="true" duration-ms="359" started-at="2017-08-10T07:27:51Z" finished-at="2017-08-10T07:27:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- PopUpMethod -->
-        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="beforeMethod" is-config="true" duration-ms="1466" started-at="2017-08-10T07:38:13Z" finished-at="2017-08-10T07:38:14Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="beforeMethod" is-config="true" duration-ms="1156" started-at="2017-08-10T07:27:52Z" finished-at="2017-08-10T07:27:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="Register(java.lang.String)[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="Register" duration-ms="7295" started-at="2017-08-10T07:38:14Z" data-provider="EnrollMember" finished-at="2017-08-10T07:38:22Z">
+        <test-method status="PASS" signature="Register(java.lang.String)[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="Register" duration-ms="7261" started-at="2017-08-10T07:27:53Z" data-provider="EnrollMember" finished-at="2017-08-10T07:28:00Z">
           <params>
             <param index="0">
               <value>
@@ -45,15 +45,15 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Register -->
-        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="PopUpMethod" is-config="true" duration-ms="338" started-at="2017-08-10T07:38:22Z" finished-at="2017-08-10T07:38:22Z">
+        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="PopUpMethod" is-config="true" duration-ms="340" started-at="2017-08-10T07:28:00Z" finished-at="2017-08-10T07:28:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- PopUpMethod -->
-        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:TestCases.EnrollMember@e6ea0c6]" name="CloseBrowser" is-config="true" duration-ms="4773" started-at="2017-08-10T07:38:22Z" finished-at="2017-08-10T07:38:27Z">
+        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="CloseBrowser" is-config="true" duration-ms="4804" started-at="2017-08-10T07:28:00Z" finished-at="2017-08-10T07:28:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CloseBrowser -->
       </class> <!-- TestCases.EnrollMember -->
-    </test> <!-- Test -->
-  </suite> <!-- Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>
