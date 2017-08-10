@@ -31,7 +31,6 @@ public class EnrollMember {
 		PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
 		Em.RegisterMember(driver, dsid);
 		popup.PopUpAccept(driver);
-		
 
 	}
 
@@ -51,10 +50,9 @@ public class EnrollMember {
 
 	@AfterMethod
 	public void afterMethod() {
-		LeftNavigationPane lnp=new LeftNavigationPane();
+		LeftNavigationPane lnp = new LeftNavigationPane();
 		lnp.NavigateTo(driver, "Logout");
 		popup.PopUpAccept(driver);
-		
 
 	}
 
