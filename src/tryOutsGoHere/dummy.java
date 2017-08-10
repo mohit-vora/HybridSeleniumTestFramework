@@ -8,25 +8,17 @@ import ApplicationMap.ReadLocators;
 
 public class dummy {
 
-	static ReadLocators rd = new ReadLocators("Login");
-
-	// public dummy()
-	// {
-	// map = rd.getMap();
-	//
-	// }
-
-	// public static void setMap()
-	// {
-	//
-	// System.out.println(map.size());
-	// }
-	//
-	//
-	// /*public static ByAll get(String parm)
-	// {
-	// setMap();
-	// return map.get(parm);
-	// }*/
-
+	public static void main(String[] args)
+	{	int i=0;
+		for (;i<5;i++)
+		{
+			System.out.println(i);
+			if (i==3)
+				break;
+		}
+	}
+	
+	
+	
+	
 }

@@ -14,8 +14,6 @@ public class MemberPayment {
 	ReadLocators rd1 = new ReadLocators("MemberPayment");
 
 	public void PopulatePaymenttoMember(WebDriver driver) {
-		String Logged_user = driver.findElement(rd1.getLocator("ELM_LOGGEDUSER")).getText();
-		System.out.println(Logged_user);
 		
 			/*Data Sheet doesnt have relevant data so i have hardcoded --Lakshmi*/
 			//ReadData dm = new ReadData("MemberDetails", dsid);

@@ -15,12 +15,11 @@ public class ReadLocators {
 
 	HashMap<String, ByAll> smap = null;
 	String sheetName = null;
-
+	XSSFCell mLocator, mValue, aLocator, aValue, elementName;
 	public ReadLocators(String sname) {
 		sheetName = sname;
 		try {
 			init();
-			System.out.println("it read excel");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -34,12 +33,13 @@ public class ReadLocators {
 		XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 
 		List<By> locators = null;
-		XSSFCell mLocator, mValue, aLocator, aValue, elementName;
+		
 		XSSFSheet sheet = WorkBook.getSheet(sheetName);
-
+		
 		int i;
 		int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-		for (i = 1; i < rownum + 1; i++) {
+		System.out.println(sheetName+rownum);
+		for (i = 1; i <= rownum; i++) {
 			locators = new ArrayList<By>();
 			elementName = sheet.getRow(i).getCell(0);
 			mLocator = sheet.getRow(i).getCell(1);
@@ -70,6 +70,13 @@ public class ReadLocators {
 			case "xpath":
 				obj1 = By.xpath(value);
 				break;
+			case "css":
+				obj1=By.cssSelector(value);
+				break;
+
+			default:
+				System.out.println("Something is wrong in application map of this object: "+ elementName);
+				break;
 
 			}
 		}
@@ -87,6 +94,10 @@ public class ReadLocators {
 	}
 
 	public ByAll getLocator(String parm) {
+		
+		System.out.println(smap.get("TXB_Name"));
+		System.out.println(smap.get(parm));
+		
 		return smap.get(parm);
 
 	}

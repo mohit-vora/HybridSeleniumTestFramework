@@ -8,16 +8,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import ApplicationMap.ReadLocators;
 import Utils.LeftNavigationPane;
 
 public class AccountBalance {
+  Map<String, Double> AccountType = new HashMap<String, Double>();
+	public void VerifyAccountBalance(){
+		
+		 } 
+	
+	
 
-	public static void VerifyAccountBalance(WebDriver driver){
+
+	public void XtractAccountBalance(WebDriver driver) {
+		ReadLocators rd1 = new ReadLocators("RegisterMember");
 		LeftNavigationPane leftpane = new LeftNavigationPane();
-		leftpane.NavigateTo(driver, "Account", "Account Information");
-		Map<String, Double> AccountType = new HashMap<String, Double>();
-		if(driver.findElement(By.xpath("html/body/div[2]/div/div/div/div[3]/table/tbody/tr[1]/td[1]")).getText().contains("My accounts")){
-			WebElement Accntypes = driver.findElement(By.xpath("html/body/div[2]/div/div/div/div[3]/table/tbody/tr[2]/td/table"));
+		leftpane.NavigateTo(driver, "Account", "Account Information");		
+		if(driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")){
+			WebElement Accntypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
 			List<WebElement> rows = Accntypes.findElements(By.tagName("tr"));
 			for(int i=1; i<rows.size();i++){
 				List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
@@ -27,13 +35,6 @@ public class AccountBalance {
 				   AccountType.put(cols.get(0).getText(), Amountd);
 				}
 			}
-		
-	} 
-	
 
-
-	public double XtractAccountBalance(double Amount) {
-
-		return Amount;
 	}
 }
