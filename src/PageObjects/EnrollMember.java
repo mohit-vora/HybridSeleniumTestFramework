@@ -13,8 +13,6 @@ public class EnrollMember {
 	public void RegisterMember(WebDriver driver, String dsid) throws InterruptedException, IOException {
 
 		ReadLocators rd1 = new ReadLocators("RegisterMember");
-		driver.findElement(By.xpath(".//*[@id='menu5']/span[2]")).click();
-		driver.findElement(By.xpath(".//*[@id='submenu5.0']/span[2]")).click();
 
 		WebElement Createmem = driver.findElement(By.xpath(".//*[@id='newMemberGroup']"));
 
