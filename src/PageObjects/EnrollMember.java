@@ -8,29 +8,24 @@ import org.openqa.selenium.support.ui.Select;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 
+public class EnrollMember {
 
-public class EnrollMember  {
-
-
-
-	
 	public void RegisterMember(WebDriver driver, String dsid) throws InterruptedException, IOException {
 
-		
 		ReadLocators rd1 = new ReadLocators("RegisterMember");
 		driver.findElement(By.xpath(".//*[@id='menu5']/span[2]")).click();
-        driver.findElement(By.xpath(".//*[@id='submenu5.0']/span[2]")).click();
-        
-        WebElement Createmem = driver.findElement(By.xpath(".//*[@id='newMemberGroup']"));       
-        
-       new Select(Createmem).selectByVisibleText("Full members");      
+		driver.findElement(By.xpath(".//*[@id='submenu5.0']/span[2]")).click();
 
-        Thread.sleep(1000);
-//        ReadData dm = new ReadData("MemberDetails","MEM001");
-        ReadData dm = new ReadData("MemberDetails",dsid);
-        driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
-		driver.findElement(rd1.getLocator( "TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
-		driver.findElement(rd1.getLocator( "TXB_Email")).sendKeys(dm.getData("EMAIL_ADDRESS"));
+		WebElement Createmem = driver.findElement(By.xpath(".//*[@id='newMemberGroup']"));
+
+		new Select(Createmem).selectByVisibleText("Full members");
+
+		Thread.sleep(1000);
+		// ReadData dm = new ReadData("MemberDetails","MEM001");
+		ReadData dm = new ReadData("MemberDetails", dsid);
+		driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
+		driver.findElement(rd1.getLocator("TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
+		driver.findElement(rd1.getLocator("TXB_Email")).sendKeys(dm.getData("EMAIL_ADDRESS"));
 		driver.findElement(rd1.getLocator("DOB")).sendKeys(dm.getData("DATE_OF_BIRTH"));
 		driver.findElement(rd1.getLocator("M_Gender")).click();
 		driver.findElement(rd1.getLocator("TXB_Address")).sendKeys(dm.getData("ADDRESS"));
@@ -44,11 +39,7 @@ public class EnrollMember  {
 		Thread.sleep(1000);
 		driver.findElement(rd1.getLocator("BTN_submit")).click();
 		Thread.sleep(1000);
-		
 
-}
-      
-
-
+	}
 
 }

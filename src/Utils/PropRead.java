@@ -7,11 +7,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropRead {
-	
-	public static String getVal(String parm)
-	{
-		File file = new File(System.getProperty("user.dir")+"\\resources\\path.properties");
-		  
+
+	public static String getVal(String parm) {
+		File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
+
 		FileInputStream fileInput = null;
 		try {
 			fileInput = new FileInputStream(file);
@@ -19,7 +18,7 @@ public class PropRead {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
+
 		Properties prop = new Properties();
 
 		try {
@@ -28,7 +27,7 @@ public class PropRead {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 		return prop.getProperty(parm);
 	}
 

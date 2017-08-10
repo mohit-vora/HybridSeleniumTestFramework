@@ -5,6 +5,15 @@
     <classes>
       <class name="TestCases.EnrollMember">
         <methods>
+<<<<<<< HEAD
+          <include name="Browser"/>
+          <include name="Register"/>
+<<<<<<< HEAD
+          <include name="PopUpMethod"/>
+=======
+>>>>>>> 1993f27ae47b7cb6392532e9fe938c8e7d60d68d
+=======
+>>>>>>> 6d0ee8befef2ee03b4cfb68b9d30dee467f51d11
           <include name="beforeMethod"/>
           <include name="Register"/>
           <include name="PopUpMethod"/>
