@@ -17,10 +17,17 @@ public class ReadSheet {
 	HashMap<String, ByAll> smap = null;
 	String sheetName = null;
 	
-	public ReadSheet(String sname) throws IOException
+	public ReadSheet(String sname) 
 	{
 		sheetName = sname;
-		init();
+		try {
+			init();
+			System.out.println("it read excel");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void init() throws IOException {
@@ -88,7 +95,7 @@ public class ReadSheet {
 		
 	}
 	
-	public ByAll get(String parm)
+	public ByAll getLocator(String parm)
 	{
 		return smap.get(parm);
 		
