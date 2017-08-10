@@ -1,18 +1,18 @@
-package Utils;
+package tryOutsGoHere;
 
 import java.util.HashMap;
 
 import org.openqa.selenium.support.pagefactory.ByAll;
 
-import ApplicationMap.ReadSheet;
+import ApplicationMap.ReadLocators;
 
 public class dummy{
 	
 	
 	
-	static ReadSheet rd = new ReadSheet("Login");
+	static ReadLocators rd = new ReadLocators("Login");
 	
-	static public HashMap<String, ByAll> map = rd.getMap();
+
 	
 //	public dummy()
 //	{

@@ -12,12 +12,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByAll;
 
 
-public class ReadSheet {
+public class ReadLocators {
     
 	HashMap<String, ByAll> smap = null;
 	String sheetName = null;
 	
-	public ReadSheet(String sname) 
+	public ReadLocators(String sname) 
 	{
 		sheetName = sname;
 		try {
