@@ -1,12 +1,9 @@
 package TestCases;
 
 import org.testng.annotations.Test;
-import org.testng.annotations.Test;
 import PageObjects.Login;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
-import Utils.dummy;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
@@ -17,7 +14,6 @@ import org.testng.annotations.AfterSuite;
 
 
 public class EnrollMember {
-private static final String PopUpMsg = null;
 WebDriver driver = null;	
 BrowserUtils bu = new BrowserUtils(); 
 VerifyPopUp popup = new VerifyPopUp();

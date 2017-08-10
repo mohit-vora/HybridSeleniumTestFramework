@@ -1,10 +1,8 @@
 package PageObjects;
 
 import DataMap.*;
-import Utils.dummy;
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
-
 import ApplicationMap.ReadLocators;
 
 public class Login  {
