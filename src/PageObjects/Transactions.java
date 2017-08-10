@@ -1,5 +1,6 @@
 package PageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
@@ -14,6 +15,7 @@ public class Transactions {
 		if (User[2].equalsIgnoreCase("admin")){
 			
 		}else{
+			driver.findElement(rd1.getLocator("TXB_Login")).sendKeys("TestUser01");
 			
 		}
 		
