@@ -29,11 +29,8 @@ public class EnrollMember {
 	@Test(dataProvider = "EnrollMember")
 	public void Register(String dsid) throws Exception {
 		LeftNavigationPane lnp = new LeftNavigationPane();
-<<<<<<< HEAD
-		lnp.NavigateTo(driver, "Users & Groups", "Manage members");
-=======
+
 		lnp.NavigateTo(driver, "Users & Groups","Manage Members");
->>>>>>> 64b06750ad7379023c715adba587230df4a7167e
 		PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
 		Em.RegisterMember(driver, dsid);
 		popup.PopUpAccept(driver);

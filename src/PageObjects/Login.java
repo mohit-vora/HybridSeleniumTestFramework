@@ -1,9 +1,11 @@
 package PageObjects;
 
-import DataMap.*;
 import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
+
 import ApplicationMap.ReadLocators;
+import DataMap.ReadData;
 
 public class Login {
 
@@ -19,6 +21,7 @@ public class Login {
 		driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("Login_Name"));
 		driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("Password"));
 		driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
+	
 
 	}
 
