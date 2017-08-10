@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="1" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="5361" started-at="2017-08-10T11:09:34Z" finished-at="2017-08-10T11:09:39Z">
+  <suite name="Default suite" duration-ms="4342" started-at="2017-08-10T11:16:55Z" finished-at="2017-08-10T11:17:00Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="5361" started-at="2017-08-10T11:09:34Z" finished-at="2017-08-10T11:09:39Z">
+    <test name="Default test" duration-ms="4342" started-at="2017-08-10T11:16:55Z" finished-at="2017-08-10T11:17:00Z">
       <class name="TestCases.MemberPayment">
-        <test-method status="PASS" signature="Browser()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="Browser" is-config="true" duration-ms="7578" started-at="2017-08-10T16:39:26Z" finished-at="2017-08-10T16:39:34Z">
+        <test-method status="PASS" signature="Browser()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="Browser" is-config="true" duration-ms="8263" started-at="2017-08-10T16:46:47Z" finished-at="2017-08-10T16:46:55Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Browser -->
-        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="beforeMethod" is-config="true" duration-ms="3456" started-at="2017-08-10T16:39:34Z" finished-at="2017-08-10T16:39:37Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="beforeMethod" is-config="true" duration-ms="2809" started-at="2017-08-10T16:46:55Z" finished-at="2017-08-10T16:46:58Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="FAIL" signature="paymentToMember()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="paymentToMember" duration-ms="1442" started-at="2017-08-10T16:39:37Z" finished-at="2017-08-10T16:39:39Z">
+        <test-method status="FAIL" signature="paymentToMember()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="paymentToMember" duration-ms="1222" started-at="2017-08-10T16:46:58Z" finished-at="2017-08-10T16:46:59Z">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
@@ -54,11 +54,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- paymentToMember -->
-        <test-method status="PASS" signature="afterMethod()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="afterMethod" is-config="true" duration-ms="409" started-at="2017-08-10T16:39:39Z" finished-at="2017-08-10T16:39:39Z">
+        <test-method status="PASS" signature="afterMethod()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="afterMethod" is-config="true" duration-ms="280" started-at="2017-08-10T16:46:59Z" finished-at="2017-08-10T16:47:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterMethod -->
-        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="CloseBrowser" is-config="true" duration-ms="5109" started-at="2017-08-10T16:39:39Z" finished-at="2017-08-10T16:39:45Z">
+        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:TestCases.MemberPayment@402f32ff]" name="CloseBrowser" is-config="true" duration-ms="4825" started-at="2017-08-10T16:47:00Z" finished-at="2017-08-10T16:47:04Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CloseBrowser -->

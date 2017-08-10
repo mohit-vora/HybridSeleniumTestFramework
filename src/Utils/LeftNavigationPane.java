@@ -13,7 +13,6 @@ public class LeftNavigationPane {
 		for (int i = 1; i < listMainMenu.size(); i++) {
 				if (listMainMenu.get(i).getText().equals(mainMenu)) {
 				String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
-				System.out.println(clickmainmenu);
 				driver.findElement(By.xpath(clickmainmenu)).click();
 				submenuxpath = "//ul[@id='subMenuContainer" + i + "']//li//span[@class='subMenuText']";
 				
