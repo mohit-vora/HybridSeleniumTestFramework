@@ -1,10 +1,13 @@
 package TestCases;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import PageObjects.Login;
@@ -17,6 +20,13 @@ public class MemberPayment {
 	WebDriver driver = null;
 	BrowserUtils bu = new BrowserUtils();
 	VerifyPopUp popup = new VerifyPopUp();
+	
+	@DataProvider(name = "MemberPayment")
+	public static Object[][] getMemPayData() {
+
+		return new Object[][] { { "TXN001" }, { "TXN001" } };
+
+	}
 
 	@BeforeMethod
 	public void beforeMethod() throws Exception {
@@ -24,14 +34,14 @@ public class MemberPayment {
 		dd.performLogin(driver,"MEM005");
 
 	}
-	@Test
-	public void paymentToMember()
+	@Test(dataProvider = "MemberPayment")
+	public void paymentToMember(String dsid) throws IOException
 	{
 		LeftNavigationPane lnp = new LeftNavigationPane();
 		lnp.NavigateTo(driver, "Account","Member Payment");	
 		
 		PageObjects.MemberPayment em=new PageObjects.MemberPayment();
-		em.PopulatePaymenttoMember(driver);
+		em.PopulatePaymenttoMember(driver,dsid);
 		
 	}
 

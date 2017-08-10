@@ -1,5 +1,6 @@
 package PageObjects;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -13,16 +14,18 @@ import DataMap.ReadData;
 public class MemberPayment {
 	ReadLocators rd1 = new ReadLocators("MemberPayment");
 
-	public void PopulatePaymenttoMember(WebDriver driver) {
+	public void PopulatePaymenttoMember(WebDriver driver,String dsid) throws IOException {
 		
-			/*Data Sheet doesnt have relevant data so i have hardcoded --Lakshmi*/
-			//ReadData dm = new ReadData("MemberDetails", dsid);
-			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys("TestUser41");
-			driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys("230.00");
+			
+			ReadData dm = new ReadData("MemberPayment", dsid);
+			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm.getData("Transaction_Login"));
+			driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys(dm.getData("Transaction_Amount"));
 			WebElement we=driver.findElement(rd1.getLocator("LST_Transaction_Type"));
 			//List<WebElement> list12 = we.findElements(By.tagName("option"));
+			
+			/*Transaction type is hardcoded as option and value is different in source page*/
 			new Select(we).selectByVisibleText("Savings to Current");
-			driver.findElement(rd1.getLocator("TXB_Description")).sendKeys("Miscellaneous Expenses");
+			driver.findElement(rd1.getLocator("TXB_Description")).sendKeys(dm.getData("Transaction_Description"));
 			driver.findElement(rd1.getLocator("BTN_Submit")).click();
 			driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
 
