@@ -60,6 +60,7 @@ public class ReadLocators {
 				smap.put(elementName.getStringCellValue(), generatorAll(locators));
 			}
 			
+			WorkBook.close();
 		}
 
 
