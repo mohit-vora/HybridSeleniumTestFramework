@@ -29,7 +29,11 @@ public class EnrollMember {
 	@Test(dataProvider = "EnrollMember")
 	public void Register(String dsid) throws Exception {
 		LeftNavigationPane lnp = new LeftNavigationPane();
+<<<<<<< HEAD
 		lnp.NavigateTo(driver, "Users & Groups", "Manage members");
+=======
+		lnp.NavigateTo(driver, "Users & Groups","Manage Members");
+>>>>>>> 64b06750ad7379023c715adba587230df4a7167e
 		PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
 		Em.RegisterMember(driver, dsid);
 		popup.PopUpAccept(driver);
@@ -39,7 +43,7 @@ public class EnrollMember {
 	@BeforeMethod
 	public void beforeMethod() throws Exception {
 		Login dd = new Login();
-		dd.performLogin(driver);
+		dd.performLogin(driver,"MEM004");
 
 	}
 
@@ -58,14 +62,6 @@ public class EnrollMember {
 
 	}
 
-	/*
-	 * @Test(dependsOnMethods={"PopUpMethod"}) public void leftNavigate(){
-	 * LeftNavigationPane leftpane = new LeftNavigationPane();
-	 * leftpane.NavigateTo(driver, "Logout", ""); }
-	 * 
-	 * @Test(dependsOnMethods={"leftNavigate"}) public void PopUpMethod1() {
-	 * popup.PopUpAccept(driver); // System.out.println(Msg); }
-	 */
 	@AfterSuite()
 	public void CloseBrowser() throws InterruptedException {
 		bu.Closebrowser();

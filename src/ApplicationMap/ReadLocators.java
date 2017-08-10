@@ -20,7 +20,6 @@ public class ReadLocators {
 		sheetName = sname;
 		try {
 			init();
-			System.out.println("it read excel");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -36,10 +35,11 @@ public class ReadLocators {
 		List<By> locators = null;
 		XSSFCell mLocator, mValue, aLocator, aValue, elementName;
 		XSSFSheet sheet = WorkBook.getSheet(sheetName);
-
+		
 		int i;
 		int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-		for (i = 1; i < rownum + 1; i++) {
+		System.out.println(sheetName+rownum);
+		for (i = 1; i <= rownum; i++) {
 			locators = new ArrayList<By>();
 			elementName = sheet.getRow(i).getCell(0);
 			mLocator = sheet.getRow(i).getCell(1);

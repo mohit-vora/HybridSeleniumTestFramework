@@ -16,19 +16,6 @@ public class ReadData {
 	private String initSheet = null;
 	private Map<String, List> data = new HashMap<String, List>();
 	private String id = null;
-	// public static void main(String[] args) throws IOException
-	// {
-	// DSName = "MemberDetails";
-	// init();
-	// String data = getData("MEM003","Login_Name");
-	// System.out.println(data);
-	// DSName = "UserAccountTypes";
-	// init();
-	// data = getData("ACC002","ACCOUNT_TYPE");
-	// System.out.println(data);
-	//
-	//
-	// }
 
 	public ReadData(String name, String id) throws IOException {
 		DSName = name;
