@@ -73,9 +73,7 @@ public class ReadLocators {
 			case "css":
 				obj1=By.cssSelector(value);
 				break;
-			case "dom":
-				obj1=By.
-				break;
+
 			default:
 				System.out.println("Something is wrong in application map of this object: "+ elementName);
 				break;
