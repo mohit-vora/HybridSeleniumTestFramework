@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="11949" started-at="2017-08-09T23:12:14Z" finished-at="2017-08-09T23:12:26Z">
+  <suite name="Default suite" duration-ms="18951" started-at="2017-08-10T01:57:41Z" finished-at="2017-08-10T01:58:00Z">
     <groups>
     </groups>
-    <test name="Test" duration-ms="11949" started-at="2017-08-09T23:12:14Z" finished-at="2017-08-09T23:12:26Z">
+    <test name="Default test" duration-ms="18951" started-at="2017-08-10T01:57:41Z" finished-at="2017-08-10T01:58:00Z">
       <class name="TestCases.EnrollMember">
-        <test-method status="PASS" signature="Browser()[pri:0, instance:TestCases.EnrollMember@402f32ff]" name="Browser" is-config="true" duration-ms="12476" started-at="2017-08-10T04:42:01Z" finished-at="2017-08-10T04:42:14Z">
+        <test-method status="PASS" signature="Browser()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="Browser" is-config="true" duration-ms="7565" started-at="2017-08-10T07:27:34Z" finished-at="2017-08-10T07:27:41Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Browser -->
-        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@402f32ff]" name="beforeMethod" is-config="true" duration-ms="3630" started-at="2017-08-10T04:42:14Z" finished-at="2017-08-10T04:42:17Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="beforeMethod" is-config="true" duration-ms="2388" started-at="2017-08-10T07:27:42Z" finished-at="2017-08-10T07:27:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="Register()[pri:0, instance:TestCases.EnrollMember@402f32ff]" name="Register" duration-ms="8299" started-at="2017-08-10T04:42:17Z" finished-at="2017-08-10T04:42:26Z">
+        <test-method status="PASS" signature="Register(java.lang.String)[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="Register" duration-ms="7414" started-at="2017-08-10T07:27:44Z" data-provider="EnrollMember" finished-at="2017-08-10T07:27:51Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[MEM001]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Register -->
-        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@402f32ff]" name="PopUpMethod" is-config="true" duration-ms="0" started-at="2017-08-10T04:42:26Z" finished-at="2017-08-10T04:42:26Z">
+        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="PopUpMethod" is-config="true" duration-ms="359" started-at="2017-08-10T07:27:51Z" finished-at="2017-08-10T07:27:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- PopUpMethod -->
-        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:TestCases.EnrollMember@402f32ff]" name="CloseBrowser" is-config="true" duration-ms="4997" started-at="2017-08-10T04:42:26Z" finished-at="2017-08-10T04:42:31Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="beforeMethod" is-config="true" duration-ms="1156" started-at="2017-08-10T07:27:52Z" finished-at="2017-08-10T07:27:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="Register(java.lang.String)[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="Register" duration-ms="7261" started-at="2017-08-10T07:27:53Z" data-provider="EnrollMember" finished-at="2017-08-10T07:28:00Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[MEM001]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Register -->
+        <test-method status="PASS" signature="PopUpMethod()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="PopUpMethod" is-config="true" duration-ms="340" started-at="2017-08-10T07:28:00Z" finished-at="2017-08-10T07:28:00Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- PopUpMethod -->
+        <test-method status="PASS" signature="CloseBrowser()[pri:0, instance:TestCases.EnrollMember@5ae9a829]" name="CloseBrowser" is-config="true" duration-ms="4804" started-at="2017-08-10T07:28:00Z" finished-at="2017-08-10T07:28:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CloseBrowser -->
       </class> <!-- TestCases.EnrollMember -->
-    </test> <!-- Test -->
-  </suite> <!-- Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

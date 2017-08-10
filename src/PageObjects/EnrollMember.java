@@ -14,7 +14,7 @@ public class EnrollMember  {
 
 
 	
-	public void RegisterMember(WebDriver driver) throws InterruptedException, IOException {
+	public void RegisterMember(WebDriver driver, String dsid) throws InterruptedException, IOException {
 
 		
 		ReadLocators rd1 = new ReadLocators("RegisterMember");
@@ -26,7 +26,8 @@ public class EnrollMember  {
        new Select(Createmem).selectByVisibleText("Full members");      
 
         Thread.sleep(1000);
-        ReadData dm = new ReadData("MemberDetails","MEM001");
+//        ReadData dm = new ReadData("MemberDetails","MEM001");
+        ReadData dm = new ReadData("MemberDetails",dsid);
         driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
 		driver.findElement(rd1.getLocator( "TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
 		driver.findElement(rd1.getLocator( "TXB_Email")).sendKeys(dm.getData("EMAIL_ADDRESS"));

@@ -9,6 +9,8 @@ import Utils.dummy;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -19,10 +21,18 @@ private static final String PopUpMsg = null;
 WebDriver driver = null;	
 BrowserUtils bu = new BrowserUtils(); 
 VerifyPopUp popup = new VerifyPopUp();
-  @Test
-  public void Register() throws Exception {
+
+@DataProvider(name="EnrollMember")
+public static Object[][] getRegData() {
+	 
+    return new Object[][] { { "MEM001"},{"MEM001"}};
+
+}
+
+  @Test(dataProvider="EnrollMember")
+  public void Register(String dsid) throws Exception {
 	  PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
-	  Em.RegisterMember(driver);
+	  Em.RegisterMember(driver,dsid);
   }
   
   
@@ -42,8 +52,10 @@ VerifyPopUp popup = new VerifyPopUp();
 
   @AfterMethod
   public void PopUpMethod() {
-//	 popup.PopUpAccept(driver);
-	// System.out.println(Msg);
+	 popup.PopUpAccept(driver);
+	 this.driver.findElement(By.cssSelector("#menu15 > span.menuText")).click();
+	 popup.PopUpAccept(driver);
+
 	 }
 
 /*  @Test(dependsOnMethods={"PopUpMethod"})
