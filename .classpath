@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="D:/Reference Selenium/Selenium-Java/selenium-java-2.53.0/selenium-java-2.53.0.jar"/>
 	<classpathentry kind="lib" path="D:/Reference Selenium/Selenium-Java/selenium-java-2.53.0/selenium-java-2.53.0-srcs.jar"/>
 	<classpathentry kind="lib" path="D:/Reference Selenium/Selenium-Java/selenium-java-2.53.0/libs/testng-6.9.9.jar"/>
@@ -13,5 +14,19 @@
 	<classpathentry kind="lib" path="D:/Reference Selenium/JARS/Apache_POI/poi-bin-3.14/poi-3.14/lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="D:/Reference Selenium/JARS/Apache_POI/poi-bin-3.14/poi-3.14/lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="D:/Reference Selenium/JARS/Apache_POI/poi-bin-3.14/poi-3.14/lib/log4j-1.2.17.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/ooxml-lib/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/ooxml-lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/poi-3.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/poi-ooxml-3.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/poi-ooxml-schemas-3.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/poi-3.16/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/org.testng.feature_5.9.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/selenium-java-2.48.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/selenium-java-2.48.2-srcs.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mohit_vora/Desktop/Selenium/jars/selenium-server-standalone-2.48.2.jar"/>
+>>>>>>> 1e10756ba3cde0217e3b74bb69e81ac9933eceac
 	<classpathentry kind="output" path="bin"/>
 </classpath>

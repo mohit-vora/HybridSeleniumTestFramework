@@ -31,6 +31,10 @@ public class EnrollMember {
 		LeftNavigationPane lnp = new LeftNavigationPane();
 
 		lnp.NavigateTo(driver, "Users & Groups","Manage Members");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e10756ba3cde0217e3b74bb69e81ac9933eceac
 		PageObjects.EnrollMember Em = new PageObjects.EnrollMember();
 		Em.RegisterMember(driver, dsid);
 		popup.PopUpAccept(driver);
