@@ -25,7 +25,7 @@ public class MemberPayment {
 	@DataProvider(name = "PayMember")
 	public static Object[][] getRegData() {
 
-		return new Object[][] { { "MEM001" }, { "MEM001" } };
+		return new Object[][] { { "MEM005","MEM006","TXN001"} };
 
 	}
 	
@@ -37,7 +37,7 @@ public class MemberPayment {
 
 	}
 	@Test(dataProvider="PayMember")
-	public void paymentToMember(String toMemDSId, String TXNDSId) throws IOException
+	public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException
 	{
 		
 		
