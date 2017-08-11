@@ -1,5 +1,5 @@
-/bin
 .classpath
 .settings
 .project
-/test-output
+bin/**/*
+test-output/**/*
