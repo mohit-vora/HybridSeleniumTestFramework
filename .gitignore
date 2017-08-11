@@ -1,5 +1,5 @@
-*
-!src\
-!Resources\
-!*.gitignore
-!testng.xml
+.settings
+.classpath
+.project
+bin/**/*
+test-output/**/*

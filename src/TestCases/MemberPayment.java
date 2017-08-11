@@ -28,20 +28,40 @@ public class MemberPayment {
 
 	}
 
-	@BeforeMethod
-	public void beforeMethod() throws Exception {
-		Login dd = new Login();
-		dd.performLogin(driver,"MEM005");
+	
+	@DataProvider(name = "PayMember")
+	public static Object[][] getRegData() {
+
+		return new Object[][] { { "MEM001" }, { "MEM001" } };
 
 	}
+	
+	@BeforeMethod
+	public void beforeMethod(Object[] testArgs) throws Exception {
+		String dsid = (String) testArgs[0];
+		Login dd = new Login();
+		dd.performLogin(driver,dsid);
+
+	}
+<<<<<<< HEAD
 	@Test(dataProvider = "MemberPayment")
 	public void paymentToMember(String dsid) throws IOException
+=======
+	@Test(dataProvider="PayMember")
+	public void paymentToMember(String toMemDSId, String TXNDSId) throws IOException
+>>>>>>> 379e39235268949cbc2dc58762b1dcac5e1ca419
 	{
+		
+		
 		LeftNavigationPane lnp = new LeftNavigationPane();
 		lnp.NavigateTo(driver, "Account","Member Payment");	
 		
 		PageObjects.MemberPayment em=new PageObjects.MemberPayment();
+<<<<<<< HEAD
 		em.PopulatePaymenttoMember(driver,dsid);
+=======
+		em.PopulatePaymenttoMember(driver,toMemDSId,TXNDSId);
+>>>>>>> 379e39235268949cbc2dc58762b1dcac5e1ca419
 		
 	}
 
