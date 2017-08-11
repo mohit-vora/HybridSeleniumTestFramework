@@ -43,13 +43,10 @@ public class MemberPayment {
 		dd.performLogin(driver,dsid);
 
 	}
-<<<<<<< HEAD
-	@Test(dataProvider = "MemberPayment")
-	public void paymentToMember(String dsid) throws IOException
-=======
+
 	@Test(dataProvider="PayMember")
 	public void paymentToMember(String toMemDSId, String TXNDSId) throws IOException
->>>>>>> 379e39235268949cbc2dc58762b1dcac5e1ca419
+
 	{
 		
 		
@@ -57,11 +54,10 @@ public class MemberPayment {
 		lnp.NavigateTo(driver, "Account","Member Payment");	
 		
 		PageObjects.MemberPayment em=new PageObjects.MemberPayment();
-<<<<<<< HEAD
-		em.PopulatePaymenttoMember(driver,dsid);
-=======
+
+		
+
 		em.PopulatePaymenttoMember(driver,toMemDSId,TXNDSId);
->>>>>>> 379e39235268949cbc2dc58762b1dcac5e1ca419
 		
 	}
 

@@ -14,14 +14,9 @@ import DataMap.ReadData;
 public class MemberPayment {
 	ReadLocators rd1 = new ReadLocators("MemberPayment");
 
-<<<<<<< HEAD
-	public void PopulatePaymenttoMember(WebDriver driver,String dsid) throws IOException {
-		
-			
-			ReadData dm = new ReadData("MemberPayment", dsid);
-			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm.getData("Transaction_Login"));
-			driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys(dm.getData("Transaction_Amount"));
-=======
+
+	
+
 	public void PopulatePaymenttoMember(WebDriver driver, String dsid1, String dsid2) throws IOException {
 		
 			
@@ -31,13 +26,13 @@ public class MemberPayment {
 			
 			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm2.getData("LOGIN_NAME"));
 			driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys("230.00");
->>>>>>> 379e39235268949cbc2dc58762b1dcac5e1ca419
+
 			WebElement we=driver.findElement(rd1.getLocator("LST_Transaction_Type"));
 			//List<WebElement> list12 = we.findElements(By.tagName("option"));
 			
 			/*Transaction type is hardcoded as option and value is different in source page*/
 			new Select(we).selectByVisibleText("Savings to Current");
-			driver.findElement(rd1.getLocator("TXB_Description")).sendKeys(dm.getData("Transaction_Description"));
+			driver.findElement(rd1.getLocator("TXB_Description")).sendKeys(dm1.getData("Transaction_Description"));
 			driver.findElement(rd1.getLocator("BTN_Submit")).click();
 			driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
 
