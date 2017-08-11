@@ -1,5 +1,6 @@
 package PageObjects;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -13,11 +14,14 @@ import DataMap.ReadData;
 public class MemberPayment {
 	ReadLocators rd1 = new ReadLocators("MemberPayment");
 
-	public void PopulatePaymenttoMember(WebDriver driver) {
+	public void PopulatePaymenttoMember(WebDriver driver, String dsid1, String dsid2) throws IOException {
 		
-			/*Data Sheet doesnt have relevant data so i have hardcoded --Lakshmi*/
-			//ReadData dm = new ReadData("MemberDetails", dsid);
-			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys("TestUser41");
+			
+			ReadData dm1 = new ReadData("TransactionData", dsid1);
+			
+			ReadData dm2 = new ReadData("MemberDetails", dsid1);
+			
+			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm2.getData("LOGIN_NAME"));
 			driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys("230.00");
 			WebElement we=driver.findElement(rd1.getLocator("LST_Transaction_Type"));
 			//List<WebElement> list12 = we.findElements(By.tagName("option"));
