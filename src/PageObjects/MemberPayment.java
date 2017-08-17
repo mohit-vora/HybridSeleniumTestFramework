@@ -14,7 +14,7 @@ import DataMap.ReadData;
 public class MemberPayment {
     ReadLocators rd1 = new ReadLocators("MemberPayment");
 
-    public void PopulatePaymenttoMember(WebDriver driver, String dsid1, String dsid2) throws IOException {
+    public void PopulatePaymenttoMember(WebDriver driver, String dsid1, String dsid2) throws IOException, InterruptedException {
 
 	
 			ReadData dm1 = new ReadData("MemberDetails", dsid1);
@@ -23,8 +23,8 @@ public class MemberPayment {
 			
 
 
-        driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm2.getData("LOGIN_NAME"));
-
+        driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm1.getData("LOGIN_NAME"));
+        Thread.sleep(1000);
         driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys(dm2.getData("TRANSACTION_AMOUNT"));
         WebElement we = driver.findElement(rd1.getLocator("LST_Transaction_Type"));
         //List<WebElement> list12 = we.findElements(By.tagName("option"));

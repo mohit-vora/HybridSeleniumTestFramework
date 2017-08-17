@@ -44,7 +44,7 @@ public class MemberPayment {
     //Calling the DataProvider objects with its name "PayMember"
     //Operation:- Invoke Left navigation and Populate payment to member method.
     @Test(dataProvider = "PayMember")
-    public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException{
+    public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException, InterruptedException{
         LeftNavigationPane lnp = new LeftNavigationPane();
         lnp.NavigateTo(driver, "Account", "Member Payment");
         PageObjects.MemberPayment em = new PageObjects.MemberPayment();
