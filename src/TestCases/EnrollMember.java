@@ -5,6 +5,7 @@ import PageObjects.Login;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
+import tryOutsGoHere.InheritThis;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -14,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 
-public class EnrollMember {
+public class EnrollMember extends InheritThis{
 	WebDriver driver = null;
 	BrowserUtils bu = new BrowserUtils();
 	VerifyPopUp popup = new VerifyPopUp();
@@ -22,7 +23,7 @@ public class EnrollMember {
 	@DataProvider(name = "EnrollMember")
 	public static Object[][] getRegData() {
 
-		return new Object[][] { { "MEM001" }, { "MEM001" } };
+		return InheritThis.args;
 
 	}
 
@@ -49,7 +50,6 @@ public class EnrollMember {
 	public void Browser() {
 		// BrowserUtils bu = new BrowserUtils();-----
 		this.driver = bu.openbrowserChrome();
-		System.out.println("inside before method");
 	}
 
 	@AfterMethod
@@ -63,6 +63,5 @@ public class EnrollMember {
 	@AfterSuite()
 	public void CloseBrowser() throws InterruptedException {
 		bu.Closebrowser();
-		System.out.println("inside aftersuit method");
 	}
 }

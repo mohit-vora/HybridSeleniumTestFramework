@@ -38,7 +38,7 @@ public class ReadLocators {
 		
 		int i;
 		int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-		System.out.println(sheetName+rownum);
+//		System.out.println(sheetName+rownum);
 		for (i = 1; i <= rownum; i++) {
 			locators = new ArrayList<By>();
 			elementName = sheet.getRow(i).getCell(0);
@@ -94,9 +94,6 @@ public class ReadLocators {
 	}
 
 	public ByAll getLocator(String parm) {
-		
-		System.out.println(smap.get("TXB_Name"));
-		System.out.println(smap.get(parm));
 		
 		return smap.get(parm);
 

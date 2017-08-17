@@ -20,20 +20,12 @@ public class MemberPayment {
 	WebDriver driver = null;
 	BrowserUtils bu = new BrowserUtils();
 	VerifyPopUp popup = new VerifyPopUp();
-	
-	@DataProvider(name = "MemberPayment")
-	public static Object[][] getMemPayData() {
-
-		return new Object[][] { { "TXN001" }, { "TXN001" } };
-
-	}
 
 	
 	@DataProvider(name = "PayMember")
 	public static Object[][] getRegData() {
 
 		return new Object[][] { { "MEM005","MEM006","TXN001"} };
-
 	}
 	
 	@BeforeMethod
@@ -41,22 +33,16 @@ public class MemberPayment {
 		String dsid = (String) testArgs[0];
 		Login dd = new Login();
 		dd.performLogin(driver,dsid);
-
 	}
 
 	@Test(dataProvider="PayMember")
 	public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException
 
 	{
-	
 		LeftNavigationPane lnp = new LeftNavigationPane();
 		lnp.NavigateTo(driver, "Account","Member Payment");	
 		PageObjects.MemberPayment em=new PageObjects.MemberPayment();
-
-		
-
 		em.PopulatePaymenttoMember(driver,toMemDSId,TXNDSId);
-		
 	}
 
 	@BeforeSuite
