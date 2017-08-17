@@ -9,13 +9,15 @@ import ApplicationMap.ReadLocators;
 public class dummy {
 
 	public static void main(String[] args)
-	{	int i=0;
-		for (;i<5;i++)
-		{
-			System.out.println(i);
-			if (i==3)
-				break;
-		}
+	{	
+		
+		String s1 = "MEM001MEM002";
+		
+		String[] s2 = s1.split(";");
+		
+		System.out.println(s2.length);
+		
+		
 	}
 	
 	

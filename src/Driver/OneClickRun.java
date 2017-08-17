@@ -46,7 +46,8 @@ public class OneClickRun extends InheritThis {
                 String tcName = sheet.getRow(i).getCell(2).getStringCellValue();
                 classes.add(new XmlClass("TestCases." + tcName));
 
-                InheritThis in = new InheritThis(); in .setArgs("MEM001;MEM001");
+                InheritThis in = new InheritThis(); 
+                in .setArgs(sheet.getRow(i).getCell(3).getStringCellValue());
 
                 XmlTest test = new XmlTest(suite);
                 test.setName("demotest");
@@ -57,7 +58,7 @@ public class OneClickRun extends InheritThis {
 
                 TestNG testNG = new TestNG();
                 testNG.setXmlSuites(suites);
-                //					    testNG.run();
+                testNG.run();
 
             }
 

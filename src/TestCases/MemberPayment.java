@@ -14,6 +14,7 @@ import PageObjects.Login;
 import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
+import tryOutsGoHere.InheritThis;
 
 public class MemberPayment {
 
@@ -25,13 +26,7 @@ public class MemberPayment {
     @DataProvider(name = "PayMember")
     public static Object[][] getRegData() {
 
-        return new Object[][] {
-            {
-                "MEM005",
-                "MEM006",
-                "TXN001"
-            }
-        };
+    	return InheritThis.args;
     }
 
     @BeforeMethod

@@ -22,9 +22,9 @@ public class MemberPayment {
 			
 			ReadData dm1 = new ReadData("MemberDetails", dsid1);
 			
-			ReadData dm2 = new ReadData("TransactionData", dsid1);
+			ReadData dm2 = new ReadData("TransactionData", dsid2);
 			
-			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm2.getData("LOGIN_NAME"));
+			driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm1.getData("LOGIN_NAME"));
 
 			driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys(dm2.getData("TRANSACTION_AMOUNT"));
 			WebElement we=driver.findElement(rd1.getLocator("LST_Transaction_Type"));
