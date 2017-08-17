@@ -9,6 +9,7 @@ import ApplicationMap.ReadLocators;
 public class dummy {
 
 	public static void main(String[] args)
+
 	{	
 		
 		String s1 = "MEM001MEM002";
@@ -22,5 +23,5 @@ public class dummy {
 	
 	
 	
-	
+
 }

@@ -1,7 +1,7 @@
 package tryOutsGoHere;
 
 public class InheritThis {
-	
+
 	public static Object[][] args = null;
 	
 	public void setArgs(String args){
@@ -34,9 +34,10 @@ public class InheritThis {
 		this.args=s1;
 	}
 
-	public Object[] getArgs()
-	{
-		return args;
-	}
-	
+
+  
+    public Object[] getArgs() {
+        return args;
+    }
+
 }

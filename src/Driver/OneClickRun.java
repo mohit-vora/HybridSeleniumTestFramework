@@ -35,7 +35,6 @@ public class OneClickRun extends InheritThis {
 
         int i;
         int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-        //			System.out.println(sheetName+rownum);
         for (i = 1; i <= rownum; i++) {
             String runStatus = sheet.getRow(i).getCell(0).getStringCellValue();
             if (runStatus.equalsIgnoreCase("Yes")) {
