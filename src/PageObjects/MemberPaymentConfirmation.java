@@ -16,26 +16,35 @@ public class MemberPaymentConfirmation {
         ReadData dm = new ReadData("MemberPayment", dsid);
         ReadLocators rd1 = new ReadLocators("MemberPayment");
         String name[] = driver.findElement(rd1.getLocator("ELM_To")).getText().split("-");
-
         if (flag) {
-            driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText()
-                .equals(dm.getData("Transaction_Amount"));
-            driver.findElement(rd1.getLocator("ELM_TransactionType")).getText().equals(dm.getData("Transaction_Type"));
-
-            name[0].trim().equals(dm.getData("Transaction_Login"));
-            name[1].trim().equals(dm.getData("Transaction_Name"));
-            driver.findElement(rd1.getLocator("ELM_TransactionDescription")).getText()
-                .equals(dm.getData("Transaction_Description7"));
-
+            if (driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText()
+                .equals(dm.getData("Transaction_Amount"))) {
+                if (driver.findElement(rd1.getLocator("ELM_TransactionDescription")).getText()
+                    .equals(dm.getData("Transaction_Description7"))
+                ) {
+                    if (driver.findElement(rd1.getLocator("ELM_TransactionType")).getText().equals(dm.getData("Transaction_Type"))) {
+                        if (name[0].trim().equals(dm.getData("Transaction_Login"))) {
+                            if (name[1].trim().equals(dm.getData("Transaction_Name"))) {
+                            } else {
+                                flag = false;
+                            }
+                        } else {
+                            flag = false;
+                        }
+                    } else {
+                    }
+                } else {
+                    flag = false;
+                }
+            } else {
+                flag = false;
+            }
         } else {
             flag = false;
         }
-        if (flag)
+    if (flag)
             driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
-
-        else
-
+    else
             driver.findElement(rd1.getLocator("BTN_Back")).click();
     }
-
 }
