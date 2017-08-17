@@ -8,27 +8,27 @@ import java.util.Properties;
 
 public class PropRead {
 
-	public static String getVal(String parm) {
-		File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
+    public static String getVal(String parm) {
+        File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
-		FileInputStream fileInput = null;
-		try {
-			fileInput = new FileInputStream(file);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+        FileInputStream fileInput = null;
+        try {
+            fileInput = new FileInputStream(file);
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
-		Properties prop = new Properties();
+        Properties prop = new Properties();
 
-		try {
-			prop.load(fileInput);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            prop.load(fileInput);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		return prop.getProperty(parm);
-	}
+        return prop.getProperty(parm);
+    }
 
 }
