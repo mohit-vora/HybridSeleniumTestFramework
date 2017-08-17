@@ -15,74 +15,72 @@ import org.testng.xml.XmlTest;
 
 import tryOutsGoHere.InheritThis;
 
-public class OneClickRun extends InheritThis{
+public class OneClickRun extends InheritThis {
 
-	public static void main(String[] args)  throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		runTestNG();
-	}
+        runTestNG();
+    }
 
-	public static void runTestNG() throws IOException {
-		
-		
-		 
-		 
-		 
-		 FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\TestCaseSheet.xlsx");
-			XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
-			
-			XSSFSheet sheet = WorkBook.getSheet("TestCases");
-			
-			int i;
-			int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-//			System.out.println(sheetName+rownum);
-			for (i = 1; i <= rownum; i++) {
-				String runStatus = sheet.getRow(i).getCell(0).getStringCellValue();
-				if (runStatus.equalsIgnoreCase("Yes"))
-				{
-					XmlSuite suite = new XmlSuite();
-					 suite.setName("MyTestSuite");
-					 
-					 List<XmlClass> classes = new ArrayList<XmlClass>();
-					String tcName = sheet.getRow(i).getCell(2).getStringCellValue();
-					classes.add(new XmlClass("TestCases."+tcName));
-		
-					InheritThis in = new InheritThis();
-					in.setArgs("MEM001;MEM001");
-					
-					XmlTest test = new XmlTest(suite);
-					 test.setName("demotest");
-					 test.setXmlClasses(classes);
-					 
-					 List<XmlSuite> suites = new ArrayList<XmlSuite>();
-					    suites.add(suite);
-					    
-					    TestNG testNG = new TestNG();
-					    testNG.setXmlSuites(suites);
-//					    testNG.run();
-					
-				}
-				
+    public static void runTestNG() throws IOException {
 
-		 
-			}
-		 
-			
-			WorkBook.close();
-					 
-		 
-		 
-		 
-		
-		
-		
-		
-		
-//		TestNG runner = new TestNG();
-//		List<String> suitefiles = new ArrayList<String>();
-//		suitefiles.add(System.getProperty("user.dir") + "\\testng.xml");
-//		runner.setTestSuites(suitefiles);
-//		runner.run();
 
-	}
+
+
+
+        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\TestCaseSheet.xlsx");
+        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
+
+        XSSFSheet sheet = WorkBook.getSheet("TestCases");
+
+        int i;
+        int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        //			System.out.println(sheetName+rownum);
+        for (i = 1; i <= rownum; i++) {
+            String runStatus = sheet.getRow(i).getCell(0).getStringCellValue();
+            if (runStatus.equalsIgnoreCase("Yes")) {
+                XmlSuite suite = new XmlSuite();
+                suite.setName("MyTestSuite");
+
+                List < XmlClass > classes = new ArrayList < XmlClass > ();
+                String tcName = sheet.getRow(i).getCell(2).getStringCellValue();
+                classes.add(new XmlClass("TestCases." + tcName));
+
+                InheritThis in = new InheritThis(); in .setArgs("MEM001;MEM001");
+
+                XmlTest test = new XmlTest(suite);
+                test.setName("demotest");
+                test.setXmlClasses(classes);
+
+                List < XmlSuite > suites = new ArrayList < XmlSuite > ();
+                suites.add(suite);
+
+                TestNG testNG = new TestNG();
+                testNG.setXmlSuites(suites);
+                //					    testNG.run();
+
+            }
+
+
+
+        }
+
+
+        WorkBook.close();
+
+
+
+
+
+
+
+
+
+        //		TestNG runner = new TestNG();
+        //		List<String> suitefiles = new ArrayList<String>();
+        //		suitefiles.add(System.getProperty("user.dir") + "\\testng.xml");
+        //		runner.setTestSuites(suitefiles);
+        //		runner.run();
+
+    }
 }

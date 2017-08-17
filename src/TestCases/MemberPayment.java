@@ -17,52 +17,58 @@ import Utils.LeftNavigationPane;
 
 public class MemberPayment {
 
-	WebDriver driver = null;
-	BrowserUtils bu = new BrowserUtils();
-	VerifyPopUp popup = new VerifyPopUp();
+    WebDriver driver = null;
+    BrowserUtils bu = new BrowserUtils();
+    VerifyPopUp popup = new VerifyPopUp();
 
-	
-	@DataProvider(name = "PayMember")
-	public static Object[][] getRegData() {
 
-		return new Object[][] { { "MEM005","MEM006","TXN001"} };
-	}
-	
-	@BeforeMethod
-	public void beforeMethod(Object[] testArgs) throws Exception {
-		String dsid = (String) testArgs[0];
-		Login dd = new Login();
-		dd.performLogin(driver,dsid);
-	}
+    @DataProvider(name = "PayMember")
+    public static Object[][] getRegData() {
 
-	@Test(dataProvider="PayMember")
-	public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException
+        return new Object[][] {
+            {
+                "MEM005",
+                "MEM006",
+                "TXN001"
+            }
+        };
+    }
 
-	{
-		LeftNavigationPane lnp = new LeftNavigationPane();
-		lnp.NavigateTo(driver, "Account","Member Payment");	
-		PageObjects.MemberPayment em=new PageObjects.MemberPayment();
-		em.PopulatePaymenttoMember(driver,toMemDSId,TXNDSId);
-	}
+    @BeforeMethod
+    public void beforeMethod(Object[] testArgs) throws Exception {
+        String dsid = (String) testArgs[0];
+        Login dd = new Login();
+        dd.performLogin(driver, dsid);
+    }
 
-	@BeforeSuite
-	public void Browser() {
-		// BrowserUtils bu = new BrowserUtils();-----
-		this.driver = bu.openbrowserChrome();
-		System.out.println("inside before method");
-	}
-	@AfterMethod
-	public void afterMethod() {
-		LeftNavigationPane lnp = new LeftNavigationPane();
-		lnp.NavigateTo(driver, "Logout");
-		popup.PopUpAccept(driver);
+    @Test(dataProvider = "PayMember")
+    public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException
 
-	}
-	
-	@AfterSuite
-	public void CloseBrowser() throws InterruptedException {
-		bu.Closebrowser();
-		System.out.println("inside aftersuit method");
-	}
+    {
+        LeftNavigationPane lnp = new LeftNavigationPane();
+        lnp.NavigateTo(driver, "Account", "Member Payment");
+        PageObjects.MemberPayment em = new PageObjects.MemberPayment();
+        em.PopulatePaymenttoMember(driver, toMemDSId, TXNDSId);
+    }
+
+    @BeforeSuite
+    public void Browser() {
+        // BrowserUtils bu = new BrowserUtils();-----
+        this.driver = bu.openbrowserChrome();
+        System.out.println("inside before method");
+    }
+    @AfterMethod
+    public void afterMethod() {
+        LeftNavigationPane lnp = new LeftNavigationPane();
+        lnp.NavigateTo(driver, "Logout");
+        popup.PopUpAccept(driver);
+
+    }
+
+    @AfterSuite
+    public void CloseBrowser() throws InterruptedException {
+        bu.Closebrowser();
+        System.out.println("inside aftersuit method");
+    }
 
 }

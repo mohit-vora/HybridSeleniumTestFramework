@@ -1,5 +1,5 @@
-.settings
+/bin/
 .classpath
 .project
-bin/**/*
-test-output/**/*
+/.settings/
+/.git/
