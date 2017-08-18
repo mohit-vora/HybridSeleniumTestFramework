@@ -1,16 +1,14 @@
 package PageObjects;
 
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.LeftNavigationPane;

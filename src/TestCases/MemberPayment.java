@@ -59,7 +59,7 @@ public class MemberPayment {
     public void Browser() {
         // BrowserUtils bu = new BrowserUtils();-----
         this.driver = bu.openbrowserChrome();
-        System.out.println("inside before method");
+//        System.out.println("inside before method");
     }
     
     
@@ -78,7 +78,7 @@ public class MemberPayment {
     @AfterSuite
     public void CloseBrowser() throws InterruptedException {
         bu.Closebrowser();
-        System.out.println("inside aftersuit method");
+//        System.out.println("inside aftersuit method");
     }
 
 }

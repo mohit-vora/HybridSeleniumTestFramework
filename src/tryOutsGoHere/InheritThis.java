@@ -6,19 +6,11 @@ public class InheritThis {
 	
 	public void setArgs(String args){
 		
-		
-		
-		
-		
 		int row=0;
 		int col=0;
 		
-		
 		row=args.split(";").length;
 		col=args.split(";")[0].split(",").length;
-		
-		
-		
 		
 		String[][] s1 = new String [row][col];
 		
@@ -28,15 +20,14 @@ public class InheritThis {
 			{
 				s1[i][j] = args.split(";")[i].split(",")[j];
 			}
-
 		}
 		
-		this.args=s1;
+		InheritThis.args=s1;
+		
 	}
-
-
-  
-    public Object[] getArgs() {
+	
+	
+    public Object[][] getArgs() {
         return args;
     }
 

@@ -6,11 +6,9 @@ import PageObjects.VerifyPopUp;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
 import tryOutsGoHere.InheritThis;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -19,7 +17,7 @@ import org.testng.annotations.AfterSuite;
 /* 
 1.Following TestNg Test case pattern, the test methods are included to enroll the member.
  */
-public class EnrollMember extends InheritThis {
+public class EnrollMember{
     WebDriver driver = null;
     BrowserUtils bu = new BrowserUtils();
     VerifyPopUp popup = new VerifyPopUp();

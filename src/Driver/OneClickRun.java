@@ -4,29 +4,25 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
+import Interface.CommonInterface;
 import tryOutsGoHere.InheritThis;
 
 public class OneClickRun extends InheritThis {
 
     public static void main(String[] args) throws IOException {
 
+    	readEverything();
         runTestNG();
     }
 
     public static void runTestNG() throws IOException {
-
-
-
-
 
         FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\TestCaseSheet.xlsx");
         XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
@@ -60,27 +56,17 @@ public class OneClickRun extends InheritThis {
                 testNG.run();
 
             }
-
-
-
         }
-
 
         WorkBook.close();
 
-
-
-
-
-
-
-
-
-        //		TestNG runner = new TestNG();
-        //		List<String> suitefiles = new ArrayList<String>();
-        //		suitefiles.add(System.getProperty("user.dir") + "\\testng.xml");
-        //		runner.setTestSuites(suitefiles);
-        //		runner.run();
-
     }
+    
+    
+    public static void readEverything() throws IOException
+    {
+    	CommonInterface ci = new CommonInterface();
+    	ci.ReadAllLocators();
+    }
+    
 }

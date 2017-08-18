@@ -1,10 +1,6 @@
 package tryOutsGoHere;
 
-import java.util.HashMap;
 
-import org.openqa.selenium.support.pagefactory.ByAll;
-
-import ApplicationMap.ReadLocators;
 
 public class dummy {
 

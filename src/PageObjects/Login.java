@@ -9,10 +9,9 @@ import DataMap.ReadData;
 
 public class Login {
 
-    // @Test
     public void performLogin(WebDriver driver, String dsid) throws IOException {
 
-        System.out.println("Login");
+//        System.out.println("Login");
 
         ReadLocators rd1 = new ReadLocators("Login");
 
