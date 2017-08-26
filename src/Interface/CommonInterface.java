@@ -23,6 +23,7 @@ public class CommonInterface {
 	
 	
 	public void ReadAllLocators() throws IOException {
+		
 		HashMap < String, ByAll > LMap = new HashMap < String, ByAll > ();
         FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\AMap.xlsx");
         XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
@@ -107,6 +108,6 @@ public class CommonInterface {
     
     
     
-    
+    //Brow
 
 }

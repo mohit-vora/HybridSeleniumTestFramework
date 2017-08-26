@@ -9,8 +9,10 @@ import java.util.Properties;
 public class PropRead {
 
     public static String getVal(String parm) {
-        File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
+//        File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
+    	File file = new File("C:\\Users\\mohit_vora\\Desktop\\Selenium\\Workspace\\Framework\\Resources\\path.properties");
+    	
         FileInputStream fileInput = null;
         try {
             fileInput = new FileInputStream(file);

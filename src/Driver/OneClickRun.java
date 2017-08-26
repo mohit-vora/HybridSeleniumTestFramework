@@ -36,7 +36,7 @@ public class OneClickRun extends InheritThis {
             if (runStatus.equalsIgnoreCase("Yes")) {
                 XmlSuite suite = new XmlSuite();
                 suite.setName("MyTestSuite");
-
+                System.out.println(i);
                 List < XmlClass > classes = new ArrayList < XmlClass > ();
                 String tcName = sheet.getRow(i).getCell(2).getStringCellValue();
                 classes.add(new XmlClass("TestCases." + tcName));
@@ -59,6 +59,7 @@ public class OneClickRun extends InheritThis {
         }
 
         WorkBook.close();
+        mapsheet.close();
 
     }
     
