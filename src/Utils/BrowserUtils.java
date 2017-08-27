@@ -2,7 +2,6 @@ package Utils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -11,17 +10,13 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
-
 import PageObjects.Login;
-import PageObjects.VerifyPopUp;
 import tryOutsGoHere.InheritThis;
 
 public class BrowserUtils {
     public static WebDriver driver = null;
 
     String Url = PropRead.getVal("url");
-    BrowserUtils bu = new BrowserUtils();
-    protected VerifyPopUp popup = new VerifyPopUp();
 
     public void openbrowserie() {
         System.setProperty("webdriver.ie.driver",
@@ -57,7 +52,7 @@ public class BrowserUtils {
     public void beforeMethod(Object[] testArgs) throws Exception {
     	String dsid = (String) testArgs[0];
         Login dd = new Login();
-        dd.performLogin(driver, dsid);
+        dd.performLogin(dsid);
     }
     
     //BeforeSuite: This method is executed before executing the all test cases present in the test suite.
@@ -75,17 +70,26 @@ public class BrowserUtils {
     @AfterMethod
     public void afterMethod() {
         LeftNavigationPane lnp = new LeftNavigationPane();
-        lnp.NavigateTo(driver, "Logout");
-        popup.PopUpAccept(driver);
+        lnp.NavigateTo("Logout");
+        PopUpAccept();
 
     }
 
+    public void PopUpAccept() {
+        try {
+//            String PopUpMessage = driver.switchTo().alert().getText();
+            driver.switchTo().alert().accept();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        // System.out.println(PopUpMessage);
+        // return PopUpMessage;
+    }
+    
     //This method is executed after executing the all test cases present in the test suite.
     //Closing the browser is necessary at end of the each test case
-    @AfterSuite()
-    public void CloseBrowser() throws InterruptedException {
-        bu.Closebrowser();
-    }
+    @AfterSuite()   
     
 
     public void Closebrowser() throws InterruptedException {

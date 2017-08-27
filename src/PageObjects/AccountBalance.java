@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
+import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
 
-public class AccountBalance {
+public class AccountBalance extends BrowserUtils{
 
     //account type is hardcoded...
     //(doubt how the method will be if sender and receiver will have differnt accnt type????)
@@ -24,13 +24,13 @@ public class AccountBalance {
     // This is to extract an amount and account type for user who having more than one account type.
     // And perform credit and debt from the account.(doubt to be a separate function or not?????)  
     // for single account user yet to be coded.....
-    public void XtractAccountBalance(WebDriver driver, String accntType, String dsid) throws Exception {
+    public void XtractAccountBalance(String accntType, String dsid) throws Exception {
             ReadData dm;
             try {
                 dm = new ReadData("MemberDetails", dsid);
                 ReadLocators rd1 = new ReadLocators("RegisterMember");
                 LeftNavigationPane leftpane = new LeftNavigationPane();
-                leftpane.NavigateTo(driver, "Account", "Account Information");
+                leftpane.NavigateTo("Account", "Account Information");
                 if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
                     WebElement Accntypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
                     List < WebElement > rows = Accntypes.findElements(By.tagName("tr"));

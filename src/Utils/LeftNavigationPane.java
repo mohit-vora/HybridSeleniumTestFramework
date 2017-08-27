@@ -2,12 +2,11 @@ package Utils;
 
 import java.util.List;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LeftNavigationPane {
+public class LeftNavigationPane extends BrowserUtils{
 
-    public void NavigateTo(WebDriver driver, String mainMenu, String subMenu) {
+    public void NavigateTo(String mainMenu, String subMenu) {
         List < WebElement > listMainMenu = driver.findElements(By.xpath("//span[@class='menuText']"));
         String submenuxpath = null;
         for (int i = 1; i < listMainMenu.size(); i++) {
@@ -31,7 +30,7 @@ public class LeftNavigationPane {
         }
     }
 
-    public void NavigateTo(WebDriver driver, String mainMenu) {
+    public void NavigateTo(String mainMenu) {
 
         if (mainMenu.equals("Logout")) {
             String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";

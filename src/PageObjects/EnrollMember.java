@@ -2,15 +2,15 @@ package PageObjects;
 
 import java.io.IOException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
+import Utils.BrowserUtils;
 
-public class EnrollMember {
+public class EnrollMember extends BrowserUtils{
 
-    public void RegisterMember(WebDriver driver, String dsid) throws InterruptedException, IOException {
+    public void RegisterMember(String dsid) throws InterruptedException, IOException {
 
         ReadLocators rd1 = new ReadLocators("RegisterMember");
 

@@ -1,15 +1,13 @@
 package PageObjects;
 
 import java.io.IOException;
-
-import org.openqa.selenium.WebDriver;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
+import Utils.BrowserUtils;
 
-public class Login {
+public class Login extends BrowserUtils{
 
-    public void performLogin(WebDriver driver, String dsid) throws IOException {
+    public void performLogin(String dsid) throws IOException {
 
 //        System.out.println("Login");
 

@@ -2,6 +2,8 @@ package TestCases;
 
 import java.io.IOException;
 import org.testng.annotations.Test;
+
+import PageObjects.MemberPaymentConfirmation;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
 
@@ -15,9 +17,12 @@ public class MemberPayment extends BrowserUtils{
     @Test(dataProvider = "dProvider")
     public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException, InterruptedException{
         LeftNavigationPane lnp = new LeftNavigationPane();
-        lnp.NavigateTo(driver, "Account", "Member Payment");
+        lnp.NavigateTo("Account", "Member Payment");
         PageObjects.MemberPayment em = new PageObjects.MemberPayment();
-        em.PopulatePaymenttoMember(driver, toMemDSId, TXNDSId);
+        em.PopulatePaymenttoMember(toMemDSId, TXNDSId);
+        MemberPaymentConfirmation mc = new MemberPaymentConfirmation();
+        
+        mc.verifyPaymentToMember(toMemDSId,TXNDSId);
     }
 
    
