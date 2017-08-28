@@ -1,30 +1,41 @@
 package PageObjects;
 
 import java.io.IOException;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
+import Utils.BrowserUtils;
 
-public class MemberPaymentConfirmation {
-    public void verifyPaymentToMember(WebDriver driver, String dsid) throws IOException {
+public class MemberPaymentConfirmation extends BrowserUtils{
+    public static  void verifyPaymentToMember(String dsid1, String dsid2) throws IOException {
         /**/
         Boolean flag = true;
-        ReadData dm = new ReadData("MemberPayment", dsid);
+        ReadData dm1 = new ReadData("MemberDetails", dsid1);
+        ReadData dm2 = new ReadData("TransactionData", dsid2);
         ReadLocators rd1 = new ReadLocators("MemberPayment");
+        try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         String name[] = driver.findElement(rd1.getLocator("ELM_To")).getText().split("-");
         if (flag) {
-            if (driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText()
-                .equals(dm.getData("Transaction_Amount"))) {
+        	
+        	String appValue = driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText();
+        	
+            if (appValue.substring(0,appValue.length()-4)
+                .equals(dm2.getData("Transaction_Amount"))) {
+          
+
                 if (driver.findElement(rd1.getLocator("ELM_TransactionDescription")).getText()
-                    .equals(dm.getData("Transaction_Description7"))
+                    .equals(dm2.getData("Transaction_Description"))
                 ) {
-                    if (driver.findElement(rd1.getLocator("ELM_TransactionType")).getText().equals(dm.getData("Transaction_Type"))) {
-                        if (name[0].trim().equals(dm.getData("Transaction_Login"))) {
-                            if (name[1].trim().equals(dm.getData("Transaction_Name"))) {
+
+                    if (driver.findElement(rd1.getLocator("ELM_TransactionType")).getText().equals(dm2.getData("Transaction_Type"))) {
+                    	
+                    	
+                        if (name[0].trim().equals(dm1.getData("Login_Name"))) {
+                            if (name[1].trim().equals(dm1.getData("Full_Name"))) {
                             } else {
                                 flag = false;
                             }

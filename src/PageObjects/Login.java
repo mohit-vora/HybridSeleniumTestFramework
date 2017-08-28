@@ -1,25 +1,22 @@
 package PageObjects;
 
 import java.io.IOException;
-
-import org.openqa.selenium.WebDriver;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
+import Utils.BrowserUtils;
 
-public class Login {
+public class Login extends BrowserUtils{
 
-    // @Test
-    public void performLogin(WebDriver driver, String dsid) throws IOException {
+    public static void performLogin(String dsid) throws IOException {
 
-        System.out.println("Login");
+//        System.out.println("Login");
 
         ReadLocators rd1 = new ReadLocators("Login");
 
         ReadData dm = new ReadData("MemberDetails", dsid);
 
-        driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("Login_Name"));
-        driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("Password"));
+        driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("LOGIN_NAME"));
+        driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("PASSWORD"));
         driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
 
 

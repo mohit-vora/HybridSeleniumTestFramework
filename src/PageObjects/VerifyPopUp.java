@@ -1,12 +1,12 @@
 package PageObjects;
 
-import org.openqa.selenium.WebDriver;
+import Utils.BrowserUtils;
 
-public class VerifyPopUp {
+public class VerifyPopUp extends BrowserUtils{
 
-    public void PopUpAccept(WebDriver driver) {
+    public void PopUpAccept() {
         try {
-            String PopUpMessage = driver.switchTo().alert().getText();
+//            String PopUpMessage = driver.switchTo().alert().getText();
             driver.switchTo().alert().accept();
         } catch (Exception e) {
             // TODO: handle exception

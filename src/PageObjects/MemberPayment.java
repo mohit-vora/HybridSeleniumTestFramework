@@ -1,21 +1,17 @@
 package PageObjects;
 
 import java.io.IOException;
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
+import Utils.BrowserUtils;
 
-public class MemberPayment {
-    ReadLocators rd1 = new ReadLocators("MemberPayment");
+public class MemberPayment extends BrowserUtils{
+    
 
-    public void PopulatePaymenttoMember(WebDriver driver, String dsid1, String dsid2) throws IOException, InterruptedException {
-
+    public static void PopulatePaymenttoMember(String dsid1, String dsid2) throws IOException, InterruptedException {
+    		ReadLocators rd1 = new ReadLocators("MemberPayment");
 	
 			ReadData dm1 = new ReadData("MemberDetails", dsid1);
 			
@@ -32,7 +28,6 @@ public class MemberPayment {
         driver.findElement(rd1.getLocator("TXB_Description")).sendKeys(dm2.getData("TRANSACTION_DESCRIPTION"));
 
         driver.findElement(rd1.getLocator("BTN_Submit")).click();
-        driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
 
     }
 
