@@ -10,7 +10,7 @@ import Utils.BrowserUtils;
 
 public class EnrollMember extends BrowserUtils{
 
-    public void RegisterMember(String dsid) throws InterruptedException, IOException {
+    public static void RegisterMember(String dsid) throws InterruptedException, IOException {
 
         ReadLocators rd1 = new ReadLocators("RegisterMember");
 

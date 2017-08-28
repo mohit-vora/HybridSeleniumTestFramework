@@ -11,6 +11,7 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
+import DataMap.ReadData;
 import Interface.CommonInterface;
 import tryOutsGoHere.InheritThis;
 
@@ -19,7 +20,17 @@ public class OneClickRun extends InheritThis {
     public static void main(String[] args) throws IOException {
 
     	readEverything();
-        runTestNG();
+//        runTestNG();
+    	
+    	
+    	
+    	////debug
+    	
+    	ReadData dm = new ReadData("MemberDetails", "MEM001");
+    	System.out.println(dm.getData("LOGIN_NAME"));
+    	
+    	////debug
+    	
     }
 
     public static void runTestNG() throws IOException {
@@ -68,6 +79,7 @@ public class OneClickRun extends InheritThis {
     {
     	CommonInterface ci = new CommonInterface();
     	ci.ReadAllLocators();
+    	ci.ReadAllData();
     }
     
 }

@@ -6,7 +6,7 @@ import DataMap.ReadData;
 import Utils.BrowserUtils;
 
 public class MemberPaymentConfirmation extends BrowserUtils{
-    public void verifyPaymentToMember(String dsid1, String dsid2) throws IOException {
+    public static  void verifyPaymentToMember(String dsid1, String dsid2) throws IOException {
         /**/
         Boolean flag = true;
         ReadData dm1 = new ReadData("MemberDetails", dsid1);

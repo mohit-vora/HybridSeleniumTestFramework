@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.collections.map.TypedMap;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -109,5 +111,95 @@ public class CommonInterface {
     
     
     //this is where data map things start
+    private static HashMap < String, HashMap<String,List<String>> > data = new HashMap < String, HashMap<String,List<String>>> ();
+    public void ReadAllData() throws IOException {
 
+    	HashMap<String,List<String>> s_data = new HashMap<String, List<String>>();
+    	
+        FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\Data.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
+
+//        int no_of_sheets = workbook.getNumberOfSheets();
+        int no_of_sheets = 2;
+        
+        
+        for (int sheetIndex=0;sheetIndex<no_of_sheets;sheetIndex++)
+        {
+        
+        	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+
+
+	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+	        int colCount = sheet.getRow(0).getLastCellNum();
+	
+	        DataFormatter df = new DataFormatter();
+	
+	        for (int i = 0; i <= rowCount; i++) {
+	            List<String> li = new ArrayList<String>();
+	            for (int j = 1; j < colCount; j++)
+	            	li.add(df.formatCellValue(sheet.getRow(i).getCell(j)));
+	   
+	            s_data.put(df.formatCellValue(sheet.getRow(i).getCell(0)), li);
+	           
+	        }
+	        
+	        data.put(sheet.getSheetName(),s_data);
+        }
+        workbook.close();
+        
+       
+    }
+    
+    protected String DSName = null;
+    protected String id = null;
+    
+    public String getdata(String col) {
+        String value = "";
+
+        ////debug
+        
+        
+        	List<String> h1 = data.get("MemberDetails").get("MEM001");
+        	
+        	for (String key2:h1)
+        	{
+        		System.out.println(key2);
+        	}
+        
+        
+        ////debug
+        
+        
+        List<String> li = data.get("MemberDetails").get("DATA_SET_ID");
+        int i = 0;
+        boolean flag = false;
+        for (; i < li.size(); i++) {
+        	////debug
+        	
+        	
+        	////debug
+            if (col.equalsIgnoreCase(li.get(i))) {
+                flag = true;
+                break;
+            }
+        }
+        if (flag) {
+            li = data.get(DSName).get(id);
+            try{
+            value = li.get(i);
+            }
+            catch (Exception e)
+            {
+            	System.out.println(id +" did not match any id in "+ DSName);
+            }
+        } else {
+            System.out.println("There is nothing like " + col + " in " + DSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
+        }
+
+        return value;
+    }
+    
+    
+    
+    //this is where dapamap related things end
 }

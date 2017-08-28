@@ -8,10 +8,10 @@ import DataMap.ReadData;
 import Utils.BrowserUtils;
 
 public class MemberPayment extends BrowserUtils{
-    ReadLocators rd1 = new ReadLocators("MemberPayment");
+    
 
-    public void PopulatePaymenttoMember(String dsid1, String dsid2) throws IOException, InterruptedException {
-
+    public static void PopulatePaymenttoMember(String dsid1, String dsid2) throws IOException, InterruptedException {
+    		ReadLocators rd1 = new ReadLocators("MemberPayment");
 	
 			ReadData dm1 = new ReadData("MemberDetails", dsid1);
 			

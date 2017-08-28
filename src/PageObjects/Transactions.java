@@ -4,8 +4,9 @@ import ApplicationMap.ReadLocators;
 import Utils.BrowserUtils;
 
 public class Transactions extends BrowserUtils{
-    ReadLocators rd1 = new ReadLocators("RegisterMember");
-    public void PopulatePaymenttoMember( ) {
+    public static void PopulatePaymenttoMember( ) {
+        ReadLocators rd1 = new ReadLocators("RegisterMember");
+
         String Logged_user = driver.findElement(rd1.getLocator("ELM_LOGGEDUSER")).getText();
         System.out.println(Logged_user);
         String[] User = Logged_user.split(" ", 5);

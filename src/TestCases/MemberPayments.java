@@ -3,12 +3,13 @@ package TestCases;
 import java.io.IOException;
 import org.testng.annotations.Test;
 
+import PageObjects.MemberPayment;
 import PageObjects.MemberPaymentConfirmation;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
 
 
-public class MemberPayment extends BrowserUtils{
+public class MemberPayments extends BrowserUtils{
 
 
    
@@ -16,13 +17,9 @@ public class MemberPayment extends BrowserUtils{
     //Operation:- Invoke Left navigation and Populate payment to member method.
     @Test(dataProvider = "dProvider")
     public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws IOException, InterruptedException{
-        LeftNavigationPane lnp = new LeftNavigationPane();
-        lnp.NavigateTo("Account", "Member Payment");
-        PageObjects.MemberPayment em = new PageObjects.MemberPayment();
-        em.PopulatePaymenttoMember(toMemDSId, TXNDSId);
-        MemberPaymentConfirmation mc = new MemberPaymentConfirmation();
-        
-        mc.verifyPaymentToMember(toMemDSId,TXNDSId);
+        LeftNavigationPane.NavigateTo("Account", "Member Payment");
+        MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
+        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
     }
 
    
