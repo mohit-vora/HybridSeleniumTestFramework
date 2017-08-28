@@ -20,17 +20,22 @@ public class MemberPaymentConfirmation extends BrowserUtils{
 		}
         String name[] = driver.findElement(rd1.getLocator("ELM_To")).getText().split("-");
         if (flag) {
-            if (driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText()
+        	
+        	String appValue = driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText();
+        	
+            if (appValue.substring(0,appValue.length()-4)
                 .equals(dm2.getData("Transaction_Amount"))) {
+          
+
                 if (driver.findElement(rd1.getLocator("ELM_TransactionDescription")).getText()
-                    .equals(dm2.getData("Transaction_Description7"))
+                    .equals(dm2.getData("Transaction_Description"))
                 ) {
+
                     if (driver.findElement(rd1.getLocator("ELM_TransactionType")).getText().equals(dm2.getData("Transaction_Type"))) {
                     	
-                    	System.out.println(name[0]+"--"+name[1]);
                     	
-                        if (name[0].trim().equals(dm1.getData("Transaction_Login"))) {
-                            if (name[1].trim().equals(dm1.getData("Transaction_Name"))) {
+                        if (name[0].trim().equals(dm1.getData("Login_Name"))) {
+                            if (name[1].trim().equals(dm1.getData("Full_Name"))) {
                             } else {
                                 flag = false;
                             }

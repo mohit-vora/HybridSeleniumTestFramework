@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.commons.collections.map.TypedMap;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -16,7 +14,42 @@ import org.openqa.selenium.support.pagefactory.ByAll;
 
 public class CommonInterface {
 	
+	//this is where Driver Splitting things go
 	
+	public static Object[][] testArgs = null;
+	
+	public void setArgs(String args){
+		
+		int row=0;
+		int col=0;
+		
+		row=args.split(";").length;
+		col=args.split(";")[0].split(",").length;
+		
+		String[][] s1 = new String [row][col];
+		
+		for (int i=0;i<row;i++)
+		{			
+			for (int j=0;j<col;j++)
+			{
+				s1[i][j] = args.split(";")[i].split(",")[j];
+			}
+		}
+		
+		testArgs=s1;
+		
+	}
+	
+	
+    public Object[][] getArgs() {
+        return testArgs;
+    }
+	
+	
+	
+	
+	
+	//this is where driver splitting things end
 	
 	//this is where application map reading starts
 	private static HashMap <String,HashMap<String,ByAll>> LMap1 = new HashMap<String,HashMap<String,ByAll>>();
@@ -114,20 +147,19 @@ public class CommonInterface {
     private static HashMap < String, HashMap<String,List<String>> > data = new HashMap < String, HashMap<String,List<String>>> ();
     public void ReadAllData() throws IOException {
 
-    	HashMap<String,List<String>> s_data = new HashMap<String, List<String>>();
+    	
     	
         FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
-//        int no_of_sheets = workbook.getNumberOfSheets();
-        int no_of_sheets = 2;
+        int no_of_sheets = workbook.getNumberOfSheets();
         
         
         for (int sheetIndex=0;sheetIndex<no_of_sheets;sheetIndex++)
         {
         
         	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-
+        	HashMap<String,List<String>> s_data = new HashMap<String, List<String>>();
 
 	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
 	        int colCount = sheet.getRow(0).getLastCellNum();
@@ -155,29 +187,12 @@ public class CommonInterface {
     
     public String getdata(String col) {
         String value = "";
-
-        ////debug
-        
-        
-        	List<String> h1 = data.get("MemberDetails").get("MEM001");
-        	
-        	for (String key2:h1)
-        	{
-        		System.out.println(key2);
-        	}
-        
-        
-        ////debug
-        
-        
-        List<String> li = data.get("MemberDetails").get("DATA_SET_ID");
+          
+        List<String> li = data.get(DSName).get("DATA_SET_ID");
         int i = 0;
         boolean flag = false;
         for (; i < li.size(); i++) {
-        	////debug
         	
-        	
-        	////debug
             if (col.equalsIgnoreCase(li.get(i))) {
                 flag = true;
                 break;
@@ -198,8 +213,6 @@ public class CommonInterface {
 
         return value;
     }
-    
-    
     
     //this is where dapamap related things end
 }

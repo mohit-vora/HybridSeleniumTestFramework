@@ -10,26 +10,18 @@ import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
-
-import DataMap.ReadData;
 import Interface.CommonInterface;
-import tryOutsGoHere.InheritThis;
 
-public class OneClickRun extends InheritThis {
+public class OneClickRun extends CommonInterface{
 
     public static void main(String[] args) throws IOException {
 
     	readEverything();
-//        runTestNG();
+        runTestNG();
     	
     	
     	
-    	////debug
     	
-    	ReadData dm = new ReadData("MemberDetails", "MEM001");
-    	System.out.println(dm.getData("LOGIN_NAME"));
-    	
-    	////debug
     	
     }
 
@@ -52,8 +44,8 @@ public class OneClickRun extends InheritThis {
                 String tcName = sheet.getRow(i).getCell(2).getStringCellValue();
                 classes.add(new XmlClass("TestCases." + tcName));
 
-                InheritThis in = new InheritThis(); 
-                in .setArgs(sheet.getRow(i).getCell(3).getStringCellValue());
+                CommonInterface ci = new CommonInterface(); 
+                ci .setArgs(sheet.getRow(i).getCell(3).getStringCellValue());
 
                 XmlTest test = new XmlTest(suite);
                 test.setName("demotest");

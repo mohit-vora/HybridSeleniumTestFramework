@@ -10,8 +10,9 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
+import Interface.CommonInterface;
 import PageObjects.Login;
-import tryOutsGoHere.InheritThis;
+
 
 public class BrowserUtils {
     public static WebDriver driver = null;
@@ -42,7 +43,7 @@ public class BrowserUtils {
     // "EnrollMember" is annotation name used in test method to specify the data.
     @DataProvider(name = "dProvider")
     public static Object[][] getRegData() {
-        return InheritThis.args;
+        return CommonInterface.testArgs;
     }
     
     //Annotates methods that will be run before each test method.
