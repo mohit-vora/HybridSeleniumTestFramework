@@ -37,6 +37,10 @@ public class OneClickRun extends CommonInterface{
         for (i = 1; i <= rownum; i++) {
             String runStatus = sheet.getRow(i).getCell(0).getStringCellValue();
             if (runStatus.equalsIgnoreCase("Yes")) {
+            	
+            	
+            	
+            	
                 XmlSuite suite = new XmlSuite();
                 suite.setName("MyTestSuite");
                 System.out.println(i);
