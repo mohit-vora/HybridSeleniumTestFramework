@@ -52,8 +52,7 @@ public class BrowserUtils {
     @BeforeMethod
     public void beforeMethod(Object[] testArgs) throws Exception {
     	String dsid = (String) testArgs[0];
-        Login dd = new Login();
-        dd.performLogin(dsid);
+        Login.performLogin(dsid);
     }
     
     //BeforeSuite: This method is executed before executing the all test cases present in the test suite.
@@ -70,8 +69,7 @@ public class BrowserUtils {
     //Operation:- Invoke logout function.
     @AfterMethod
     public void afterMethod() {
-        LeftNavigationPane lnp = new LeftNavigationPane();
-        lnp.NavigateTo("Logout");
+        LeftNavigationPane.NavigateTo("Logout");
         PopUpAccept();
 
     }
