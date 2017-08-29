@@ -20,10 +20,12 @@ public class MemberPayments extends BrowserUtils{
     public void paymentToMember(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception{
         
     	AccountBalance accnt = new AccountBalance();
-    	accnt.XtractAccountBalance(TXNDSId);   	
+    	accnt.XtractAccountBalance(TXNDSId,"Calculate");   	
     	LeftNavigationPane.NavigateTo("Account", "Member Payment");
         MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
         MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
+        accnt.XtractAccountBalance(TXNDSId);
+    	accnt.verifiyDebitAccount();
     }
 
 }

@@ -7,6 +7,11 @@ import org.openqa.selenium.WebElement;
 public class LeftNavigationPane extends BrowserUtils{
 
     public static void NavigateTo(String mainMenu, String subMenu) {
+    	String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
+    	if(driver.findElement(By.xpath(clicksubmenu)).isDisplayed()){
+    		driver.findElement(By.xpath(clicksubmenu)).click();
+    	}
+    	else{
         List < WebElement > listMainMenu = driver.findElements(By.xpath("//span[@class='menuText']"));
         String submenuxpath = null;
         for (int i = 1; i < listMainMenu.size(); i++) {
@@ -18,7 +23,6 @@ public class LeftNavigationPane extends BrowserUtils{
                 List < WebElement > list12 = driver.findElements(By.xpath(submenuxpath));
                 for (WebElement webElement1: list12) {
                     if (webElement1.getText().equals(subMenu)) {
-                        String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
                         driver.findElement(By.xpath(clicksubmenu)).click();
                         break;
                     }
@@ -28,6 +32,7 @@ public class LeftNavigationPane extends BrowserUtils{
 
             }
         }
+    }
     }
 
     public static void NavigateTo(String mainMenu) {

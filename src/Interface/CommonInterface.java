@@ -188,9 +188,7 @@ public class CommonInterface {
     
     public String getdata(String col) {
         String value = "";
-         
-        System.out.println(data.get(DSName).keySet().toArray()[0]);
-        
+               
         List<String> li = data.get(DSName).get(data.get(DSName).keySet().toArray()[0]);
         int i = 0;
         boolean flag = false;
