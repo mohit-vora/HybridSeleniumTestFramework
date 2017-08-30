@@ -17,7 +17,7 @@ public class CommonInterface {
 	//this is where Driver Splitting things go
 	
 	public static Object[][] testArgs = null;
-	
+	public static ArrayList<String> testList = null;
 	public void setArgs(String args){
 		
 		int row=0;
@@ -44,9 +44,34 @@ public class CommonInterface {
     public Object[][] getArgs() {
         return testArgs;
     }
+    
+    
+    public void setTestList(String args){
+		
+		int row=0;
+		int col=0;
+		
+		row=args.split(";").length;
+		col=args.split(";")[0].split(",").length;
+		
+		ArrayList<String> s1 = new ArrayList<String>();
+		
+		for (int i=0;i<row;i++)
+		{			
+			for (int j=0;j<col;j++)
+			{
+				s1.add(args.split(";")[i].split(",")[j]);
+			}
+		}
+		
+		testList=s1;
+		
+	}
 	
-	
-	
+	public boolean checkTestFlag(String testName)
+	{
+		return testList.contains(testName);
+	}
 	
 	
 	//this is where driver splitting things end
