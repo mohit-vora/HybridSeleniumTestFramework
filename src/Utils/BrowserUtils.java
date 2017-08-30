@@ -20,7 +20,7 @@ import Interface.CommonInterface;
 import PageObjects.Login;
 
 
-public class BrowserUtils {
+public class BrowserUtils extends CommonInterface{
     public static WebDriver driver = null;
 
     String Url = PropRead.getVal("url");
@@ -41,15 +41,14 @@ public class BrowserUtils {
     @DataProvider(name="dp")
     public Object[][] dptryout(Method m)
     {
-    	CommonInterface ci = new CommonInterface();
-    	if (ci.checkTestFlag(m.getName()))
+    	if (checkTestFlag(m.getName()))
     		return CommonInterface.testArgs;
     	
     	else
     	return new Object[][]{};
     }
     
-    ////tryout
+ 
 
     
     
@@ -67,6 +66,7 @@ public class BrowserUtils {
             if (runStatus.equalsIgnoreCase("Yes")) {
                 CommonInterface ci = new CommonInterface(); 
                 ci .setArgs(sheet.getRow(i).getCell(3).getStringCellValue());
+                ci.setTestList(sheet.getRow(i).getCell(2).getStringCellValue());
             }
         }
 
@@ -85,9 +85,8 @@ public class BrowserUtils {
     
     public void readEverything() throws IOException
     {
-    	CommonInterface ci = new CommonInterface();
-    	ci.ReadAllLocators();
-    	ci.ReadAllData();
+    	ReadAllLocators();
+    	ReadAllData();
     }
     
     public void openbrowserChrome() {
