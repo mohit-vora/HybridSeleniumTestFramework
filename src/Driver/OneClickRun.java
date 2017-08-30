@@ -17,11 +17,7 @@ public class OneClickRun extends CommonInterface{
     public static void main(String[] args) throws IOException {
 
     	readEverything();
-        runTestNG();
-    	
-    	
-    	
-    	
+        runTestNG();  	
     	
     }
 

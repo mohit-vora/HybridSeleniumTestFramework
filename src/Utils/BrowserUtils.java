@@ -49,11 +49,11 @@ public class BrowserUtils {
     //Annotates methods that will be run before each test method.
     //This method will run before Register Method.
     //Operation:- Invoke Login Function
-    @BeforeMethod
-    public void beforeMethod(Object[] testArgs) throws Exception {
-    	String dsid = (String) testArgs[0];
-        Login.performLogin(dsid);
-    }
+//    @BeforeMethod
+//    public void beforeMethod(Object[] testArgs) throws Exception {
+//    	String dsid = (String) testArgs[0];
+//        Login.performLogin(dsid);
+//    }
     
     //BeforeSuite: This method is executed before executing the all test cases present in the test suite.
     //Opening the browser is prerequisite for all TestCases. 
@@ -67,12 +67,12 @@ public class BrowserUtils {
     
     //Annotates methods that will be run after each test method.
     //Operation:- Invoke logout function.
-    @AfterMethod
-    public void afterMethod() {
-        LeftNavigationPane.NavigateTo("Logout");
-        PopUpAccept();
-
-    }
+//    @AfterMethod
+//    public void afterMethod() {
+//        LeftNavigationPane.NavigateTo("Logout");
+//        PopUpAccept();
+//
+//    }
 
     public void PopUpAccept() {
         try {
