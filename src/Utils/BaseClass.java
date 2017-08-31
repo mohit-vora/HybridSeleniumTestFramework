@@ -267,7 +267,9 @@ public class BaseClass {
     
     protected ByAll getLocator(String sname, String parm)
     {
-		return LMap1.get(sname).get(parm);
+    
+    		return LMap1.get(sname).get(parm);
+
     	
     }
     
