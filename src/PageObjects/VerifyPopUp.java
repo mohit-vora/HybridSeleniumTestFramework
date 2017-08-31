@@ -1,6 +1,7 @@
 package PageObjects;
 
 import Utils.BrowserUtils;
+import Utils.ReportLogger;
 
 public class VerifyPopUp extends BrowserUtils{
 
@@ -8,7 +9,7 @@ public class VerifyPopUp extends BrowserUtils{
         try {
             String PopUpMessage = driver.switchTo().alert().getText();
             driver.switchTo().alert().accept();
-            logInfo("Accepting Popup: " + PopUpMessage);
+            ReportLogger.info("Accepting Popup: " + PopUpMessage);
 
         } catch (Exception e) {
             // TODO: handle exception

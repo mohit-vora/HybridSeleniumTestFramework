@@ -13,6 +13,7 @@ import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
+import Utils.ReportLogger;
 
 public class AccountBalance extends BrowserUtils {
 
@@ -37,9 +38,9 @@ public class AccountBalance extends BrowserUtils {
 		try {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
 			ReadData dm1 = new ReadData("TransactionData", dsid1);
-			ReadData dm2 = new ReadData("TransactionType", dm1.getdata("TRANSACTION_TYPE"));
+			ReadData dm2 = new ReadData("TransactionType", dm1.getData("TRANSACTION_TYPE"));
 			Fromaccnt = dm2.getData("From_Account");
-			Toaccnt = dm2.getdata("To_Account");
+			Toaccnt = dm2.getData("To_Account");
 			Transaction_Amount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
 			LeftNavigationPane.NavigateTo("Account", "Account Information");
 			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
@@ -101,9 +102,9 @@ public class AccountBalance extends BrowserUtils {
 		try {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
 			ReadData dm1 = new ReadData("TransactionData", dsid1);
-			ReadData dm2 = new ReadData("TransactionType", dm1.getdata("TRANSACTION_TYPE"));
+			ReadData dm2 = new ReadData("TransactionType", dm1.getData("TRANSACTION_TYPE"));
 			Fromaccnt = dm2.getData("From_Account");
-			Toaccnt = dm2.getdata("To_Account");
+			Toaccnt = dm2.getData("To_Account");
 			Transaction_Amount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
 			LeftNavigationPane.NavigateTo("Account", "Account Information");
 			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
@@ -150,9 +151,9 @@ public class AccountBalance extends BrowserUtils {
 			for (Entry<String, Double> entry : fromAccountType.entrySet()) {
 				if (entry.getKey().equalsIgnoreCase(Fromaccnt)) {
 					if (df.format(AmountDebit).equals(df.format(entry.getValue()))) {
-							logInfo("Amount has been sucessfully debited from " + Fromaccnt);
+						ReportLogger.info("Amount has been sucessfully debited from " + Fromaccnt);
 					} else {
-						logInfo("Amount has not been debited from " + Fromaccnt);
+						ReportLogger.info("Amount has not been debited from " + Fromaccnt);
 					}
 
 				}
@@ -169,9 +170,9 @@ public class AccountBalance extends BrowserUtils {
 			for (Entry<String, Double> entry : toAccountType.entrySet()) {
 				if (entry.getKey().equalsIgnoreCase(Toaccnt)) {
 					if (df.format(AmountCredit).equals(df.format(entry.getValue()))) {
-						logInfo("Amount has been sucessfully Credited to" + " " + Toaccnt + " " + "account");
+						ReportLogger.info("Amount has been sucessfully Credited to" + " " + Toaccnt + " " + "account");
 					} else {
-						logInfo("Amount has not been credited to" + " " + Toaccnt + " " + "account");
+						ReportLogger.info("Amount has not been credited to" + " " + Toaccnt + " " + "account");
 					}
 				}
 			}

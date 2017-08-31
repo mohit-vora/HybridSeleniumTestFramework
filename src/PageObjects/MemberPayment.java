@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.Select;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BrowserUtils;
+import Utils.ReportLogger;
 
 public class MemberPayment extends BrowserUtils{
     
@@ -29,7 +30,7 @@ public class MemberPayment extends BrowserUtils{
 
         driver.findElement(rd1.getLocator("BTN_Submit")).click();
         
-        logInfo("populated payment details");
+        ReportLogger.info("populated payment details");
 
     }
 

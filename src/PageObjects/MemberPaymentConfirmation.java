@@ -4,6 +4,7 @@ import java.io.IOException;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BrowserUtils;
+import Utils.ReportLogger;
 
 public class MemberPaymentConfirmation extends BrowserUtils{
     public static  void verifyPaymentToMember(String dsid1, String dsid2) throws IOException {
@@ -56,11 +57,11 @@ public class MemberPaymentConfirmation extends BrowserUtils{
     if (flag)
             {
     			driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
-    			logInfo("Payment details Confirmed, clicking on Submit button");
+    			ReportLogger.info("Payment details Confirmed, clicking on Submit button");
             }
     else
-            driver.findElement(rd1.getLocator("BTN_Back")).click();
-    			logInfo("Payment details not matching");
+            	driver.findElement(rd1.getLocator("BTN_Back")).click();
+    			ReportLogger.fail("Payment details not matching");
     			
     }
 }

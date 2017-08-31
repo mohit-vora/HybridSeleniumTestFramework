@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BrowserUtils;
+import Utils.ReportLogger;
 
 public class EnrollMember extends BrowserUtils{
 
@@ -38,6 +39,6 @@ public class EnrollMember extends BrowserUtils{
         driver.findElement(rd1.getLocator("BTN_submit")).click();
         Thread.sleep(1000);
         
-        logInfo("New member details populated");
+        ReportLogger.info("New member details populated");
     }
 }

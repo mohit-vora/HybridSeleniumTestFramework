@@ -4,22 +4,19 @@ import java.io.IOException;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BrowserUtils;
+import Utils.ReportLogger;
 
 public class Login extends BrowserUtils{
 
     public static void performLogin(String dsid) throws IOException {
-
-//        System.out.println("Login");
-
         ReadLocators rd1 = new ReadLocators("Login");
-
         ReadData dm = new ReadData("MemberDetails", dsid);
 
         driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("LOGIN_NAME"));
         driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("PASSWORD"));
         driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
 
-        logInfo("Login Successful");
+        ReportLogger.info("Login action performed");
 
     }
 
