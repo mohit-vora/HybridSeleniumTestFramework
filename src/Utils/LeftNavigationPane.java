@@ -4,6 +4,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+
 public class LeftNavigationPane extends BrowserUtils{
 
     public static void NavigateTo(String mainMenu, String subMenu) {
@@ -24,12 +25,11 @@ public class LeftNavigationPane extends BrowserUtils{
                 for (WebElement webElement1: list12) {
                     if (webElement1.getText().equals(subMenu)) {
                         driver.findElement(By.xpath(clicksubmenu)).click();
+                        logInfo("Navigating to "+ subMenu + "under" + mainMenu);
                         break;
                     }
-
                 }
                 break;
-
             }
         }
     }
@@ -40,6 +40,8 @@ public class LeftNavigationPane extends BrowserUtils{
         if (mainMenu.equals("Logout")) {
             String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
             driver.findElement(By.xpath(clickmainmenu)).click();
+            logInfo("Navigating to "+ mainMenu);
+
 
         }
 

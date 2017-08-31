@@ -19,6 +19,7 @@ public class Login extends BrowserUtils{
         driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("PASSWORD"));
         driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
 
+        logInfo("Login Successful");
 
     }
 

@@ -6,52 +6,53 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByAll;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class CommonInterface {
 	
-	//this is where Driver Splitting things go
+	////this is where Driver Splitting things go
 	
-	public static Object[][] testArgs = null;
+	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
 	
-	public void setArgs(String args){
-		
+	public void setYesTestDetails(String yesTestName, String dataSetIDs)
+	{
 		int row=0;
 		int col=0;
 		
-		row=args.split(";").length;
-		col=args.split(";")[0].split(",").length;
+		row=dataSetIDs.split(";").length;
+		col=dataSetIDs.split(";")[0].split(",").length;
 		
-		String[][] s1 = new String [row][col];
+		Object[][] s1 = new String [row][col];
 		
 		for (int i=0;i<row;i++)
 		{			
 			for (int j=0;j<col;j++)
 			{
-				s1[i][j] = args.split(";")[i].split(",")[j];
+				s1[i][j] = dataSetIDs.split(";")[i].split(",")[j];
 			}
 		}
-		
-		testArgs=s1;
-		
+		onlyYesTestCases.put(yesTestName,s1);
 	}
 	
-	
-    public Object[][] getArgs() {
-        return testArgs;
-    }
-	
-	
-	
-	
+	public Object[][] getYesTestDetails(String testName)
+	{
+		Object[][] dataSetIDs = new Object[][]{};
+		
+		if (onlyYesTestCases.containsKey(testName))
+			dataSetIDs = onlyYesTestCases.get(testName);
+		
+		return dataSetIDs;
+	}
+
 	
 	//this is where driver splitting things end
 	
@@ -216,4 +217,40 @@ public class CommonInterface {
     }
     
     //this is where dapamap related things end
+    
+    
+    
+    
+    ////report related things start here
+    
+    public static ExtentReports extent;
+    
+    public static ExtentReports getInstance() {
+    	if (extent == null)
+    		createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
+    	
+        return extent;
+    }
+    
+    public static ExtentReports createInstance(String fileName) {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setChartVisibilityOnOpen(true);
+        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setDocumentTitle(fileName);
+        htmlReporter.config().setEncoding("utf-8");
+        htmlReporter.config().setReportName(fileName);
+        
+        extent = new ExtentReports();
+        extent.setSystemInfo("OS", "Windows 10 x64");
+        extent.setSystemInfo("Host Name", "IVS_ETA");
+        extent.setSystemInfo("Environment", "Test");
+        extent.setSystemInfo("User Name", "FSM");
+
+        extent.attachReporter(htmlReporter);
+        
+        return extent;
+    }
+    
+    ////Report related things end here
 }

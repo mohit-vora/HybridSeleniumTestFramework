@@ -3,7 +3,7 @@
 <suite name="Suite">
   <test name="Test">
     <classes>
-      <class name="TestCases.EnrollMember"/>
+      <class name="TestCases.AllTestCasesGoHere"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -150,9 +150,9 @@ public class AccountBalance extends BrowserUtils {
 			for (Entry<String, Double> entry : fromAccountType.entrySet()) {
 				if (entry.getKey().equalsIgnoreCase(Fromaccnt)) {
 					if (df.format(AmountDebit).equals(df.format(entry.getValue()))) {
-						System.out.println("Amount has been sucessfully debited from " + Fromaccnt);
+							logInfo("Amount has been sucessfully debited from " + Fromaccnt);
 					} else {
-						System.out.println("Amount has not been debited from " + Fromaccnt);
+						logInfo("Amount has not been debited from " + Fromaccnt);
 					}
 
 				}
@@ -169,9 +169,9 @@ public class AccountBalance extends BrowserUtils {
 			for (Entry<String, Double> entry : toAccountType.entrySet()) {
 				if (entry.getKey().equalsIgnoreCase(Toaccnt)) {
 					if (df.format(AmountCredit).equals(df.format(entry.getValue()))) {
-						System.out.println("Amount has been sucessfully Credited to" + " " + Toaccnt + " " + "account");
+						logInfo("Amount has been sucessfully Credited to" + " " + Toaccnt + " " + "account");
 					} else {
-						System.out.println("Amount has not been credited to" + " " + Toaccnt + " " + "account");
+						logInfo("Amount has not been credited to" + " " + Toaccnt + " " + "account");
 					}
 				}
 			}
