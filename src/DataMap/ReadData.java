@@ -1,9 +1,8 @@
 package DataMap;
 
 import java.io.IOException;
-import Interface.CommonInterface;
 
-public class ReadData extends CommonInterface{    
+public class ReadData extends Utils.BaseClass{    
 
     public ReadData(String name, String id) throws IOException {
         DSName = name;

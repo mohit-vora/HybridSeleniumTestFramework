@@ -37,9 +37,9 @@ public class AccountBalance extends BrowserUtils {
 		try {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
 			ReadData dm1 = new ReadData("TransactionData", dsid1);
-			ReadData dm2 = new ReadData("TransactionType", dm1.getdata("TRANSACTION_TYPE"));
+			ReadData dm2 = new ReadData("TransactionType", dm1.getData("TRANSACTION_TYPE"));
 			Fromaccnt = dm2.getData("From_Account");
-			Toaccnt = dm2.getdata("To_Account");
+			Toaccnt = dm2.getData("To_Account");
 			Transaction_Amount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
 			LeftNavigationPane.NavigateTo("Account", "Account Information");
 			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
@@ -101,9 +101,9 @@ public class AccountBalance extends BrowserUtils {
 		try {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
 			ReadData dm1 = new ReadData("TransactionData", dsid1);
-			ReadData dm2 = new ReadData("TransactionType", dm1.getdata("TRANSACTION_TYPE"));
+			ReadData dm2 = new ReadData("TransactionType", dm1.getData("TRANSACTION_TYPE"));
 			Fromaccnt = dm2.getData("From_Account");
-			Toaccnt = dm2.getdata("To_Account");
+			Toaccnt = dm2.getData("To_Account");
 			Transaction_Amount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
 			LeftNavigationPane.NavigateTo("Account", "Account Information");
 			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
