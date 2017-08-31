@@ -54,8 +54,13 @@ public class MemberPaymentConfirmation extends BrowserUtils{
             flag = false;
         }
     if (flag)
-            driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
+            {
+    			driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
+    			logInfo("Payment details Confirmed, clicking on Submit button");
+            }
     else
             driver.findElement(rd1.getLocator("BTN_Back")).click();
+    			logInfo("Payment details not matching");
+    			
     }
 }

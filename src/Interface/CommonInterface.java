@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -11,43 +12,47 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByAll;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class CommonInterface {
 	
-	//this is where Driver Splitting things go
+	////this is where Driver Splitting things go
 	
-	public static Object[][] testArgs = null;
+	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
 	
-	public void setArgs(String args){
-		
+	public void setYesTestDetails(String yesTestName, String dataSetIDs)
+	{
 		int row=0;
 		int col=0;
 		
-		row=args.split(";").length;
-		col=args.split(";")[0].split(",").length;
+		row=dataSetIDs.split(";").length;
+		col=dataSetIDs.split(";")[0].split(",").length;
 		
-		String[][] s1 = new String [row][col];
+		Object[][] s1 = new String [row][col];
 		
 		for (int i=0;i<row;i++)
 		{			
 			for (int j=0;j<col;j++)
 			{
-				s1[i][j] = args.split(";")[i].split(",")[j];
+				s1[i][j] = dataSetIDs.split(";")[i].split(",")[j];
 			}
 		}
-		
-		testArgs=s1;
-		
+		onlyYesTestCases.put(yesTestName,s1);
 	}
 	
-	
-    public Object[][] getArgs() {
-        return testArgs;
-    }
-	
-	
-	
-	
+	public Object[][] getYesTestDetails(String testName)
+	{
+		Object[][] dataSetIDs = new Object[][]{};
+		
+		if (onlyYesTestCases.containsKey(testName))
+			dataSetIDs = onlyYesTestCases.get(testName);
+		
+		return dataSetIDs;
+	}
+
 	
 	//this is where driver splitting things end
 	
@@ -98,7 +103,7 @@ public class CommonInterface {
         
 
         WorkBook.close();
-    }
+    }	
 	
 	private By generator(String locator, String value) {
         By obj1 = null;
@@ -144,7 +149,7 @@ public class CommonInterface {
     
     
     //this is where data map things start
-    private static HashMap < String, HashMap<String,List<String>> > data = new HashMap < String, HashMap<String,List<String>>> ();
+    private static LinkedHashMap < String, HashMap<String,List<String>> > data = new LinkedHashMap < String, HashMap<String,List<String>>> ();
     public void ReadAllData() throws IOException {
 
     	
@@ -159,26 +164,23 @@ public class CommonInterface {
         {
         
         	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-        	HashMap<String,List<String>> s_data = new HashMap<String, List<String>>();
+        	LinkedHashMap<String,List<String>> s_data = new LinkedHashMap<String, List<String>>();
 
 	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
 	        int colCount = sheet.getRow(0).getLastCellNum();
 	
 	        DataFormatter df = new DataFormatter();
 	
-	        for (int i = 0; i <= rowCount; i++) {
+	        for (int i = 0; i <= rowCount; i++){
 	            List<String> li = new ArrayList<String>();
 	            for (int j = 1; j < colCount; j++)
-	            	li.add(df.formatCellValue(sheet.getRow(i).getCell(j)));
-	   
-	            s_data.put(df.formatCellValue(sheet.getRow(i).getCell(0)), li);
-	           
+	            	li.add(df.formatCellValue(sheet.getRow(i).getCell(j)));            	
+	           s_data.put(df.formatCellValue(sheet.getRow(i).getCell(0)), li);  
 	        }
-	        
+       
 	        data.put(sheet.getSheetName(),s_data);
         }
         workbook.close();
-        
        
     }
     
@@ -187,17 +189,17 @@ public class CommonInterface {
     
     public String getdata(String col) {
         String value = "";
-          
-        List<String> li = data.get(DSName).get("DATA_SET_ID");
+               
+        List<String> li = data.get(DSName).get(data.get(DSName).keySet().toArray()[0]);
         int i = 0;
         boolean flag = false;
         for (; i < li.size(); i++) {
-        	
             if (col.equalsIgnoreCase(li.get(i))) {
                 flag = true;
                 break;
             }
         }
+        
         if (flag) {
             li = data.get(DSName).get(id);
             try{
@@ -215,4 +217,40 @@ public class CommonInterface {
     }
     
     //this is where dapamap related things end
+    
+    
+    
+    
+    ////report related things start here
+    
+    public static ExtentReports extent;
+    
+    public static ExtentReports getInstance() {
+    	if (extent == null)
+    		createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
+    	
+        return extent;
+    }
+    
+    public static ExtentReports createInstance(String fileName) {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setChartVisibilityOnOpen(true);
+        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setDocumentTitle(fileName);
+        htmlReporter.config().setEncoding("utf-8");
+        htmlReporter.config().setReportName(fileName);
+        
+        extent = new ExtentReports();
+        extent.setSystemInfo("OS", "Windows 10 x64");
+        extent.setSystemInfo("Host Name", "IVS_ETA");
+        extent.setSystemInfo("Environment", "Test");
+        extent.setSystemInfo("User Name", "FSM");
+
+        extent.attachReporter(htmlReporter);
+        
+        return extent;
+    }
+    
+    ////Report related things end here
 }
