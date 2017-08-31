@@ -13,6 +13,7 @@ import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
+import Utils.ReportLogger;
 
 public class AccountBalance extends BrowserUtils {
 
@@ -150,9 +151,9 @@ public class AccountBalance extends BrowserUtils {
 			for (Entry<String, Double> entry : fromAccountType.entrySet()) {
 				if (entry.getKey().equalsIgnoreCase(Fromaccnt)) {
 					if (df.format(AmountDebit).equals(df.format(entry.getValue()))) {
-							logInfo("Amount has been sucessfully debited from " + Fromaccnt);
+						ReportLogger.info("Amount has been sucessfully debited from " + Fromaccnt);
 					} else {
-						logInfo("Amount has not been debited from " + Fromaccnt);
+						ReportLogger.info("Amount has not been debited from " + Fromaccnt);
 					}
 
 				}
@@ -169,9 +170,9 @@ public class AccountBalance extends BrowserUtils {
 			for (Entry<String, Double> entry : toAccountType.entrySet()) {
 				if (entry.getKey().equalsIgnoreCase(Toaccnt)) {
 					if (df.format(AmountCredit).equals(df.format(entry.getValue()))) {
-						logInfo("Amount has been sucessfully Credited to" + " " + Toaccnt + " " + "account");
+						ReportLogger.info("Amount has been sucessfully Credited to" + " " + Toaccnt + " " + "account");
 					} else {
-						logInfo("Amount has not been credited to" + " " + Toaccnt + " " + "account");
+						ReportLogger.info("Amount has not been credited to" + " " + Toaccnt + " " + "account");
 					}
 				}
 			}

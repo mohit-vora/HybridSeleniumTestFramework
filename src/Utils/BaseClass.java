@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -20,9 +22,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByAll;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
@@ -40,7 +39,7 @@ public class BaseClass {
     	ReadAllData();
     }
     
-    public void openbrowserChrome() {
+    public void openBrowserChrome() {
         System.setProperty("webdriver.chrome.driver", getPropVal("chromeDriver"));
         driver = new ChromeDriver();
         driver.get(getPropVal("url"));
@@ -48,27 +47,41 @@ public class BaseClass {
         driver.manage().window().maximize();
     }
     
-    public void runTestNG() throws IOException {
+    public void runTestNG() {
 
-        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\TestCaseSheet.xlsx");
-        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
+    	try
+    	{
+    		FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\TestCaseSheet.xlsx");
+            XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 
-        XSSFSheet sheet = WorkBook.getSheet("TestCases");
+            XSSFSheet sheet = WorkBook.getSheet("TestCases");
 
-        int i;
-        int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-        for (i = 1; i <= rownum; i++) {
-            String runStatus = sheet.getRow(i).getCell(3).getStringCellValue();
-            if (runStatus.equalsIgnoreCase("Yes")) {
-            	String testName = sheet.getRow(i).getCell(1).getStringCellValue();
-            	String dataSetIDs = sheet.getRow(i).getCell(2).getStringCellValue();
-                BaseClass ci = new BaseClass(); 
-                ci.setYesTestDetails(testName, dataSetIDs);
+            int i;
+            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
+            for (i = 1; i <= rownum; i++) {
+                String runStatus = sheet.getRow(i).getCell(3).getStringCellValue();
+                if (runStatus.equalsIgnoreCase("Yes")) {
+                	String testName = sheet.getRow(i).getCell(1).getStringCellValue();
+                	String dataSetIDs = sheet.getRow(i).getCell(2).getStringCellValue();
+                    BaseClass ci = new BaseClass(); 
+                    ci.setYesTestDetails(testName, dataSetIDs);
+                }
             }
-        }
 
-        WorkBook.close();
-        mapsheet.close();
+            WorkBook.close();
+            mapsheet.close();
+    	}
+    	catch (Exception e)
+    	{
+    		StringWriter sw = new StringWriter();
+    		PrintWriter pw = new PrintWriter(sw);
+    		e.printStackTrace(pw);
+    		String StackTrace = sw.toString(); // stack trace as a string
+    		ReportLogger.fatal("problem in runTestNG method in BaseClass"+StackTrace);
+
+    		extent.flush();
+    	}
+        
 
     }
    
@@ -76,12 +89,7 @@ public class BaseClass {
 	//reading things ends here
 	
     
-    protected static void logInfo(String logMessage)
-    {
-    	test.log(Status.INFO, 
-        		MarkupHelper.createLabel(logMessage,
-        				ExtentColor.BLUE));
-    }
+   
 
 
     public void PopUpAccept() {
@@ -173,47 +181,55 @@ public class BaseClass {
 	
 	
 	
-	public void ReadAllLocators() throws IOException {
+	public void ReadAllLocators(){
+		try
+		{
+			HashMap < String, ByAll > LMap = new HashMap < String, ByAll > ();
+	        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
+	        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
+
+	        List < By > locators = null;
+	        
+	        int no_of_sheets = WorkBook.getNumberOfSheets();
+	        
+	        for (int sheetIndex=0;sheetIndex<no_of_sheets;sheetIndex++)
+	        {
+	        
+	        	XSSFSheet sheet = WorkBook.getSheetAt(sheetIndex);
+	        	XSSFCell mLocator, mValue, aLocator, aValue;
+	            int i;
+	            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
+	            //		System.out.println(sheetName+rownum);
+	            for (i = 1; i <= rownum; i++) {
+	                locators = new ArrayList < By > ();
+	                elementName = sheet.getRow(i).getCell(0);
+	                mLocator = sheet.getRow(i).getCell(1);
+	                mValue = sheet.getRow(i).getCell(2);
+	                aLocator = sheet.getRow(i).getCell(3);
+	                aValue = sheet.getRow(i).getCell(4);
+	                if (mLocator != null && mValue != null) {
+	                    locators.add(generator(mLocator.getStringCellValue().toLowerCase(), mValue.getStringCellValue()));
+	                }
+
+	                if (aLocator != null && aValue != null) {
+	                    locators.add(generator(aLocator.getStringCellValue().toLowerCase(), aValue.getStringCellValue()));
+
+	                }
+	                LMap.put(elementName.getStringCellValue(), generatorAll(locators));
+	            }
+	            LMap1.put(sheet.getSheetName(), LMap);
+	        }
+	        
+	        
+
+	        WorkBook.close();
+		}
 		
-		HashMap < String, ByAll > LMap = new HashMap < String, ByAll > ();
-        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\AMap.xlsx");
-        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
-
-        List < By > locators = null;
-        
-        int no_of_sheets = WorkBook.getNumberOfSheets();
-        
-        for (int sheetIndex=0;sheetIndex<no_of_sheets;sheetIndex++)
-        {
-        
-        	XSSFSheet sheet = WorkBook.getSheetAt(sheetIndex);
-        	XSSFCell mLocator, mValue, aLocator, aValue;
-            int i;
-            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-            //		System.out.println(sheetName+rownum);
-            for (i = 1; i <= rownum; i++) {
-                locators = new ArrayList < By > ();
-                elementName = sheet.getRow(i).getCell(0);
-                mLocator = sheet.getRow(i).getCell(1);
-                mValue = sheet.getRow(i).getCell(2);
-                aLocator = sheet.getRow(i).getCell(3);
-                aValue = sheet.getRow(i).getCell(4);
-                if (mLocator != null && mValue != null) {
-                    locators.add(generator(mLocator.getStringCellValue().toLowerCase(), mValue.getStringCellValue()));
-                }
-
-                if (aLocator != null && aValue != null) {
-                    locators.add(generator(aLocator.getStringCellValue().toLowerCase(), aValue.getStringCellValue()));
-
-                }
-                LMap.put(elementName.getStringCellValue(), generatorAll(locators));
-            }
-            LMap1.put(sheet.getSheetName(), LMap);
-        }
-        
-        
-
-        WorkBook.close();
+		catch (Exception e)
+		{
+			ReportLogger.fatal("problem in ReadAllLocators"+e);
+		}
+		
     }	
 	
 	private By generator(String locator, String value) {
@@ -265,7 +281,7 @@ public class BaseClass {
 
     	
     	
-        FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\Data.xlsx");
+        FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
         int no_of_sheets = workbook.getNumberOfSheets();

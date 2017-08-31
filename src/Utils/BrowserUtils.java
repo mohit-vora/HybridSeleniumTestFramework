@@ -40,8 +40,7 @@ public class BrowserUtils extends BaseClass{
 
     @BeforeMethod
     public void beforeMethod(Method method) throws Exception {
-        test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:write something here");
-        
+        test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:write something here");    
     }
 
     
@@ -51,7 +50,9 @@ public class BrowserUtils extends BaseClass{
     @BeforeSuite
     public void Browser() {
     	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
-        openbrowserChrome();
+        test = extent.createTest("preExecution-Log");    
+        openBrowserChrome();
+        System.out.println("we are in before suite");
     }
     
     
@@ -84,6 +85,7 @@ public class BrowserUtils extends BaseClass{
     public void Closebrowser() throws InterruptedException {
         Thread.sleep(3000);
         driver.quit();
+        System.out.println("we are here");
 
         try {
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
