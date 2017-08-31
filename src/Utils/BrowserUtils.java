@@ -43,13 +43,8 @@ public class BrowserUtils extends CommonInterface{
     ////tryout
     
     @DataProvider(name="dp")
-    public Object[][] dptryout(Method m)
-    {
-    	if (checkTestFlag(m.getName()))
-    		return CommonInterface.testArgs;
-    	
-    	else
-    	return new Object[][]{};
+    public Object[][] dptryout(Method m){  	
+    	return getYesTestDetails(m.getName());
     }
     
  
@@ -72,9 +67,10 @@ public class BrowserUtils extends CommonInterface{
         for (i = 1; i <= rownum; i++) {
             String runStatus = sheet.getRow(i).getCell(3).getStringCellValue();
             if (runStatus.equalsIgnoreCase("Yes")) {
+            	String testName = sheet.getRow(i).getCell(1).getStringCellValue();
+            	String dataSetIDs = sheet.getRow(i).getCell(2).getStringCellValue();
                 CommonInterface ci = new CommonInterface(); 
-                ci .setArgs(sheet.getRow(i).getCell(2).getStringCellValue());
-                ci.setTestList(sheet.getRow(i).getCell(1).getStringCellValue());
+                ci.setYesTestDetails(testName, dataSetIDs);
             }
         }
 
@@ -111,7 +107,7 @@ public class BrowserUtils extends CommonInterface{
 
     @BeforeMethod
     public void beforeMethod(Method method) throws Exception {
-        test = extent.createTest(getClass().getName()+ ":"+method.getName()+"");
+        test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:"+testArgs.toString());
         
     }
 

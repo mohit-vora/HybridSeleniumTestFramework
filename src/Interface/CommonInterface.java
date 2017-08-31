@@ -23,65 +23,40 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class CommonInterface {
 	
-	//this is where Driver Splitting things go
+	////this is where Driver Splitting things go
 	
-	public static Object[][] testArgs = null;
-	public static ArrayList<String> testList = null;
-	public void setArgs(String args){
-		
-		int row=0;
-		int col=0;
-		
-		row=args.split(";").length;
-		col=args.split(";")[0].split(",").length;
-		
-		String[][] s1 = new String [row][col];
-		
-		for (int i=0;i<row;i++)
-		{			
-			for (int j=0;j<col;j++)
-			{
-				s1[i][j] = args.split(";")[i].split(",")[j];
-			}
-		}
-		
-		testArgs=s1;
-		
-	}
+	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
 	
-	
-    public Object[][] getArgs() {
-        return testArgs;
-    }
-    
-    
-    public void setTestList(String args){
-		
-		int row=0;
-		int col=0;
-		
-		row=args.split(";").length;
-		col=args.split(";")[0].split(",").length;
-		
-		ArrayList<String> s1 = new ArrayList<String>();
-		
-		for (int i=0;i<row;i++)
-		{			
-			for (int j=0;j<col;j++)
-			{
-				s1.add(args.split(";")[i].split(",")[j]);
-			}
-		}
-		
-		testList=s1;
-		
-	}
-	
-	public boolean checkTestFlag(String testName)
+	public void setYesTestDetails(String yesTestName, String dataSetIDs)
 	{
-		return testList.contains(testName);
+		int row=0;
+		int col=0;
+		
+		row=dataSetIDs.split(";").length;
+		col=dataSetIDs.split(";")[0].split(",").length;
+		
+		Object[][] s1 = new String [row][col];
+		
+		for (int i=0;i<row;i++)
+		{			
+			for (int j=0;j<col;j++)
+			{
+				s1[i][j] = dataSetIDs.split(";")[i].split(",")[j];
+			}
+		}
+		onlyYesTestCases.put(yesTestName,s1);
 	}
 	
+	public Object[][] getYesTestDetails(String testName)
+	{
+		Object[][] dataSetIDs = new Object[][]{};
+		
+		if (onlyYesTestCases.containsKey(testName))
+			dataSetIDs = onlyYesTestCases.get(testName);
+		
+		return dataSetIDs;
+	}
+
 	
 	//this is where driver splitting things end
 	
