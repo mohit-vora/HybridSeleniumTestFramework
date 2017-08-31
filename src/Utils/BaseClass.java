@@ -94,8 +94,9 @@ public class BaseClass {
 
     public void PopUpAccept() {
         try {
-//            String PopUpMessage = driver.switchTo().alert().getText();
+        	String PopUpMessage = driver.switchTo().alert().getText();
             driver.switchTo().alert().accept();
+            ReportLogger.info("Accepting Popup: " + PopUpMessage);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
