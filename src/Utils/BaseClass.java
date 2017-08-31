@@ -43,8 +43,10 @@ public class BaseClass {
         System.setProperty("webdriver.chrome.driver", getPropVal("chromeDriver"));
         driver = new ChromeDriver();
         driver.get(getPropVal("url"));
+        ReportLogger.info("Browser Instance opened");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+        ReportLogger.info("Browser Window Maximized");
     }
     
     public void runTestNG() {
@@ -67,7 +69,7 @@ public class BaseClass {
                     ci.setYesTestDetails(testName, dataSetIDs);
                 }
             }
-
+            ReportLogger.info("Test Cases to be executed retrieved from Testcase Sheet");
             WorkBook.close();
             mapsheet.close();
     	}
@@ -77,7 +79,7 @@ public class BaseClass {
     		PrintWriter pw = new PrintWriter(sw);
     		e.printStackTrace(pw);
     		String StackTrace = sw.toString(); // stack trace as a string
-    		ReportLogger.fatal("problem in runTestNG method in BaseClass"+StackTrace);
+    		ReportLogger.fatal("problem in runTestNG method in BaseClass"+e);
 
     		extent.flush();
     	}
@@ -94,9 +96,11 @@ public class BaseClass {
 
     public void PopUpAccept() {
         try {
-        	String PopUpMessage = driver.switchTo().alert().getText();
+//            String PopUpMessage = driver.switchTo().alert().getText();
             driver.switchTo().alert().accept();
-            ReportLogger.info("Accepting Popup: " + PopUpMessage);
+            ReportLogger.info("Popup Handled");
+            
+            
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -119,13 +123,14 @@ public class BaseClass {
 		
 		Object[][] s1 = new String [row][col];
 		
-		for (int i=0;i<row;i++)
+		for (int rowIterator=0;rowIterator<row;rowIterator++)
 		{			
-			for (int j=0;j<col;j++)
+			for (int columnIterator=0;columnIterator<col;columnIterator++)
 			{
-				s1[i][j] = dataSetIDs.split(";")[i].split(",")[j];
+				s1[rowIterator][columnIterator] = dataSetIDs.split(";")[rowIterator].split(",")[columnIterator];
 			}
 		}
+		ReportLogger.info("Data Set ID for the chosen TestCase"+ yesTestName +"is read");
 		onlyYesTestCases.put(yesTestName,s1);
 	}
 	
@@ -149,23 +154,26 @@ public class BaseClass {
 	public static String getPropVal(String parm) {
 //      File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
-  	File file = new File(System.getProperty("user.dir") + "\\TestResources\\path.properties");
+  	File filePath = new File(System.getProperty("user.dir") + "\\TestResources\\path.properties");
   	
       FileInputStream fileInput = null;
       try {
-          fileInput = new FileInputStream(file);
-      } catch (FileNotFoundException e1) {
+          fileInput = new FileInputStream(filePath);
+          ReportLogger.info("Traced Location of Path file");
+      } catch (FileNotFoundException fileNotFoundException) {
           // TODO Auto-generated catch block
-          e1.printStackTrace();
+         // e1.printStackTrace();
+    	 ReportLogger.preExecutionFail(fileNotFoundException);
       }
 
       Properties prop = new Properties();
 
       try {
           prop.load(fileInput);
-      } catch (IOException e) {
+          ReportLogger.info("Loaded the Path file");
+      } catch (IOException ioException) {
           // TODO Auto-generated catch block
-          e.printStackTrace();
+          //e.printStackTrace();
       }
 
       return prop.getProperty(parm);
@@ -181,7 +189,7 @@ public class BaseClass {
 	XSSFCell elementName;
 	
 	
-
+	
 	public void ReadAllLocators(){
 		try
 		{
@@ -220,6 +228,7 @@ public class BaseClass {
 	            }
 	            LMap1.put(sheet.getSheetName(), LMap);
 	        }
+	        ReportLogger.info("Corresponding Element Locators Fetched");
 	        
 	        
 
@@ -285,10 +294,10 @@ public class BaseClass {
         FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
-        int no_of_sheets = workbook.getNumberOfSheets();
+        int noOfSheets = workbook.getNumberOfSheets();
         
         
-        for (int sheetIndex=0;sheetIndex<no_of_sheets;sheetIndex++)
+        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
         {
         
         	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
@@ -299,11 +308,11 @@ public class BaseClass {
 	
 	        DataFormatter df = new DataFormatter();
 	
-	        for (int i = 0; i <= rowCount; i++){
-	            List<String> li = new ArrayList<String>();
-	            for (int j = 1; j < colCount; j++)
-	            	li.add(df.formatCellValue(sheet.getRow(i).getCell(j)));            	
-	           s_data.put(df.formatCellValue(sheet.getRow(i).getCell(0)), li);  
+	        for (int rowiterater = 0; rowiterater <= rowCount; rowiterater++){
+	            List<String> list = new ArrayList<String>();
+	            for (int coliterater = 1; coliterater < colCount; coliterater++)
+	            	list.add(df.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
+	           s_data.put(df.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
 	        }
        
 	        data.put(sheet.getSheetName(),s_data);
@@ -312,33 +321,33 @@ public class BaseClass {
        
     }
     
-    protected String DSName = null;
+    protected String dSName = null;
     protected String id = null;
     
     public String getdata(String col) {
         String value = "";
                
-        List<String> li = data.get(DSName).get(data.get(DSName).keySet().toArray()[0]);
-        int i = 0;
+        List<String> list = data.get(dSName).get(data.get(dSName).keySet().toArray()[0]);
+        int dataColumn = 0;
         boolean flag = false;
-        for (; i < li.size(); i++) {
-            if (col.equalsIgnoreCase(li.get(i))) {
+        for (; dataColumn < list.size(); dataColumn++) {
+            if (col.equalsIgnoreCase(list.get(dataColumn))) {
                 flag = true;
                 break;
             }
         }
         
         if (flag) {
-            li = data.get(DSName).get(id);
+            list = data.get(dSName).get(id);
             try{
-            value = li.get(i);
+            value = list.get(dataColumn);
             }
             catch (Exception e)
             {
-            	System.out.println(id +" did not match any id in "+ DSName);
+            	System.out.println(id +" did not match any id in "+ dSName);
             }
         } else {
-            System.out.println("There is nothing like " + col + " in " + DSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
+            System.out.println("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
         }
 
         return value;
@@ -352,6 +361,7 @@ public class BaseClass {
     ////report related things start here
     
     public static ExtentReports extent;
+    
     
     public static ExtentReports getInstance() {
     	if (extent == null)
