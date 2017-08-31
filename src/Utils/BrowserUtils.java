@@ -52,7 +52,6 @@ public class BrowserUtils extends BaseClass{
     	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
         test = extent.createTest("preExecution-Log");    
         openBrowserChrome();
-        System.out.println("we are in before suite");
     }
     
     
