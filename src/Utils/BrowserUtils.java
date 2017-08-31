@@ -86,7 +86,6 @@ public class BrowserUtils extends CommonInterface{
     @BeforeClass
     public void bc() throws IOException
     {
-    	System.out.println("inside before class");
     	readEverything();
         runTestNG();
     }
@@ -109,11 +108,13 @@ public class BrowserUtils extends CommonInterface{
     //Annotates methods that will be run before each test method.
     //This method will run before Register Method.
     //Operation:- Invoke Login Function
+
     @BeforeMethod
     public void beforeMethod(Method method) throws Exception {
-        test = extent.createTest(getClass().getName()+ ":"+method.getName());
+        test = extent.createTest(getClass().getName()+ ":"+method.getName()+"");
         
     }
+
     
     //BeforeSuite: This method is executed before executing the all test cases present in the test suite.
     //Opening the browser is prerequisite for all TestCases. 
@@ -127,6 +128,7 @@ public class BrowserUtils extends CommonInterface{
     
     //Annotates methods that will be run after each test method.
     //Operation:- Invoke logout function.
+
     @AfterMethod
     public void afterMethod(ITestResult result) {
     	if (result.getStatus() == ITestResult.FAILURE) {
@@ -152,6 +154,7 @@ public class BrowserUtils extends CommonInterface{
         		MarkupHelper.createLabel(logMessage,
         				ExtentColor.BLUE));
     }
+
 
     public void PopUpAccept() {
         try {
