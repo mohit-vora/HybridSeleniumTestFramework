@@ -29,8 +29,7 @@ public class AccountBalance extends BrowserUtils{
             try {
                 dm = new ReadData("MemberDetails", dsid);
                 ReadLocators rd1 = new ReadLocators("RegisterMember");
-                LeftNavigationPane leftpane = new LeftNavigationPane();
-                leftpane.NavigateTo("Account", "Account Information");
+                LeftNavigationPane.NavigateTo("Account", "Account Information");
                 if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
                     WebElement Accntypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
                     List < WebElement > rows = Accntypes.findElements(By.tagName("tr"));

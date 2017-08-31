@@ -37,5 +37,7 @@ public class EnrollMember extends BrowserUtils{
         Thread.sleep(1000);
         driver.findElement(rd1.getLocator("BTN_submit")).click();
         Thread.sleep(1000);
+        
+        logInfo("New member details populated");
     }
 }

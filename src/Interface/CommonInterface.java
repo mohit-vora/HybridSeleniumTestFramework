@@ -12,6 +12,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByAll;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+
 public class CommonInterface {
 	
 	//this is where Driver Splitting things go
@@ -240,4 +245,40 @@ public class CommonInterface {
     }
     
     //this is where dapamap related things end
+    
+    
+    
+    
+    ////report related things start here
+    
+    public static ExtentReports extent;
+    
+    public static ExtentReports getInstance() {
+    	if (extent == null)
+    		createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
+    	
+        return extent;
+    }
+    
+    public static ExtentReports createInstance(String fileName) {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setChartVisibilityOnOpen(true);
+        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setDocumentTitle(fileName);
+        htmlReporter.config().setEncoding("utf-8");
+        htmlReporter.config().setReportName(fileName);
+        
+        extent = new ExtentReports();
+        extent.setSystemInfo("OS", "Windows 10 x64");
+        extent.setSystemInfo("Host Name", "IVS_ETA");
+        extent.setSystemInfo("Environment", "Test");
+        extent.setSystemInfo("User Name", "FSM");
+
+        extent.attachReporter(htmlReporter);
+        
+        return extent;
+    }
+    
+    ////Report related things end here
 }

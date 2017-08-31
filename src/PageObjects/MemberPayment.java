@@ -28,6 +28,8 @@ public class MemberPayment extends BrowserUtils{
         driver.findElement(rd1.getLocator("TXB_Description")).sendKeys(dm2.getData("TRANSACTION_DESCRIPTION"));
 
         driver.findElement(rd1.getLocator("BTN_Submit")).click();
+        
+        logInfo("populated payment details");
 
     }
 
