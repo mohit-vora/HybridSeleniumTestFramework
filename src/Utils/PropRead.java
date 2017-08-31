@@ -11,7 +11,7 @@ public class PropRead {
     public static String getVal(String parm) {
 //        File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
-    	File file = new File(System.getProperty("user.dir") + "\\Resources\\path.properties");
+    	File file = new File(System.getProperty("user.dir") + "\\TestResources\\path.properties");
     	
         FileInputStream fileInput = null;
         try {

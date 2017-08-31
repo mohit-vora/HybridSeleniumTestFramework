@@ -65,7 +65,7 @@ public class CommonInterface {
 	public void ReadAllLocators() throws IOException {
 		
 		HashMap < String, ByAll > LMap = new HashMap < String, ByAll > ();
-        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\AMap.xlsx");
+        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
         XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 
         List < By > locators = null;
@@ -154,7 +154,7 @@ public class CommonInterface {
 
     	
     	
-        FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\Resources\\Data.xlsx");
+        FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
         int no_of_sheets = workbook.getNumberOfSheets();
