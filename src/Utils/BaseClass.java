@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -30,15 +28,9 @@ public class BaseClass {
 	
 	public static WebDriver driver = null;
     public static ExtentTest test;
+    public static Boolean preExecutionCheck=true;
 
 	//reading things go here
-	
-	public void readEverything() throws IOException
-    {
-    	ReadAllLocators();
-    	ReadAllData();
-    }
-    
     public void openBrowserChrome() {
         System.setProperty("webdriver.chrome.driver", getPropVal("chromeDriver"));
         driver = new ChromeDriver();
@@ -49,37 +41,34 @@ public class BaseClass {
         ReportLogger.info("Browser Window Maximized");
     }
     
-    public void runTestNG() {
+    public void readTestCaseSheet() {
 
     	try
     	{
-    		FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\TestCaseSheet.xlsx");
-            XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
+    		FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\TestCaseSheet.xlsx");
+            XSSFWorkbook workBook = new XSSFWorkbook(mapSheet);
 
-            XSSFSheet sheet = WorkBook.getSheet("TestCases");
+            XSSFSheet sheet = workBook.getSheet("TestCases");
 
-            int i;
-            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-            for (i = 1; i <= rownum; i++) {
-                String runStatus = sheet.getRow(i).getCell(3).getStringCellValue();
+            int currentRow;
+            int rowNum = sheet.getLastRowNum() - sheet.getFirstRowNum();
+            for (currentRow = 1; currentRow <= rowNum; currentRow++) {
+                String runStatus = sheet.getRow(currentRow).getCell(3).getStringCellValue();
                 if (runStatus.equalsIgnoreCase("Yes")) {
-                	String testName = sheet.getRow(i).getCell(1).getStringCellValue();
-                	String dataSetIDs = sheet.getRow(i).getCell(2).getStringCellValue();
-                    BaseClass ci = new BaseClass(); 
-                    ci.setYesTestDetails(testName, dataSetIDs);
+                	String testName = sheet.getRow(currentRow).getCell(1).getStringCellValue();
+                	String dataSetIds = sheet.getRow(currentRow).getCell(2).getStringCellValue();
+                    BaseClass baseClass = new BaseClass(); 
+                    baseClass.setYesTestDetails(testName, dataSetIds);
                 }
             }
             ReportLogger.info("Test Cases to be executed retrieved from Testcase Sheet");
-            WorkBook.close();
-            mapsheet.close();
+            workBook.close();
+            mapSheet.close();
     	}
-    	catch (Exception e)
+    	catch (Exception exception)
     	{
-    		StringWriter sw = new StringWriter();
-    		PrintWriter pw = new PrintWriter(sw);
-    		e.printStackTrace(pw);
-    		String StackTrace = sw.toString(); // stack trace as a string
-    		ReportLogger.fatal("problem in runTestNG method in BaseClass"+e);
+    		preExecutionCheck=false;
+    		ReportLogger.preExecutionFail(exception);
 
     		extent.flush();
     	}
@@ -89,37 +78,25 @@ public class BaseClass {
    
 	
 	//reading things ends here
-	
-    
-   
-
-
-    public void PopUpAccept() {
-        try {
-//            String PopUpMessage = driver.switchTo().alert().getText();
+	public void PopUpAccept() {
+        
+        	String popUpMessage = driver.switchTo().alert().getText();
             driver.switchTo().alert().accept();
-            ReportLogger.info("Popup Handled");
-            
-            
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-        // System.out.println(PopUpMessage);
-        // return PopUpMessage;
+            ReportLogger.info("Popup accepted :"+popUpMessage);
+                
     }
 	
 	////this is where Driver Splitting things go
 	
 	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
 	
-	public void setYesTestDetails(String yesTestName, String dataSetIDs)
+	private  void setYesTestDetails(String yesTestName, String dataSetIds)
 	{
 		int row=0;
 		int col=0;
 		
-		row=dataSetIDs.split(";").length;
-		col=dataSetIDs.split(";")[0].split(",").length;
+		row=dataSetIds.split(";").length;
+		col=dataSetIds.split(";")[0].split(",").length;
 		
 		Object[][] s1 = new String [row][col];
 		
@@ -127,7 +104,7 @@ public class BaseClass {
 		{			
 			for (int columnIterator=0;columnIterator<col;columnIterator++)
 			{
-				s1[rowIterator][columnIterator] = dataSetIDs.split(";")[rowIterator].split(",")[columnIterator];
+				s1[rowIterator][columnIterator] = dataSetIds.split(";")[rowIterator].split(",")[columnIterator];
 			}
 		}
 		ReportLogger.info("Data Set ID for the chosen TestCase"+ yesTestName +"is read");
@@ -136,21 +113,17 @@ public class BaseClass {
 	
 	public Object[][] getYesTestDetails(String testName)
 	{
-		Object[][] dataSetIDs = new Object[][]{};
+		Object[][] dataSetIds = new Object[][]{};
 		
 		if (onlyYesTestCases.containsKey(testName))
-			dataSetIDs = onlyYesTestCases.get(testName);
+			dataSetIds = onlyYesTestCases.get(testName);
 		
-		return dataSetIDs;
+		return dataSetIds;
 	}
 
 	
 	//this is where driver splitting things end
-	
-	
 	//properties file related code
-	
-	
 	public static String getPropVal(String parm) {
 //      File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
@@ -161,22 +134,20 @@ public class BaseClass {
           fileInput = new FileInputStream(filePath);
           ReportLogger.info("Traced Location of Path file");
       } catch (FileNotFoundException fileNotFoundException) {
-          // TODO Auto-generated catch block
-         // e1.printStackTrace();
+          
     	 ReportLogger.preExecutionFail(fileNotFoundException);
       }
 
-      Properties prop = new Properties();
+      Properties properties = new Properties();
 
       try {
-          prop.load(fileInput);
-          ReportLogger.info("Loaded the Path file");
+    	  properties.load(fileInput);
+          ReportLogger.info("Loaded the path file");
       } catch (IOException ioException) {
-          // TODO Auto-generated catch block
-          //e.printStackTrace();
+    	  ReportLogger.preExecutionFail(ioException);
       }
 
-      return prop.getProperty(parm);
+      return properties.getProperty(parm);
   }
 	
 	
@@ -185,7 +156,7 @@ public class BaseClass {
 	//properties file related code ends here
 	
 	//this is where application map reading starts
-	private static HashMap <String,HashMap<String,ByAll>> LMap1 = new HashMap<String,HashMap<String,ByAll>>();
+	private static HashMap <String,HashMap<String,ByAll>> testSpecificMap = new HashMap<String,HashMap<String,ByAll>>();
 	XSSFCell elementName;
 	
 	
@@ -193,40 +164,40 @@ public class BaseClass {
 	public void ReadAllLocators(){
 		try
 		{
-			HashMap < String, ByAll > LMap = new HashMap < String, ByAll > ();
+			HashMap < String, ByAll > locatorMap = new HashMap < String, ByAll > ();
 	        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
 	        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 
 	        List < By > locators = null;
 	        
-	        int no_of_sheets = WorkBook.getNumberOfSheets();
+	        int noOfSheets = WorkBook.getNumberOfSheets();
 	        
-	        for (int sheetIndex=0;sheetIndex<no_of_sheets;sheetIndex++)
+	        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
 	        {
 	        
 	        	XSSFSheet sheet = WorkBook.getSheetAt(sheetIndex);
-	        	XSSFCell mLocator, mValue, aLocator, aValue;
-	            int i;
+	        	XSSFCell mainLocator, mainValue, alternateLocator, alternateValue;
+	            int rowIterator;
 	            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
 	            //		System.out.println(sheetName+rownum);
-	            for (i = 1; i <= rownum; i++) {
+	            for (rowIterator = 1; rowIterator <= rownum; rowIterator++) {
 	                locators = new ArrayList < By > ();
-	                elementName = sheet.getRow(i).getCell(0);
-	                mLocator = sheet.getRow(i).getCell(1);
-	                mValue = sheet.getRow(i).getCell(2);
-	                aLocator = sheet.getRow(i).getCell(3);
-	                aValue = sheet.getRow(i).getCell(4);
-	                if (mLocator != null && mValue != null) {
-	                    locators.add(generator(mLocator.getStringCellValue().toLowerCase(), mValue.getStringCellValue()));
+	                elementName = sheet.getRow(rowIterator).getCell(0);
+	                mainLocator = sheet.getRow(rowIterator).getCell(1);
+	                mainValue = sheet.getRow(rowIterator).getCell(2);
+	                alternateLocator = sheet.getRow(rowIterator).getCell(3);
+	                alternateValue = sheet.getRow(rowIterator).getCell(4);
+	                if (mainLocator != null && mainValue != null) {
+	                    locators.add(generator(mainLocator.getStringCellValue().toLowerCase(), mainValue.getStringCellValue()));
 	                }
 
-	                if (aLocator != null && aValue != null) {
-	                    locators.add(generator(aLocator.getStringCellValue().toLowerCase(), aValue.getStringCellValue()));
+	                if (alternateLocator != null && alternateValue != null) {
+	                    locators.add(generator(alternateLocator.getStringCellValue().toLowerCase(), alternateValue.getStringCellValue()));
 
 	                }
-	                LMap.put(elementName.getStringCellValue(), generatorAll(locators));
+	                locatorMap.put(elementName.getStringCellValue(), generatorAll(locators));
 	            }
-	            LMap1.put(sheet.getSheetName(), LMap);
+	            testSpecificMap.put(sheet.getSheetName(), locatorMap);
 	        }
 	        ReportLogger.info("Corresponding Element Locators Fetched");
 	        
@@ -235,25 +206,26 @@ public class BaseClass {
 	        WorkBook.close();
 		}
 		
-		catch (Exception e)
+		catch (Exception exception)
 		{
-			ReportLogger.fatal("problem in ReadAllLocators"+e);
+			preExecutionCheck=false;
+			ReportLogger.fatal("problem in ReadAllLocators"+exception);
 		}
 		
     }	
 	
 	private By generator(String locator, String value) {
-        By obj1 = null;
+        By by = null;
         if (!locator.equals("")) {
             switch (locator.toLowerCase()) {
                 case "id":
-                    obj1 = By.id(value);
+                	by = By.id(value);
                     break;
                 case "xpath":
-                    obj1 = By.xpath(value);
+                	by = By.xpath(value);
                     break;
                 case "css":
-                    obj1 = By.cssSelector(value);
+                	by = By.cssSelector(value);
                     break;
 
                 default:
@@ -263,21 +235,21 @@ public class BaseClass {
             }
         }
 
-        return obj1;
+        return by;
     }
 
-    private ByAll generatorAll(List < By > list) {
-        if (list.size() == 1) {
-            return new ByAll(list.get(0));
+    private ByAll generatorAll(List < By >byList) {
+        if (byList.size() == 1) {
+            return new ByAll(byList.get(0));
         } else {
-            return new ByAll(list.get(0), list.get(1));
+            return new ByAll(byList.get(0), byList.get(1));
         }
 
     }
     
     protected ByAll getLocator(String sname, String parm)
     {
-		return LMap1.get(sname).get(parm);
+		return testSpecificMap.get(sname).get(parm);
     	
     }
     
@@ -286,7 +258,7 @@ public class BaseClass {
     
     
     //this is where data map things start
-    private static LinkedHashMap < String, HashMap<String,List<String>> > data = new LinkedHashMap < String, HashMap<String,List<String>>> ();
+    private static LinkedHashMap < String, HashMap<String,List<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,List<String>>> ();
     public void ReadAllData() throws IOException {
 
     	
@@ -301,21 +273,21 @@ public class BaseClass {
         {
         
         	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-        	LinkedHashMap<String,List<String>> s_data = new LinkedHashMap<String, List<String>>();
+        	LinkedHashMap<String,List<String>> sheetData = new LinkedHashMap<String, List<String>>();
 
 	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
 	        int colCount = sheet.getRow(0).getLastCellNum();
 	
-	        DataFormatter df = new DataFormatter();
+	        DataFormatter dataFormatter = new DataFormatter();
 	
 	        for (int rowiterater = 0; rowiterater <= rowCount; rowiterater++){
 	            List<String> list = new ArrayList<String>();
 	            for (int coliterater = 1; coliterater < colCount; coliterater++)
-	            	list.add(df.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
-	           s_data.put(df.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
+	            	list.add(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
+	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
 	        }
        
-	        data.put(sheet.getSheetName(),s_data);
+	        testSpecificData.put(sheet.getSheetName(),sheetData);
         }
         workbook.close();
        
@@ -325,9 +297,9 @@ public class BaseClass {
     protected String id = null;
     
     public String getdata(String col) {
-        String value = "";
+        String dataValue = "";
                
-        List<String> list = data.get(dSName).get(data.get(dSName).keySet().toArray()[0]);
+        List<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
         int dataColumn = 0;
         boolean flag = false;
         for (; dataColumn < list.size(); dataColumn++) {
@@ -338,22 +310,24 @@ public class BaseClass {
         }
         
         if (flag) {
-            list = data.get(dSName).get(id);
+            list = testSpecificData.get(dSName).get(id);
             try{
-            value = list.get(dataColumn);
+            	dataValue = list.get(dataColumn);
             }
             catch (Exception e)
             {
+            	preExecutionCheck=false;
             	System.out.println(id +" did not match any id in "+ dSName);
             }
         } else {
+        	preExecutionCheck=false;
             System.out.println("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
         }
 
-        return value;
+        return dataValue;
     }
     
-    //this is where dapamap related things end
+    //this is where datamap related things end
     
     
     
@@ -364,9 +338,9 @@ public class BaseClass {
     
     
     public static ExtentReports getInstance() {
-    	if (extent == null)
+    	if (extent == null){
     		createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
-    	
+    	}
         return extent;
     }
     

@@ -4,6 +4,7 @@ package Utils;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -22,14 +23,21 @@ public class BrowserUtils extends BaseClass{
     
     @DataProvider(name="dp")
     public Object[][] dptryout(Method m){  	
-    	return getYesTestDetails(m.getName());
+    	if(preExecutionCheck){
+    		return getYesTestDetails(m.getName());
+    	}
+    	return new Object[][]{};
+    	
     }   
     
     @BeforeClass
-    public void bc() throws IOException
-    {
-    	readEverything();
-        runTestNG();
+    public void bc() throws IOException {
+    	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
+        test = extent.createTest("preExecution-Log");    
+        openBrowserChrome();
+        ReadAllLocators();
+    	ReadAllData();
+    	readTestCaseSheet();
     }
     
     
@@ -76,23 +84,24 @@ public class BrowserUtils extends BaseClass{
         extent.flush();
 
     }
-    
-   
-    
     //This method is executed after executing the all test cases present in the test suite.
     //Closing the browser is necessary at end of the each test case
-    @AfterSuite()   
-    public void Closebrowser() throws InterruptedException {
+    @AfterClass
+    public void Closebrowser() throws InterruptedException, IOException {
         Thread.sleep(3000);
         driver.quit();
+        ReportLogger.info("WebDriver Session ended");
         System.out.println("we are here");
-
-        try {
-            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+        
 
     }
 
+    
+    
+   
+    
+   
+ 
+   
 }
