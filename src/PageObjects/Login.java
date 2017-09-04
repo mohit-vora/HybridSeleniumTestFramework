@@ -9,14 +9,16 @@ import Utils.ReportLogger;
 public class Login extends BrowserUtils{
 
     public static void performLogin(String dsid) throws IOException {
-        ReadLocators rd1 = new ReadLocators("Login");
-        ReadData dm = new ReadData("MemberDetails", dsid);
+    		ReadLocators rd1 = new ReadLocators("Login");
+            ReadData dm = new ReadData("MemberDetails", dsid);
 
-        driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("LOGIN_NAME"));
-        driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("PASSWORD"));
-        driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
-
-        ReportLogger.info("Login action performed");
+            driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("LOGIN_NAME"));
+            driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("PASSWORD"));
+            driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
+            
+            ReportLogger.info("User has sucessfully logged-in");
+            ReportLogger.pass("Login Action Performed");
+       
 
     }
 

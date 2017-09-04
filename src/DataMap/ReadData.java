@@ -5,7 +5,7 @@ import java.io.IOException;
 public class ReadData extends Utils.BaseClass{    
 
     public ReadData(String name, String id) throws IOException {
-        DSName = name;
+        dSName = name;
         this.id = id;
         
     }

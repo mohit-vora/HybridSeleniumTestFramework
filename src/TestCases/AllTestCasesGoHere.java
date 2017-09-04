@@ -25,7 +25,8 @@ public class AllTestCasesGoHere extends BrowserUtils{
     }
 	
 	@Test(dataProvider = "dp")
-    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception {
+    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception{
+			
 			Login.performLogin(toMemDSId);
 	    	AccountBalance accnt = new AccountBalance();
 	    	accnt.XtractAccountBalance(TXNDSId,"ToAccount","Calculate"); 
@@ -48,11 +49,5 @@ public class AllTestCasesGoHere extends BrowserUtils{
 	    	accnt.verifiyCreditAccount();
 	    	LeftNavigationPane.NavigateTo("Logout");
 	        PopUpAccept();
-		
-		
-		
-        
-    }
-	
-	
+	}
 }

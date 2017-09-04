@@ -13,6 +13,16 @@ public class ReportLogger extends BaseClass{
 	    	test.log(Status.INFO, 
 	        		MarkupHelper.createLabel(logMessage,
 	        				ExtentColor.GREY));
+	    	
+	    }
+	 public static void info(Exception e,String logMessage)
+	    {
+		 test.log(Status.INFO, 
+	        		MarkupHelper.createLabel(logMessage,
+	        				ExtentColor.GREY));
+	    	test.log(Status.INFO, 
+	        		e);
+	    	
 	    }
 	 
 	 public static void pass(String logMessage)
@@ -22,11 +32,23 @@ public class ReportLogger extends BaseClass{
 	        				ExtentColor.GREEN));
 	    }
 	 
+	 public static void resultPass(String logMessage)
+	    {
+	    	test.log(Status.PASS, 
+	        		MarkupHelper.createLabel(logMessage,
+	        				ExtentColor.PURPLE));
+	    }
+	 
 	 public static void fail(String logMessage)
 	    {
 	    	test.log(Status.FAIL, 
 	        		MarkupHelper.createLabel(logMessage,
 	        				ExtentColor.ORANGE));
+	    }
+	 public static void preExecutionFail(Exception exception)
+	    {
+	    	test.log(Status.FAIL, 
+	        		exception);
 	    }
 	 
 	 public static void fatal(String logMessage)
