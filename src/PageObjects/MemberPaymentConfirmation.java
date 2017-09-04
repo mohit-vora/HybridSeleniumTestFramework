@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
-import Utils.BrowserUtils;
+import Utils.BaseClass;
 import Utils.ReportLogger;
 
-public class MemberPaymentConfirmation extends BrowserUtils {
+public class MemberPaymentConfirmation extends BaseClass {
 	public static void verifyPaymentToMember(String dsid1, String dsid2) throws IOException, Exception {
 		/**/
 		Boolean flag = true;

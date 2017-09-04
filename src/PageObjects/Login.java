@@ -1,15 +1,12 @@
 package PageObjects;
 
 import java.io.IOException;
-
-import com.aventstack.extentreports.Status;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
-import Utils.BrowserUtils;
+import Utils.BaseClass;
 import Utils.ReportLogger;
 
-public class Login extends BrowserUtils{
+public class Login extends BaseClass{
 
     public static void performLogin(String dsid) throws IOException {
     		ReadLocators rd1 = new ReadLocators("Login");

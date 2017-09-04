@@ -1,26 +1,30 @@
 package PageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
-import Utils.BrowserUtils;
+import Utils.BaseClass;
 import Utils.ReportLogger;
+import sun.security.util.Length;
 
-public class EnrollMember extends BrowserUtils {
+public class EnrollMember extends BaseClass {
 
 	public static void RegisterMember(String dsid) throws InterruptedException, IOException {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
-
-			WebElement Createmem = driver.findElement(By.xpath(".//*[@id='newMemberGroup']"));
-
-			new Select(Createmem).selectByVisibleText("Full members");
+			ReadData dm = new ReadData("MemberDetails", dsid);
+			WebElement createMember = driver.findElement(rd1.getLocator("LST_CreateMember"));
+			
+			new Select(createMember).selectByVisibleText("Savings");
+			
 
 			Thread.sleep(1000);
-			// ReadData dm = new ReadData("MemberDetails","MEM001");
-			ReadData dm = new ReadData("MemberDetails", dsid);
+			
 			driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
 			driver.findElement(rd1.getLocator("TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
 			driver.findElement(rd1.getLocator("TXB_Email")).sendKeys(dm.getData("EMAIL_ADDRESS"));

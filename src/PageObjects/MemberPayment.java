@@ -7,10 +7,10 @@ import org.openqa.selenium.support.ui.Select;
 
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
-import Utils.BrowserUtils;
+import Utils.BaseClass;
 import Utils.ReportLogger;
 
-public class MemberPayment extends BrowserUtils {
+public class MemberPayment extends BaseClass {
 
 	public static void PopulatePaymenttoMember(String dsid1, String dsid2) throws IOException, InterruptedException {
 		ReadLocators rd1 = new ReadLocators("MemberPayment");
