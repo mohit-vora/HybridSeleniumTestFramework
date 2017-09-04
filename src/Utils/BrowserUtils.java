@@ -62,17 +62,6 @@ public class BrowserUtils extends BaseClass{
     public void beforeMethod(Method method) throws Exception {
         test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:write something here");    
     }
-
-    
-    //BeforeSuite: This method is executed before executing the all test cases present in the test suite.
-    //Opening the browser is prerequisite for all TestCases. 
-    //hence, this method will be executed before all test methods and tests. 
-    @BeforeSuite
-    public void Browser() {
-    	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/Report/AutomationReport.html");
-        test = extent.createTest("preExecution-Log");    
-        openBrowserChrome();
-    }
     
     
     //Annotates methods that will be run after each test method.

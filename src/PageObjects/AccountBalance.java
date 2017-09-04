@@ -7,7 +7,6 @@ import java.util.Map;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BaseClass;
@@ -29,68 +28,74 @@ public class AccountBalance extends BaseClass {
 	static double toAccountBalance = 0;
 	static Map<String, Double> fromAccountType = new HashMap<String, Double>();
 	Map<String, Double> toAccountType = new HashMap<String, Double>();
+	ReadLocators rd1 = new ReadLocators("RegisterMember");
 
 	// This is to extract an amount and account type for user who having more
 	// than one account type.
 	// And perform credit and debt from the account.(doubt to be a separate
 	// function or not?????)
 	// for single account user yet to be coded.....
-	public static void XtractAccountBalance(String dsid1, String account, String calculate) throws Exception {
-
-		ReadLocators rd1 = new ReadLocators("RegisterMember");
-		ReadData dm1 = new ReadData("TransactionData", dsid1);
-		ReadData dm2 = new ReadData("TransactionType", dm1.getData("TRANSACTION_TYPE"));
-		fromaccnt = dm2.getData("From_Account");
-		toaccnt = dm2.getData("To_Account");
-		transactionAmount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
-		LeftNavigationPane.NavigateTo("Account", "Account Information");
-		if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
-			WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
-			List<WebElement> rows = accnTypes.findElements(By.tagName("tr"));
-			for (int i = 1; i < rows.size(); i++) {
-				List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
-				String amount = cols.get(2).getText();
+	public void XtractAccountBalance(String dsid1, String account) throws Exception {
+		if (!((account.contentEquals("FromAccount") || account.contentEquals("ToAccount")))) {
+			ReportLogger.fail("The second argument in xtractAccount Balance method can be either FromAccount or ToAccount");
+			Assert.fail("Fails in argumet passing");
+		} else {
+			ReadData dm1 = new ReadData("TransactionData", dsid1);
+			ReadData dm2 = new ReadData("TransactionType", dm1.getData("TRANSACTION_TYPE"));
+			fromaccnt = dm2.getData("From_Account");
+			toaccnt = dm2.getData("To_Account");
+			transactionAmount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
+			LeftNavigationPane.NavigateTo("Acco", "Account Information");
+			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
+				WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
+				List<WebElement> rows = accnTypes.findElements(By.tagName("tr"));
+				for (int i = 1; i < rows.size(); i++) {
+					List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+					String amount = cols.get(2).getText();
+					String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
+					Double amountDb = Double.parseDouble(subStringAmount);
+					if (account.equalsIgnoreCase("FromAccount")) {
+						if (cols.get(0).getText().equalsIgnoreCase(fromaccnt)) {
+							fromAccountBalance = amountDb;
+							break;
+						}
+					} else if (account.equalsIgnoreCase("ToAccount")) {
+						if (cols.get(0).getText().equalsIgnoreCase(toaccnt)) {
+							toAccountBalance = amountDb;
+							break;
+						}
+					}
+				}
+			} else if (driver.findElement(rd1.getLocator("ELM_SingleAccountPane")).getText()
+					.contains("Account balance")) {
+				String amount = driver.findElement(rd1.getLocator("ELM_SingleAccountBalance")).getText();
 				String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 				Double amountDb = Double.parseDouble(subStringAmount);
 				if (account.equalsIgnoreCase("FromAccount")) {
-					if (cols.get(0).getText().equalsIgnoreCase(fromaccnt)) {
-						fromAccountBalance = amountDb;
-						break;
-					}
-
+					fromAccountBalance = amountDb;
 				} else if (account.equalsIgnoreCase("ToAccount")) {
-					if (cols.get(0).getText().equalsIgnoreCase(toaccnt)) {						
-						toAccountBalance = amountDb;
-						break;
-					}
+					toAccountBalance = amountDb;
 				}
 			}
-		} else if (driver.findElement(rd1.getLocator("ELM_SingleAccountPane")).getText().contains("Account balance")) {
-			String amount = driver.findElement(rd1.getLocator("ELM_SingleAccountBalance")).getText();
-			String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
-			Double amountDb = Double.parseDouble(subStringAmount);
-			if (account.equalsIgnoreCase("FromAccount")) {
-				fromAccountBalance = amountDb;				
-			} else if (account.equalsIgnoreCase("ToAccount")) {
-				toAccountBalance = amountDb;
-				
-			}
-		}
-		ReportLogger.info("Account Balance has been extracted before transactions");
+			ReportLogger.info("Account Balance has been extracted before transactions");
 
-		if (calculate.equalsIgnoreCase("Calculate") && (account.equalsIgnoreCase("FromAccount"))) {
-			amountDebit = fromAccountBalance - transactionAmount;
-		} else if (calculate.equalsIgnoreCase("Calculate") && (account.equalsIgnoreCase("ToAccount"))) {
-			amountCredit = toAccountBalance + transactionAmount;
+			if (account.equalsIgnoreCase("FromAccount")) {
+				amountDebit = fromAccountBalance - transactionAmount;
+			} else if (account.equalsIgnoreCase("ToAccount")) {
+				amountCredit = toAccountBalance + transactionAmount;
+			}
+			ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
+			ReportLogger.pass("Credited or Debited amount has been calculated for transaction verfication");
 		}
-		ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
-		ReportLogger.pass("Credited or Debited amount has been calculated for transaction verfication");
+
 	}
 
-	public void XtractAccountBalance(String dsid1, String account) throws Exception {
+	public void XtractAccountBalance(String account) throws Exception {
 
-		ReadLocators rd1 = new ReadLocators("RegisterMember");
-
+		if (!((account.contentEquals("FromAccount") || account.contentEquals("ToAccount")))) {
+			ReportLogger.fail("The argument in XtractAccount method can be either FromAccount or ToAccount");
+			Assert.fail();
+		} else {
 		LeftNavigationPane.NavigateTo("Account", "Account Information");
 		if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
 			WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
@@ -125,38 +130,32 @@ public class AccountBalance extends BaseClass {
 		}
 		ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
 		ReportLogger.pass("Account Balance has been extracted after transactions");
-}
+	}
+   }		
 
 	// to verify amount is debted or not.........
 	public void verifiyDebitAccount() {
-		Boolean flag = true;
 		if (df.format(amountDebit).equals(df.format(fromAccountBalance))) {
-			flag = true;
-		} else {
-			flag = false;
-		}
-		if (flag) {
 			ReportLogger.resultPass("Amount has been sucessfully debited from " + fromaccnt);
 		} else {
-			Assert.assertEquals(df.format(amountDebit), df.format(fromAccountBalance));	
+			System.out.println(fromAccountBalance + " " + amountDebit);
+
+			Assert.assertEquals(df.format(amountDebit), df.format(fromAccountBalance));
 		}
+
 		ReportLogger.info("In verifiyDebitAccount method of AccountBalance PageObjects");
 		ReportLogger.pass("Verfication of Debit Account Done Successfully");
-}
+	}
+
 	// to verify amount is credited or not.........
 	public void verifiyCreditAccount() {
-		Boolean flag = true;
 		if (df.format(amountCredit).equals(df.format(toAccountBalance))) {
-			flag = true;
-		} else {
-			flag = false;
-		}
-		if (flag) {
 			ReportLogger.resultPass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
 		} else {
 			Assert.assertEquals(df.format(amountCredit), df.format(toAccountBalance));
 		}
+
 		ReportLogger.info("In verifiyCreditAccount method of AccountBalance PageObjects");
 		ReportLogger.pass("Verfication of Credit Account Done Successfully");
 	}
-}	
+}

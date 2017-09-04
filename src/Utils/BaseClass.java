@@ -18,6 +18,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByAll;
+import org.testng.Assert;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -323,9 +325,9 @@ public class BaseClass {
             }
         } else {
         	preExecutionCheck=false;
-            System.out.println("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
+            ReportLogger.fail("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
+            Assert.fail();
         }
-
         return dataValue;
     }
     
