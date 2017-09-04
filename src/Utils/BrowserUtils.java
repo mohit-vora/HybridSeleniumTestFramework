@@ -3,12 +3,13 @@ package Utils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
@@ -17,13 +18,9 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 public class BrowserUtils extends BaseClass{
     
-    
-    ////tryout
-    
     @DataProvider(name="dp")
     public Object[][] dptryout(Method m){  	
 
-    	System.out.println();
     	try
     	{
     		if(preExecutionCheck){
@@ -31,7 +28,7 @@ public class BrowserUtils extends BaseClass{
         	}
     		else
     		{
-    			ReportLogger.info("Dataprovider failed");  			
+    			Assert.fail("PreExecution failed");  			
     		}	
     	}
     	catch(Exception e){
@@ -43,13 +40,24 @@ public class BrowserUtils extends BaseClass{
 
     
     @BeforeClass
-    public void bc() throws IOException {
+    public void grounWork() throws IOException {
     	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
-        test = extent.createTest("preExecution-Log");    
-        openBrowserChrome();
-        ReadAllLocators();
-    	ReadAllData();
-    	readTestCaseSheet();
+        test = extent.createTest("preExecution-Log");  
+        readTestCaseSheet();
+        
+        if (testCaseCount>0)
+        {
+            ReadAllLocators();
+         	ReadAllData();
+         	openBrowserChrome();
+        }
+        
+        else
+        {
+        	ReportLogger.warn("No Testcases has been selected");
+        }
+        
+       
     }
     
     
@@ -60,20 +68,9 @@ public class BrowserUtils extends BaseClass{
 
     @BeforeMethod
     public void beforeMethod(Method method) throws Exception {
+    	System.out.println("before method");
         test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:write something here");    
     }
-
-    
-    //BeforeSuite: This method is executed before executing the all test cases present in the test suite.
-    //Opening the browser is prerequisite for all TestCases. 
-    //hence, this method will be executed before all test methods and tests. 
-    @BeforeSuite
-    public void Browser() {
-    	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/Report/AutomationReport.html");
-        test = extent.createTest("preExecution-Log");    
-        openBrowserChrome();
-    }
-    
     
     //Annotates methods that will be run after each test method.
     //Operation:- Invoke logout function.
@@ -103,13 +100,19 @@ public class BrowserUtils extends BaseClass{
     //This method is executed after executing the all test cases present in the test suite.
     //Closing the browser is necessary at end of the each test case
     @AfterClass
-    public void Closebrowser() throws InterruptedException, IOException {
-        Thread.sleep(3000);
-        driver.quit();
-        ReportLogger.info("WebDriver Session ended");
-        System.out.println("we are here");
-        Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
-        
+    public void closeBrowser() throws InterruptedException, IOException {
+    	if (testCaseCount>0)
+        {
+    		Thread.sleep(3000);
+            driver.quit();
+            ReportLogger.info("WebDriver Session ended");
+            System.out.println("we are here");
+            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+        }
+    	
+    	
+        extent.flush();
+
 
     }
 

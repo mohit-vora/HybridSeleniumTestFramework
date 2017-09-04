@@ -159,7 +159,7 @@ public class AccountBalance extends BaseClass{
 		Boolean flag = true;
 		for (Entry<String, Double> entry : toAccountType.entrySet()) {
 			if (entry.getKey().equalsIgnoreCase(toaccnt)) {
-				if (df.format(amountDebit).equals(df.format(entry.getValue()))) {
+				if (df.format(amountCredit).equals(df.format(entry.getValue()))) {
 					flag=true;
 				} else {
 					flag=false;
@@ -167,7 +167,7 @@ public class AccountBalance extends BaseClass{
 				if(flag){
 					ReportLogger.resultPass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
 				}else{
-					Assert.assertEquals(df.format(amountDebit), df.format(entry.getValue()));
+					Assert.assertEquals(df.format(amountCredit), df.format(entry.getValue()));
 					ReportLogger.info("Amount has not been credited to" + " " + toaccnt + " " + "account");
 				}
 			}

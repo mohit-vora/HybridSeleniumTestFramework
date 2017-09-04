@@ -18,17 +18,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByAll;
+import org.testng.Assert;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
+import DataMap.ReadData;
+
 public class BaseClass {
 	
 	public static WebDriver driver = null;
     public static ExtentTest test;
-
+    protected static int testCaseCount = 0;
     protected static boolean preExecutionCheck = true;
 
 
@@ -45,6 +49,7 @@ public class BaseClass {
     
     public void readTestCaseSheet() {
 
+    	testCaseCount = 0;
     	try
     	{
     		FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\TestCaseSheet.xlsx");
@@ -57,15 +62,16 @@ public class BaseClass {
             for (currentRow = 1; currentRow <= rowNum; currentRow++) {
                 String runStatus = sheet.getRow(currentRow).getCell(3).getStringCellValue();
                 if (runStatus.equalsIgnoreCase("Yes")) {
+                	testCaseCount++;
                 	String testName = sheet.getRow(currentRow).getCell(1).getStringCellValue();
                 	String dataSetIds = sheet.getRow(currentRow).getCell(2).getStringCellValue();
-                    BaseClass baseClass = new BaseClass(); 
-                    baseClass.setYesTestDetails(testName, dataSetIds);
+                    setYesTestDetails(testName, dataSetIds);
                 }
             }
             ReportLogger.info("Test Cases to be executed retrieved from Testcase Sheet");
             workBook.close();
             mapSheet.close();
+            
     	}
     	catch (Exception exception)
     	{
@@ -73,6 +79,7 @@ public class BaseClass {
     		ReportLogger.preExecutionFail(exception);
 
     		extent.flush();
+    		
     	}
         
 
@@ -87,7 +94,24 @@ public class BaseClass {
             ReportLogger.info("Popup accepted :"+popUpMessage);
                 
     }
-	
+	public void PopUpAccept(String dsid) throws IOException {
+		ReadData data = new ReadData("PopupMessages", dsid);
+    	String popUpMessage = driver.switchTo().alert().getText();
+    	
+    	if(popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
+    		driver.switchTo().alert().accept();
+    		ReportLogger.info("Popup accepted :"+popUpMessage);
+    	}
+    	else{
+    		driver.switchTo().alert().accept();
+    		ReportLogger.info("Enrollment was not successfull refer to the Stack trace below");
+    		Assert.assertEquals(popUpMessage, data.getData("MESSAGE_TEXT"));
+    		 
+    	}
+        
+        
+            
+}
 	////this is where Driver Splitting things go
 	
 	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
@@ -98,10 +122,22 @@ public class BaseClass {
 		int col=0;
 		
 		row=dataSetIds.split(";").length;
+		int counter=0;
+		for (int i=0;i<dataSetIds.length();i++)
+		{
+			if (dataSetIds.charAt(i)==';')
+				counter++;
+		}
+
+
+		if (counter!=row-1){
+			ReportLogger.warn(yesTestName+" ignoring last ; as no dataset ids after that");
+		}
+	
 		col=dataSetIds.split(";")[0].split(",").length;
 		System.out.println("i calculated row col");
 		Object[][] s1 = new String [row][col];
-		
+		System.out.println("row & col"+row+col);
 		for (int rowIterator=0;rowIterator<row;rowIterator++)
 		{			
 			for (int columnIterator=0;columnIterator<col;columnIterator++)
@@ -109,7 +145,7 @@ public class BaseClass {
 				s1[rowIterator][columnIterator] = dataSetIds.split(";")[rowIterator].split(",")[columnIterator];
 			}
 		}
-		ReportLogger.info("Data Set ID for the chosen TestCase"+ yesTestName +"is read");
+		ReportLogger.info("Data Set ID for the chosen TestCase: "+ yesTestName +"is read");
 		System.out.println("read ids");
 		onlyYesTestCases.put(yesTestName,s1);
 	}
@@ -161,14 +197,14 @@ public class BaseClass {
 	//this is where application map reading starts
 	private static HashMap <String,HashMap<String,ByAll>> testSpecificMap = new HashMap<String,HashMap<String,ByAll>>();
 	XSSFCell elementName;
-	
+	XSSFSheet sheet;
 	
 	
 	public void ReadAllLocators(){
 		try
 		{
 			HashMap < String, ByAll > locatorMap = new HashMap < String, ByAll > ();
-	        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
+	        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMa.xlsx");
 	        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 
 	        List < By > locators = null;
@@ -178,7 +214,7 @@ public class BaseClass {
 	        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
 	        {
 	        
-	        	XSSFSheet sheet = WorkBook.getSheetAt(sheetIndex);
+	        	sheet = WorkBook.getSheetAt(sheetIndex);
 	        	XSSFCell mainLocator, mainValue, alternateLocator, alternateValue;
 	            int rowIterator;
 	            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
@@ -193,6 +229,11 @@ public class BaseClass {
 	                if (mainLocator != null && mainValue != null) {
 	                    locators.add(generator(mainLocator.getStringCellValue().toLowerCase(), mainValue.getStringCellValue()));
 	                }
+	                else{
+	                	ReportLogger.warn("Main Locator cell is empty");
+	                	Assert.fail("Main Locator cell is empty");
+	                }
+	   
 
 	                if (alternateLocator != null && alternateValue != null) {
 	                    locators.add(generator(alternateLocator.getStringCellValue().toLowerCase(), alternateValue.getStringCellValue()));
@@ -212,7 +253,7 @@ public class BaseClass {
 		catch (Exception exception)
 		{
 			preExecutionCheck=false;
-			ReportLogger.fatal("problem in ReadAllLocators"+exception);
+			ReportLogger.fatal("problem in ReadAllLocators "+exception);
 		}
 		
     }	
@@ -232,7 +273,7 @@ public class BaseClass {
                     break;
 
                 default:
-                    System.out.println("Something is wrong in application map of this object: " + elementName);
+                    ReportLogger.fatal("Something is wrong in application map "+sheet+" of object: " + elementName);
                     break;
 
             }
@@ -244,8 +285,13 @@ public class BaseClass {
     private ByAll generatorAll(List < By >byList) {
         if (byList.size() == 1) {
             return new ByAll(byList.get(0));
-        } else {
+        } else if(byList.size() == 2) {
             return new ByAll(byList.get(0), byList.get(1));
+        }
+        else{
+        	
+        	ReportLogger.fatal("ByAll couldn't be generated");
+        	return null;
         }
 
     }
@@ -260,10 +306,8 @@ public class BaseClass {
     
     
     //this is where data map things start
-    private static LinkedHashMap < String, HashMap<String,List<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,List<String>>> ();
+    private static LinkedHashMap < String, HashMap<String,ArrayList<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,ArrayList<String>>> ();
     public void ReadAllData() throws IOException {
-
-    	System.out.println("finally got id");
     	
         FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
@@ -275,7 +319,7 @@ public class BaseClass {
         {
         
         	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-        	LinkedHashMap<String,List<String>> sheetData = new LinkedHashMap<String, List<String>>();
+        	LinkedHashMap<String,ArrayList<String>> sheetData = new LinkedHashMap<String, ArrayList<String>>();
 
 	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
 	        int colCount = sheet.getRow(0).getLastCellNum();
@@ -283,7 +327,7 @@ public class BaseClass {
 	        DataFormatter dataFormatter = new DataFormatter();
 	
 	        for (int rowiterater = 0; rowiterater <= rowCount; rowiterater++){
-	            List<String> list = new ArrayList<String>();
+	            ArrayList<String> list = new ArrayList<String>();
 	            for (int coliterater = 1; coliterater < colCount; coliterater++)
 	            	list.add(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
 	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
@@ -301,7 +345,7 @@ public class BaseClass {
     public String getdata(String col) {
         String dataValue = "";
                
-        List<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
+        ArrayList<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
         int dataColumn = 0;
         boolean flag = false;
         for (; dataColumn < list.size(); dataColumn++) {
@@ -313,17 +357,17 @@ public class BaseClass {
         
         if (flag) {
             list = testSpecificData.get(dSName).get(id);
-            try{
+            System.out.println(list.get(dataColumn)+"printing list");
+            if (list.size()>0){
             	dataValue = list.get(dataColumn);
             }
-            catch (Exception e)
-            {
-            	preExecutionCheck=false;
-            	System.out.println(id +" did not match any id in "+ dSName);
-            }
+            else
+            	{
+            		Assert.fail(id +" did not match any id in "+ dSName);
+            	}
+
         } else {
-        	preExecutionCheck=false;
-            System.out.println("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
+        	Assert.fail("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
         }
 
         return dataValue;
@@ -338,13 +382,7 @@ public class BaseClass {
     
     public static ExtentReports extent;
     
-    
-    public static ExtentReports getInstance() {
-    	if (extent == null){
-    		createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
-    	}
-        return extent;
-    }
+ 
     
     public static ExtentReports createInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);

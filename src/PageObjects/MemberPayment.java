@@ -9,6 +9,7 @@ import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BaseClass;
 import Utils.ReportLogger;
+import junit.framework.Assert;
 
 public class MemberPayment extends BaseClass {
 
@@ -17,8 +18,7 @@ public class MemberPayment extends BaseClass {
 
 		ReadData dm1 = new ReadData("MemberDetails", dsid1);
 
-		ReadData dm2 = new ReadData("TransactionData", dsid2);
-
+		ReadData dm2 = new ReadData("TransactionData", dsid2);	
 		driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm1.getData("LOGIN_NAME"));
 		Thread.sleep(1000);
 		driver.findElement(rd1.getLocator("TXB_Amount")).sendKeys(dm2.getData("TRANSACTION_AMOUNT"));
@@ -31,7 +31,7 @@ public class MemberPayment extends BaseClass {
 
 		ReportLogger.info("In PopulatePaymenttoMember pageobjects");
 		ReportLogger.info("Sucessfully payment to member page has been populated");
-
+		
 	}
 
 }
