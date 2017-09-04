@@ -97,7 +97,7 @@ public class BaseClass {
 		
 		row=dataSetIds.split(";").length;
 		col=dataSetIds.split(";")[0].split(",").length;
-		
+		System.out.println("i calculated row col");
 		Object[][] s1 = new String [row][col];
 		
 		for (int rowIterator=0;rowIterator<row;rowIterator++)
@@ -108,6 +108,7 @@ public class BaseClass {
 			}
 		}
 		ReportLogger.info("Data Set ID for the chosen TestCase"+ yesTestName +"is read");
+		System.out.println("read ids");
 		onlyYesTestCases.put(yesTestName,s1);
 	}
 	
@@ -261,7 +262,7 @@ public class BaseClass {
     private static LinkedHashMap < String, HashMap<String,List<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,List<String>>> ();
     public void ReadAllData() throws IOException {
 
-    	
+    	System.out.println("finally got id");
     	
         FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);

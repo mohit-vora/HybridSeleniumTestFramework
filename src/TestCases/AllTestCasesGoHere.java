@@ -33,6 +33,7 @@ public class AllTestCasesGoHere extends BrowserUtils{
 	@Test(dataProvider = "dp")
     public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId){
 		try{
+			
 			Login.performLogin(toMemDSId);
 	    	AccountBalance accnt = new AccountBalance();
 	    	accnt.XtractAccountBalance(TXNDSId,"ToAccount","Calculate"); 

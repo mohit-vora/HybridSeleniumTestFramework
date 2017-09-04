@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -23,10 +22,30 @@ public class BrowserUtils extends BaseClass{
     
     @DataProvider(name="dp")
     public Object[][] dptryout(Method m){  	
-    	if(preExecutionCheck){
-    		return getYesTestDetails(m.getName());
+    	System.out.println();
+    	try
+    	{
+    		if(preExecutionCheck){
+        		return getYesTestDetails(m.getName());
+        	}
+    		else
+    		{
+    			ReportLogger.info("Dataprovider failed");
+    			
+    			
+    			
+    		}
+    	
     	}
+    	catch(Exception e){
+    		ReportLogger.preExecutionFail(e);
+    		
+    	}
+    		
     	return new Object[][]{};
+    		
+    	
+    	
     	
     }   
     
