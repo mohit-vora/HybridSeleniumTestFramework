@@ -44,8 +44,5 @@ public class EnrollMember extends BaseClass {
 
 			ReportLogger.info("In EnrollMember PageObjects");
 			ReportLogger.pass("Registration of new member page populated successfully");
-
-
-
 	}
 }

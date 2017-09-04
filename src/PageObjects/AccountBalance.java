@@ -4,11 +4,11 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.testng.*;
+import org.junit.runners.model.FrameworkMember;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
@@ -16,7 +16,7 @@ import Utils.BaseClass;
 import Utils.LeftNavigationPane;
 import Utils.ReportLogger;
 
-public class AccountBalance extends BaseClass{
+public class AccountBalance extends BaseClass {
 	// account type is hardcoded...
 	// (doubt how the method will be if sender and receiver will have differnt
 	// accnt type????)
@@ -27,7 +27,9 @@ public class AccountBalance extends BaseClass{
 	static double amountDebit = 0;
 	static double amountCredit = 0;
 	static double transactionAmount = 0;
-	Map<String, Double> fromAccountType = new HashMap<String, Double>();
+	static double fromAccountBalance = 0;
+	static double toAccountBalance = 0;
+	static Map<String, Double> fromAccountType = new HashMap<String, Double>();
 	Map<String, Double> toAccountType = new HashMap<String, Double>();
 
 	// This is to extract an amount and account type for user who having more
@@ -35,7 +37,7 @@ public class AccountBalance extends BaseClass{
 	// And perform credit and debt from the account.(doubt to be a separate
 	// function or not?????)
 	// for single account user yet to be coded.....
-	public void XtractAccountBalance(String dsid1, String account, String calculate) throws Exception {
+	public static void XtractAccountBalance(String dsid1, String account, String calculate) throws Exception {
 
 		ReadLocators rd1 = new ReadLocators("RegisterMember");
 		ReadData dm1 = new ReadData("TransactionData", dsid1);
@@ -51,43 +53,44 @@ public class AccountBalance extends BaseClass{
 				List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
 				String amount = cols.get(2).getText();
 				String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
-				Double Amountdb = Double.parseDouble(subStringAmount);
+				Double amountDb = Double.parseDouble(subStringAmount);
 				if (account.equalsIgnoreCase("FromAccount")) {
-					fromAccountType.put(cols.get(0).getText(), Amountdb);
+					if(cols.get(0).getText().equalsIgnoreCase(fromaccnt)){
+						System.out.println(cols.get(0).getText());
+						fromAccountBalance = amountDb;
+						System.out.println("fromaccountbalance"+fromAccountBalance);
+						break;
+					}
+					
 				} else if (account.equalsIgnoreCase("ToAccount")) {
-					toAccountType.put(cols.get(0).getText(), Amountdb);
-				}
+					if(cols.get(0).getText().equalsIgnoreCase(toaccnt)){
+						System.out.println(cols.get(0).getText());
+					toAccountBalance = amountDb;
+					System.out.println("toaccountbal"+toAccountBalance);
+					break;
+					}
+				}				
 			}
 		} else if (driver.findElement(rd1.getLocator("ELM_SingleAccountPane")).getText().contains("Account balance")) {
-			String accountTab = driver.findElement(rd1.getLocator("ELM_SingleAccountType")).getText();
 			String amount = driver.findElement(rd1.getLocator("ELM_SingleAccountBalance")).getText();
 			String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 			Double Amountdb = Double.parseDouble(subStringAmount);
-			String[] accountName = accountTab.split(" ");
-			String accountType = "";
-			for (int i = 3; i < accountName.length; i++) {
-				accountType = accountType + accountName[i] + " ";
-			}
 			if (account.equalsIgnoreCase("FromAccount")) {
-				fromAccountType.put(accountType.trim(), Amountdb);
+				fromAccountBalance = Amountdb;
+				System.out.println("fromaccountbalance"+fromAccountBalance);
 			} else if (account.equalsIgnoreCase("ToAccount")) {
-				toAccountType.put(accountType.trim(), Amountdb);
+				toAccountBalance = Amountdb;
+				System.out.println("toaccountbal"+toAccountBalance);
 			}
 		}
 		ReportLogger.info("Account Balance has been extracted before transactions");
 
 		if (calculate.equalsIgnoreCase("Calculate") && (account.equalsIgnoreCase("FromAccount"))) {
-			for (Entry<String, Double> entry : fromAccountType.entrySet()) {
-				if (entry.getKey().equalsIgnoreCase(fromaccnt)) {
-					amountDebit = entry.getValue() - transactionAmount;
-				}
-			}
+			amountDebit = fromAccountBalance - transactionAmount;
+			System.out.println("amountdebit"+amountDebit);
 		} else if (calculate.equalsIgnoreCase("Calculate") && (account.equalsIgnoreCase("ToAccount"))) {
-			for (Entry<String, Double> entry : toAccountType.entrySet()) {
-				if (entry.getKey().equalsIgnoreCase(toaccnt)) {
-					amountCredit = entry.getValue() + transactionAmount;
-				}
-			}
+			amountCredit = toAccountBalance + transactionAmount;
+			System.out.println("amouCredit"+amountCredit);
 		}
 		ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
 		ReportLogger.pass("Credited or Debited amount has been calculated for transaction verfication");
@@ -107,25 +110,32 @@ public class AccountBalance extends BaseClass{
 				String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 				Double amountDb = Double.parseDouble(subStringAmount);
 				if (account.equalsIgnoreCase("FromAccount")) {
-					fromAccountType.put(cols.get(0).getText(), amountDb);
+					if(cols.get(0).getText().equalsIgnoreCase(fromaccnt)){
+						System.out.println(cols.get(0).getText());						
+						fromAccountBalance = amountDb;
+						System.out.println("fromaccountbalance"+fromAccountBalance);
+						break;
+					}
+					
 				} else if (account.equalsIgnoreCase("ToAccount")) {
-					toAccountType.put(cols.get(0).getText(), amountDb);
+					if(cols.get(0).getText().equalsIgnoreCase(toaccnt)){
+						System.out.println(cols.get(0).getText());
+					toAccountBalance = amountDb;
+					System.out.println("toaccountbal"+toAccountBalance);
+					break;
+					}
 				}
 			}
 		} else if (driver.findElement(rd1.getLocator("ELM_SingleAccountPane")).getText().contains("Account balance")) {
-			String accountTab = driver.findElement(rd1.getLocator("ELM_SingleAccountType")).getText();
 			String amount = driver.findElement(rd1.getLocator("ELM_SingleAccountBalance")).getText();
 			String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 			Double amountDb = Double.parseDouble(subStringAmount);
-			String[] accountName = accountTab.split(" ");
-			String accountType = "";
-			for (int i = 3; i < accountName.length; i++) {
-				accountType = accountType + accountName[i] + " ";
-			}
 			if (account.equalsIgnoreCase("FromAccount")) {
-				fromAccountType.put(accountType.trim(), amountDb);
+				fromAccountBalance = amountDb;
+				System.out.println("fromaccountbalance"+fromAccountBalance);
 			} else if (account.equalsIgnoreCase("ToAccount")) {
-				toAccountType.put(accountType.trim(), amountDb);
+				toAccountBalance = amountDb;
+				System.out.println("toaccountbal"+toAccountBalance);
 			}
 		}
 		ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
@@ -135,20 +145,16 @@ public class AccountBalance extends BaseClass{
 	// to verify amount is debted or not.........
 	public void verifiyDebitAccount() {
 		Boolean flag = true;
-		for (Entry<String, Double> entry : fromAccountType.entrySet()) {
-			if (entry.getKey().equalsIgnoreCase(fromaccnt)) {
-				if (df.format(amountDebit).equals(df.format(entry.getValue()))) {
-					flag = true;
-				} else {
-					flag = false;
-				}
-				if (flag) {
-					ReportLogger.resultPass("Amount has been sucessfully debited from " + fromaccnt);
-				} else {
-					Assert.assertEquals(df.format(amountDebit), df.format(entry.getValue()));
-					ReportLogger.info("Amount has not been debited from " + fromaccnt);
-				}
-			}
+		if (df.format(amountDebit).equals(df.format(fromAccountBalance))) {
+			flag = true;
+		} else {
+			flag = false;
+		}
+		if (flag) {
+			ReportLogger.resultPass("Amount has been sucessfully debited from " + fromaccnt);
+		} else {
+			Assert.assertEquals(df.format(amountDebit), df.format(fromAccountBalance));
+			ReportLogger.info("Amount has not been debited from " + fromaccnt);
 		}
 		ReportLogger.info("In verifiyDebitAccount method of AccountBalance PageObjects");
 		ReportLogger.pass("Verfication of Debit Account Done Successfully");
@@ -157,24 +163,16 @@ public class AccountBalance extends BaseClass{
 	// to verify amount is credited or not.........
 	public void verifiyCreditAccount() {
 		Boolean flag = true;
-		for (Entry<String, Double> entry : toAccountType.entrySet()) {
-			if (entry.getKey().equalsIgnoreCase(toaccnt)) {
-				if (df.format(amountDebit).equals(df.format(entry.getValue()))) {
-					flag=true;
-				} else {
-					flag=false;
-				}
-				if(flag){
-					ReportLogger.resultPass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
-				}else{
-					Assert.assertEquals(df.format(amountDebit), df.format(entry.getValue()));
-					ReportLogger.info("Amount has not been credited to" + " " + toaccnt + " " + "account");
-				}
-			}
+		if (df.format(amountCredit).equals(df.format(toAccountBalance))) {
+			flag = true;
+		} else {
+			flag = false;
 		}
+		if (flag) {
+			ReportLogger.resultPass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
+		} else {
+			Assert.assertEquals(df.format(amountCredit), df.format(toAccountBalance));
+			ReportLogger.info("Amount has not been credited to" + " " + toaccnt + " " + "account");
+		}
+
 		ReportLogger.info("In verifiyCreditAccount method of AccountBalance PageObjects");
-		ReportLogger.pass("Verfication of credit Account Done Successfully");
-
-	}
-
-}
