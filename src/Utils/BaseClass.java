@@ -30,6 +30,7 @@ public class BaseClass {
 	
 	public static WebDriver driver = null;
     public static ExtentTest test;
+    protected static boolean preExecutionCheck = true;
 
 	//reading things go here
 	

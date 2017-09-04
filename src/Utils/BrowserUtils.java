@@ -22,8 +22,12 @@ public class BrowserUtils extends BaseClass{
     
     @DataProvider(name="dp")
     public Object[][] dptryout(Method m){  	
-    	return getYesTestDetails(m.getName());
-    }   
+    	if (preExecutionCheck)
+    	{
+        	return getYesTestDetails(m.getName());
+    	}
+    	return new Object[][]{};
+    }
     
     @BeforeClass
     public void bc() throws IOException
@@ -49,7 +53,7 @@ public class BrowserUtils extends BaseClass{
     //hence, this method will be executed before all test methods and tests. 
     @BeforeSuite
     public void Browser() {
-    	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
+    	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/Report/AutomationReport.html");
         test = extent.createTest("preExecution-Log");    
         openBrowserChrome();
     }

@@ -31,8 +31,16 @@ public class dummy {
 	@BeforeClass
 	public void bc()
 	{
-		System.out.println("before class");
-		int x=1/0;
+		try{
+			System.out.println("before class");
+			int x=1/0;
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("i am here");
+			return;
+		}
 
 	}
 	
