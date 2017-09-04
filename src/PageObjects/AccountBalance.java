@@ -4,8 +4,6 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.runners.model.FrameworkMember;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -145,7 +143,6 @@ public class AccountBalance extends BaseClass {
 		ReportLogger.info("In verifiyDebitAccount method of AccountBalance PageObjects");
 		ReportLogger.pass("Verfication of Debit Account Done Successfully");
 }
-
 	// to verify amount is credited or not.........
 	public void verifiyCreditAccount() {
 		Boolean flag = true;
@@ -160,5 +157,6 @@ public class AccountBalance extends BaseClass {
 			Assert.assertEquals(df.format(amountCredit), df.format(toAccountBalance));
 		}
 		ReportLogger.info("In verifiyCreditAccount method of AccountBalance PageObjects");
+		ReportLogger.pass("Verfication of Credit Account Done Successfully");
 	}
 }	
