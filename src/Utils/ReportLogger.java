@@ -13,6 +13,16 @@ public class ReportLogger extends BaseClass{
 	    	test.log(Status.INFO, 
 	        		MarkupHelper.createLabel(logMessage,
 	        				ExtentColor.GREY));
+	    	
+	    }
+	 public static void info(Exception e,String logMessage)
+	    {
+		 test.log(Status.INFO, 
+	        		MarkupHelper.createLabel(logMessage,
+	        				ExtentColor.GREY));
+	    	test.log(Status.INFO, 
+	        		e);
+	    	
 	    }
 	 
 	 public static void pass(String logMessage)
