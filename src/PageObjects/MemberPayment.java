@@ -1,15 +1,12 @@
 package PageObjects;
 
 import java.io.IOException;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-
 import ApplicationMap.ReadLocators;
 import DataMap.ReadData;
 import Utils.BaseClass;
 import Utils.ReportLogger;
-import junit.framework.Assert;
 
 public class MemberPayment extends BaseClass {
 

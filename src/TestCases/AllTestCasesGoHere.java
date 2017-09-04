@@ -29,23 +29,23 @@ public class AllTestCasesGoHere extends BrowserUtils {
 			
 			Login.performLogin(toMemDSId);
 	    	AccountBalance accnt = new AccountBalance();
-	    	accnt.XtractAccountBalance(TXNDSId,"ToAccount","Calculate"); 
+	    	accnt.XtractAccountBalance(TXNDSId,"ToAccount"); 
 	    	LeftNavigationPane.NavigateTo("Logout");
 	        PopUpAccept();
 	        
 	        
 	        Login.performLogin(fromMemDSId);
-	    	accnt.XtractAccountBalance(TXNDSId,"FromAccount","Calculate");   	
-	    	LeftNavigationPane.NavigateTo("Account", "Member Payment");
+	    	accnt.XtractAccountBalance(TXNDSId,"FromAccount");   	
+	    	LeftNavigationPane.NavigateTo("Acco", "Member Payment");
 	        MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
 	        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
-	        accnt.XtractAccountBalance(TXNDSId,"FromAccount");
+	        accnt.XtractAccountBalance("FromAccount");
 	    	accnt.verifiyDebitAccount();
 	    	LeftNavigationPane.NavigateTo("Logout");
 	        PopUpAccept();
 	        
 	        Login.performLogin(toMemDSId);
-	        accnt.XtractAccountBalance(TXNDSId,"ToAccount");
+	        accnt.XtractAccountBalance("ToAccount");
 	    	accnt.verifiyCreditAccount();
 	    	LeftNavigationPane.NavigateTo("Logout");
 	        PopUpAccept();

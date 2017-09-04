@@ -368,8 +368,8 @@ public class BaseClass {
 
         } else {
         	Assert.fail("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
-        }
 
+        }
         return dataValue;
     }
     

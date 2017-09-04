@@ -71,6 +71,7 @@ public class BrowserUtils extends BaseClass{
     	System.out.println("before method");
         test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:write something here");    
     }
+
     
     //Annotates methods that will be run after each test method.
     //Operation:- Invoke logout function.
