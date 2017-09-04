@@ -34,7 +34,7 @@ public class BaseClass {
 
 	//reading things go here
     public void openBrowserChrome() {
-        System.setProperty("webdriver.chrome.driver", getPropVal("chromeDriver"));
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+getPropVal("chromeDriver"));
         driver = new ChromeDriver();
         driver.get(getPropVal("url"));
         ReportLogger.info("Browser Instance opened");

@@ -80,6 +80,8 @@ public class BrowserUtils extends BaseClass{
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
+    	
+    	System.out.println("inside after method");
     	if (result.getStatus() == ITestResult.FAILURE) {
             test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " Test case FAILED due to below issues:",
                                             ExtentColor.RED));
