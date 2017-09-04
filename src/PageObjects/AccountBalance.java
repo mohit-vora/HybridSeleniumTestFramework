@@ -55,42 +55,35 @@ public class AccountBalance extends BaseClass {
 				String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 				Double amountDb = Double.parseDouble(subStringAmount);
 				if (account.equalsIgnoreCase("FromAccount")) {
-					if(cols.get(0).getText().equalsIgnoreCase(fromaccnt)){
-						System.out.println(cols.get(0).getText());
+					if (cols.get(0).getText().equalsIgnoreCase(fromaccnt)) {
 						fromAccountBalance = amountDb;
-						System.out.println("fromaccountbalance"+fromAccountBalance);
 						break;
 					}
-					
+
 				} else if (account.equalsIgnoreCase("ToAccount")) {
-					if(cols.get(0).getText().equalsIgnoreCase(toaccnt)){
-						System.out.println(cols.get(0).getText());
-					toAccountBalance = amountDb;
-					System.out.println("toaccountbal"+toAccountBalance);
-					break;
+					if (cols.get(0).getText().equalsIgnoreCase(toaccnt)) {						
+						toAccountBalance = amountDb;
+						break;
 					}
-				}				
+				}
 			}
 		} else if (driver.findElement(rd1.getLocator("ELM_SingleAccountPane")).getText().contains("Account balance")) {
 			String amount = driver.findElement(rd1.getLocator("ELM_SingleAccountBalance")).getText();
 			String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
-			Double Amountdb = Double.parseDouble(subStringAmount);
+			Double amountDb = Double.parseDouble(subStringAmount);
 			if (account.equalsIgnoreCase("FromAccount")) {
-				fromAccountBalance = Amountdb;
-				System.out.println("fromaccountbalance"+fromAccountBalance);
+				fromAccountBalance = amountDb;				
 			} else if (account.equalsIgnoreCase("ToAccount")) {
-				toAccountBalance = Amountdb;
-				System.out.println("toaccountbal"+toAccountBalance);
+				toAccountBalance = amountDb;
+				
 			}
 		}
 		ReportLogger.info("Account Balance has been extracted before transactions");
 
 		if (calculate.equalsIgnoreCase("Calculate") && (account.equalsIgnoreCase("FromAccount"))) {
 			amountDebit = fromAccountBalance - transactionAmount;
-			System.out.println("amountdebit"+amountDebit);
 		} else if (calculate.equalsIgnoreCase("Calculate") && (account.equalsIgnoreCase("ToAccount"))) {
 			amountCredit = toAccountBalance + transactionAmount;
-			System.out.println("amouCredit"+amountCredit);
 		}
 		ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
 		ReportLogger.pass("Credited or Debited amount has been calculated for transaction verfication");
@@ -110,19 +103,15 @@ public class AccountBalance extends BaseClass {
 				String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 				Double amountDb = Double.parseDouble(subStringAmount);
 				if (account.equalsIgnoreCase("FromAccount")) {
-					if(cols.get(0).getText().equalsIgnoreCase(fromaccnt)){
-						System.out.println(cols.get(0).getText());						
+					if (cols.get(0).getText().equalsIgnoreCase(fromaccnt)) {
 						fromAccountBalance = amountDb;
-						System.out.println("fromaccountbalance"+fromAccountBalance);
 						break;
 					}
-					
+
 				} else if (account.equalsIgnoreCase("ToAccount")) {
-					if(cols.get(0).getText().equalsIgnoreCase(toaccnt)){
-						System.out.println(cols.get(0).getText());
-					toAccountBalance = amountDb;
-					System.out.println("toaccountbal"+toAccountBalance);
-					break;
+					if (cols.get(0).getText().equalsIgnoreCase(toaccnt)) {
+						toAccountBalance = amountDb;
+						break;
 					}
 				}
 			}
@@ -132,15 +121,13 @@ public class AccountBalance extends BaseClass {
 			Double amountDb = Double.parseDouble(subStringAmount);
 			if (account.equalsIgnoreCase("FromAccount")) {
 				fromAccountBalance = amountDb;
-				System.out.println("fromaccountbalance"+fromAccountBalance);
 			} else if (account.equalsIgnoreCase("ToAccount")) {
 				toAccountBalance = amountDb;
-				System.out.println("toaccountbal"+toAccountBalance);
 			}
 		}
 		ReportLogger.info("In extract accountbalance method of AccountBalance PageObjects");
 		ReportLogger.pass("Account Balance has been extracted after transactions");
-	}
+}
 
 	// to verify amount is debted or not.........
 	public void verifiyDebitAccount() {
@@ -153,12 +140,11 @@ public class AccountBalance extends BaseClass {
 		if (flag) {
 			ReportLogger.resultPass("Amount has been sucessfully debited from " + fromaccnt);
 		} else {
-			Assert.assertEquals(df.format(amountDebit), df.format(fromAccountBalance));
-			ReportLogger.info("Amount has not been debited from " + fromaccnt);
+			Assert.assertEquals(df.format(amountDebit), df.format(fromAccountBalance));	
 		}
 		ReportLogger.info("In verifiyDebitAccount method of AccountBalance PageObjects");
 		ReportLogger.pass("Verfication of Debit Account Done Successfully");
-	}
+}
 
 	// to verify amount is credited or not.........
 	public void verifiyCreditAccount() {
@@ -172,7 +158,7 @@ public class AccountBalance extends BaseClass {
 			ReportLogger.resultPass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
 		} else {
 			Assert.assertEquals(df.format(amountCredit), df.format(toAccountBalance));
-			ReportLogger.info("Amount has not been credited to" + " " + toaccnt + " " + "account");
 		}
-
 		ReportLogger.info("In verifiyCreditAccount method of AccountBalance PageObjects");
+	}
+}	

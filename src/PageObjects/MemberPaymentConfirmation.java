@@ -16,8 +16,8 @@ public class MemberPaymentConfirmation extends BaseClass {
 		ReadLocators rd1 = new ReadLocators("MemberPayment");
 		Thread.sleep(2000);
 		String name[] = driver.findElement(rd1.getLocator("ELM_To")).getText().split("-");
-		if (flag) {
-			String appValue = driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText();
+		String appValue = driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText();
+		if (flag){			
 			if (appValue.substring(0, appValue.length() - 4).equals(dm2.getData("Transaction_Amount"))) {
 				if (driver.findElement(rd1.getLocator("ELM_TransactionDescription")).getText()
 						.equals(dm2.getData("Transaction_Description"))) {
