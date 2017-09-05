@@ -15,6 +15,7 @@ public class Login extends BaseClass{
             driver.findElement(rd1.getLocator("TXB_LOGINNAME")).sendKeys(dm.getData("LOGIN_NAME"));
             driver.findElement(rd1.getLocator("TXB_PASSWORD")).sendKeys(dm.getData("PASSWORD"));
             driver.findElement(rd1.getLocator("BTN_LOGIN")).click();
+       
             
             ReportLogger.info("User has sucessfully logged-in");
             ReportLogger.pass("Login Action Performed");

@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-
 public class LeftNavigationPane extends BrowserUtils {
 
 	public static void NavigateTo(String mainMenu, String subMenu) {
@@ -57,20 +56,25 @@ public class LeftNavigationPane extends BrowserUtils {
 	}
 
 	public static void NavigateTo(String mainMenu) {
-        try {
-			
-		if (mainMenu.equals("Logout")) {
-			String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
-			driver.findElement(By.xpath(clickmainmenu)).click();
-			ReportLogger.info("Navigating to " + mainMenu);
+		try {
 
-		}else{
-			Assert.fail(mainMenu + " " + "might not be a webelement present in cyclos application");
-		}
-        } catch (Exception e) {
+			if (mainMenu.equals("Logout")) {
+				String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
+				if (driver.findElement(By.xpath(clickmainmenu)).isDisplayed()){
+					driver.findElement(By.xpath(clickmainmenu)).click();
+					ReportLogger.info("Navigating to " + mainMenu);
+				}else{
+					Assert.fail(mainMenu + " " + "might not be a present in the current page of cyclos application");
+				}
+
+
+			} else {
+				Assert.fail(mainMenu + " " + "might not be a webelement present in cyclos application");
+			}
+		} catch (Exception e) {
 			// TODO: handle exception
-        	ReportLogger.fail("LeftNavigationPane NosuchElement found error");
-			Assert.fail(mainMenu + "/" + mainMenu + " " + "might not be a webelement in cyclos application");
+			ReportLogger.fail("LeftNavigationPane NosuchElement found error");
+			Assert.fail(mainMenu + " " + "might not be a webelement in cyclos application");
 		}
 
 	}
