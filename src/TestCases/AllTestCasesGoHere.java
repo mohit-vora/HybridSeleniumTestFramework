@@ -12,6 +12,7 @@ import Utils.LeftNavigationPane;
 
 public class AllTestCasesGoHere extends BrowserUtils {
 
+	@Test(dataProvider = "dp")
     public void EnrollNewMember(String dsid1,String dsid2) throws IOException, InterruptedException {
 			Login.performLogin(dsid1);
 	        LeftNavigationPane .NavigateTo("Users & Groups", "Manage Members");
