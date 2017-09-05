@@ -40,6 +40,7 @@ public class BaseClass {
     protected static int testCaseCount = 0;
     protected static boolean preExecutionCheck = true;
     protected static int testIterationNumber = 0;
+    protected static boolean isLoggedIn = false;
 
 	//reading things go here
     public void openBrowserChrome() {
@@ -49,7 +50,7 @@ public class BaseClass {
             driver = new ChromeDriver();
             driver.get(getPropVal("url"));
             ReportLogger.info("Browser Instance opened");
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
             driver.manage().window().maximize();
             ReportLogger.info("Browser Window Maximized");
     	}
@@ -78,7 +79,7 @@ public class BaseClass {
                     setYesTestDetails(testName, dataSetIds);
                 }
             }
-            ReportLogger.info("Test Cases to be executed retrieved from Testcase Sheet");
+            ReportLogger.info(testCaseCount+" TestCases to be executed retrieved from Testcase Sheet");
             workBook.close();
             mapSheet.close();
             
@@ -97,11 +98,13 @@ public class BaseClass {
    
 	
 	//reading things ends here
-	public void PopUpAccept() {
-        
-        	String popUpMessage = driver.switchTo().alert().getText();
+	public static void LogoutPopUpAccept() throws IOException {
+		ReadData data = new ReadData("PopupMessages", "MSG002");
+        String popUpMessage = driver.switchTo().alert().getText();
+        if (popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
             driver.switchTo().alert().accept();
             ReportLogger.info("Popup accepted :"+popUpMessage);
+        }
                 
     }
 	public void PopUpAccept(String dsid) throws IOException {
@@ -119,7 +122,7 @@ public class BaseClass {
     	}     
 }
 	
-	protected boolean checkDataProviderDimension(Object[][] obj, Method method){
+	protected boolean checkDataProviderSanity(Object[][] obj, Method method){
 		
 		boolean flag = true;
 		
@@ -130,7 +133,7 @@ public class BaseClass {
 				ReportLogger.skip("skipped this Test");
 				ReportLogger.skip("No of arguments taken by test case ["+method.getName()+"] are not matching test method parameters");
 				break;		
-			}			
+			}
 		}	
 		return flag;
 	}

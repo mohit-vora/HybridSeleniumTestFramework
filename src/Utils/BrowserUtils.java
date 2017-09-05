@@ -20,22 +20,19 @@ public class BrowserUtils extends BaseClass{
     
     @DataProvider(name="dp")
     public Object[][] dptryout(Method method){  	
-
+		testIterationNumber=0;
+    	
     	Object[][] returnObject = new Object[][]{};
     	
     	try
     	{
     		if(preExecutionCheck){
     			Object[][] obj = getYesTestDetails(method.getName());
-    			if (checkDataProviderDimension(obj, method)){
-    				testIterationNumber=0;
-    				returnObject = getYesTestDetails(method.getName());
+    			if (checkDataProviderSanity(obj, method)){
+    				System.out.println(method.getName());
+    				returnObject = obj;
     			}
-        	}
-    		else
-    		{
-    			Assert.fail("PreExecution failed");  			
-    		}	
+        	}	
     	}
     	catch(Exception e){
     		ReportLogger.preExecutionFail(e);   		
@@ -92,7 +89,6 @@ public class BrowserUtils extends BaseClass{
                                             ExtentColor.RED));
             test.fail(result.getThrowable());
             LeftNavigationPane.NavigateTo("Logout");
-            PopUpAccept();
 
          } else if (result.getStatus() == ITestResult.SUCCESS) {
             test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " Test Case PASSED", ExtentColor.GREEN));

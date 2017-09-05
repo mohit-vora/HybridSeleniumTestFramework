@@ -9,29 +9,28 @@ import PageObjects.MemberPayment;
 import PageObjects.MemberPaymentConfirmation;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
-import Utils.ReportLogger;
 
 public class AllTestCasesGoHere extends BrowserUtils {
 
 	@Test(dataProvider = "dp")
+
     public void EnrollNewMember(String dsid1,String dsid2,String dsid3) throws IOException, InterruptedException {
+
 			Login.performLogin(dsid1);
 	        LeftNavigationPane .NavigateTo("Users & Groups", "Manage Members");
 	        EnrollMember.RegisterMember(dsid2);
 	        PopUpAccept(dsid3);
 	        LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
     }
 	
 	@Test(dataProvider = "dp")
-    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) {
+    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception {
 			
-			try{
+			
 				Login.performLogin(toMemDSId);
 		    	AccountBalance accnt = new AccountBalance();
 		    	accnt.XtractAccountBalance(TXNDSId,"ToAccount"); 
 		    	LeftNavigationPane.NavigateTo("Logout");
-		        PopUpAccept();
 		        	        
 		        Login.performLogin(fromMemDSId);
 		    	accnt.XtractAccountBalance(TXNDSId,"FromAccount");   	
@@ -41,18 +40,12 @@ public class AllTestCasesGoHere extends BrowserUtils {
 		        accnt.XtractAccountBalance("FromAccount");
 		    	accnt.verifiyDebitAccount();
 		    	LeftNavigationPane.NavigateTo("Logout");
-		        PopUpAccept();
 		        
 		        Login.performLogin(toMemDSId);
 		        accnt.XtractAccountBalance("ToAccount");
 		    	accnt.verifiyCreditAccount();
 		    	LeftNavigationPane.NavigateTo("Logout");
-		        PopUpAccept();
-			}
 			
-			catch (Exception e){
-				ReportLogger.fail("inside exception"+e);
-			}
 			
 	}
 

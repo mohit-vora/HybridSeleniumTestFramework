@@ -15,14 +15,11 @@ public class ReadData extends BaseClass{
         this.id = id;
         
         ArrayList<String> list = new ArrayList<String>();
-        
-   
-        	list = testSpecificData.get(dSName).get(id);
-        	if (list==null){
-        		Assert.fail(id +" did not match any id in "+ dSName);
-        	}
-        	
-        	
+        list = testSpecificData.get(dSName).get(id);
+
+    	if (list==null){
+    		ReportLogger.fatal(id +" did not match any id in "+ dSName);
+    	} 	
         try{
         	for (String element:list){
             	if (!(element.length()>0)){
