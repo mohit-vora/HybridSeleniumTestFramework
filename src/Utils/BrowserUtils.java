@@ -19,12 +19,18 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 public class BrowserUtils extends BaseClass{
     
     @DataProvider(name="dp")
-    public Object[][] dptryout(Method m){  	
+    public Object[][] dptryout(Method method){  	
 
+    	Object[][] returnObject = new Object[][]{};
+    	
     	try
     	{
     		if(preExecutionCheck){
-        		return getYesTestDetails(m.getName());
+    			Object[][] obj = getYesTestDetails(method.getName());
+    			if (checkDataProviderDimension(obj, method)){
+    				testIterationNumber=0;
+    				returnObject = getYesTestDetails(method.getName());
+    			}
         	}
     		else
     		{
@@ -35,7 +41,7 @@ public class BrowserUtils extends BaseClass{
     		ReportLogger.preExecutionFail(e);   		
     	}
     		
-    	return new Object[][]{}; 	
+    	return returnObject; 	
     }   
 
     
@@ -69,8 +75,8 @@ public class BrowserUtils extends BaseClass{
     @BeforeMethod
     public void beforeMethod(Method method) throws Exception {
     	System.out.println("before method");
-        test = extent.createTest(getClass().getName()+ ":"+method.getName()+" DataSet:write something here");    
-    }
+        test = extent.createTest(method.getName()+": "+getCurrentIterationTestData(method));
+      }
 
     
     //Annotates methods that will be run after each test method.
@@ -102,7 +108,7 @@ public class BrowserUtils extends BaseClass{
     //Closing the browser is necessary at end of the each test case
     @AfterClass
     public void closeBrowser() throws InterruptedException, IOException {
-    	if (testCaseCount>0)
+    	if (testCaseCount>0 && preExecutionCheck)
         {
     		Thread.sleep(3000);
             driver.quit();

@@ -9,6 +9,7 @@ import PageObjects.MemberPayment;
 import PageObjects.MemberPaymentConfirmation;
 import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
+import Utils.ReportLogger;
 
 public class AllTestCasesGoHere extends BrowserUtils {
 
@@ -20,35 +21,39 @@ public class AllTestCasesGoHere extends BrowserUtils {
 	        PopUpAccept(dsid3);
 	        LeftNavigationPane.NavigateTo("Logout");
 	        PopUpAccept();
-
-		
     }
 	
 	@Test(dataProvider = "dp")
-    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception{
+    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) {
 			
-			Login.performLogin(toMemDSId);
-	    	AccountBalance accnt = new AccountBalance();
-	    	accnt.XtractAccountBalance(TXNDSId,"ToAccount"); 
-	    	LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
-	        
-	        
-	        Login.performLogin(fromMemDSId);
-	    	accnt.XtractAccountBalance(TXNDSId,"FromAccount");   	
-	    	LeftNavigationPane.NavigateTo("Acco", "Member Payment");
-	        MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
-	        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
-	        accnt.XtractAccountBalance("FromAccount");
-	    	accnt.verifiyDebitAccount();
-	    	LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
-	        
-	        Login.performLogin(toMemDSId);
-	        accnt.XtractAccountBalance("ToAccount");
-	    	accnt.verifiyCreditAccount();
-	    	LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
+			try{
+				Login.performLogin(toMemDSId);
+		    	AccountBalance accnt = new AccountBalance();
+		    	accnt.XtractAccountBalance(TXNDSId,"ToAccount"); 
+		    	LeftNavigationPane.NavigateTo("Logout");
+		        PopUpAccept();
+		        	        
+		        Login.performLogin(fromMemDSId);
+		    	accnt.XtractAccountBalance(TXNDSId,"FromAccount");   	
+		    	LeftNavigationPane.NavigateTo("Acco", "Member Payment");
+		        MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
+		        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
+		        accnt.XtractAccountBalance("FromAccount");
+		    	accnt.verifiyDebitAccount();
+		    	LeftNavigationPane.NavigateTo("Logout");
+		        PopUpAccept();
+		        
+		        Login.performLogin(toMemDSId);
+		        accnt.XtractAccountBalance("ToAccount");
+		    	accnt.verifiyCreditAccount();
+		    	LeftNavigationPane.NavigateTo("Logout");
+		        PopUpAccept();
+			}
+			
+			catch (Exception e){
+				ReportLogger.fail("inside exception"+e);
+			}
+			
 	}
 
 }

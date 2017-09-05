@@ -62,7 +62,7 @@ public class ReportLogger extends BaseClass{
 	    {
 	    	test.log(Status.SKIP, 
 	        		MarkupHelper.createLabel(logMessage,
-	        				ExtentColor.LIME));
+	        				ExtentColor.TEAL));
 	    }
 	 public static void warn(String logMessage)
 	    {
