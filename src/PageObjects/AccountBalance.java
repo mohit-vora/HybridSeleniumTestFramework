@@ -48,7 +48,7 @@ public class AccountBalance extends BaseClass {
 			fromaccnt = dm2.getData("From_Account");
 			toaccnt = dm2.getData("To_Account");
 			transactionAmount = Double.parseDouble((dm1.getData("TRANSACTION_AMOUNT")));
-			LeftNavigationPane.NavigateTo("Acco", "Account Information");
+			LeftNavigationPane.navigateTo("Acco", "Account Information");
 			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
 				WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
 				List<WebElement> rows = accnTypes.findElements(By.tagName("tr"));
@@ -99,7 +99,7 @@ public class AccountBalance extends BaseClass {
 			ReportLogger.fail("The argument in XtractAccount method can be either FromAccount or ToAccount");
 			Assert.fail();
 		} else {
-		LeftNavigationPane.NavigateTo("Account", "Account Information");
+		LeftNavigationPane.navigateTo("Account", "Account Information");
 		if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
 			WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
 			List<WebElement> rows = accnTypes.findElements(By.tagName("tr"));

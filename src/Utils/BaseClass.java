@@ -43,6 +43,7 @@ public class BaseClass {
     protected static boolean isLoggedIn = false;
 
 	//reading things go here
+    /*This Method does the driver setup for the execution*/
     public void openBrowserChrome() {
     	
     	if (preExecutionCheck){
@@ -57,7 +58,7 @@ public class BaseClass {
     	
         
     }
-    
+    /*reads the TestCase sheet to fetch the testcases marked with 'yes'*/
     public void readTestCaseSheet() {
 
     	testCaseCount = 0;
@@ -98,6 +99,7 @@ public class BaseClass {
    
 	
 	//reading things ends here
+    /*This method handles the logout popup that occurs inbetween the scenario execution*/
 	public static void LogoutPopUpAccept() throws IOException {
 		ReadData data = new ReadData("PopupMessages", "MSG002");
         String popUpMessage = driver.switchTo().alert().getText();
@@ -107,6 +109,7 @@ public class BaseClass {
         }
                 
     }
+	/*This method handles the popup that occurs during the scenario execution*/
 	public void PopUpAccept(String dsid) throws IOException {
 		ReadData data = new ReadData("PopupMessages", dsid);
     	String popUpMessage = driver.switchTo().alert().getText();
@@ -121,7 +124,7 @@ public class BaseClass {
     		Assert.assertEquals(popUpMessage, data.getData("MESSAGE_TEXT"));    		 
     	}     
 }
-	
+	/*Checks whether the Object Array passed by dataprovider and no of parameter needed by @test method are equal*/
 	protected boolean checkDataProviderSanity(Object[][] obj, Method method){
 		
 		boolean flag = true;
@@ -137,7 +140,7 @@ public class BaseClass {
 		}	
 		return flag;
 	}
-	
+	/*Fetches the data set used for each iteration*/
 	protected String getCurrentIterationTestData(Method method){
 		testIterationNumber++;
 		Object[] argumentObjectArray = getYesTestDetails(method.getName())[testIterationNumber-1];
@@ -152,7 +155,7 @@ public class BaseClass {
 	////this is where Driver Splitting things go
 	
 	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
-	
+	/*Reading the Dataset ids' provided accross each testcase marked as 'Yes'*/
 	private  void setYesTestDetails(String yesTestName, String dataSetIds)
 	{
 		int row=0;
@@ -185,7 +188,7 @@ public class BaseClass {
 		System.out.println("read ids");
 		onlyYesTestCases.put(yesTestName,s1);
 	}
-	
+	/*Returns the test data as object array*/
 	public Object[][] getYesTestDetails(String testName)
 	{
 		Object[][] dataSetIds = new Object[][]{};
@@ -199,6 +202,7 @@ public class BaseClass {
 	
 	//this is where driver splitting things end
 	//properties file related code
+	/*read the path of Application map,datamap,Driver setup file*/
 	public static String getPropVal(String parm) {
 //      File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
@@ -231,6 +235,9 @@ public class BaseClass {
 	//properties file related code ends here
 	
 	//this is where application map reading starts
+	
+	/*ReadAllLocators method reads the application map where the element locators are saved and stores it in a HashMap datastructure*/
+	
 	private static HashMap <String,HashMap<String,ByAll>> testSpecificMap = new HashMap<String,HashMap<String,ByAll>>();
 	XSSFCell elementName;
 	XSSFSheet sheet;
@@ -298,7 +305,7 @@ public class BaseClass {
 		
 		
     }	
-	
+	 /* With the value retrieved from the Application Map By instances are created based on its Locator*/
 	private By generator(String locator, String value) {
         By by = null;
         if (!locator.equals("")) {
@@ -322,7 +329,7 @@ public class BaseClass {
 
         return by;
     }
-
+/*with the By instance created from generator method  ByAll insatnce is created*/
     private ByAll generatorAll(List < By >byList) {
         if (byList.size() == 1) {
             return new ByAll(byList.get(0));
@@ -336,9 +343,9 @@ public class BaseClass {
         }
 
     }
-    
-    protected ByAll getLocator(String sname, String parm) {
-		return testSpecificMap.get(sname).get(parm);
+    /*This method fetches the corresponding locator value by taking its corresponding sheet name and element name as parameter*/
+    protected ByAll getLocator(String sheetName, String elementName) {
+		return testSpecificMap.get(sheetName).get(elementName);
     }
     
     //this is where application map related things end
@@ -387,8 +394,8 @@ public class BaseClass {
     
     protected String dSName = null;
     protected String id = null;
-    
-    public String getdata(String col) {
+    /*returns the corresponding value by taking column name as parameter*/
+    public String getColumnData(String col) {
         String dataValue = "";
                
         ArrayList<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
@@ -439,10 +446,8 @@ public class BaseClass {
      }
     
     ////report related things start here
-
+/*This method initializes the basic configuration needed for the report generation*/
     public static ExtentReports extent;
-       
-   
     public static ExtentReports createInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);

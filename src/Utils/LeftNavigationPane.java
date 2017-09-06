@@ -9,8 +9,8 @@ import org.testng.Assert;
 
 public class LeftNavigationPane extends BaseClass {
 	
-
-	public static void NavigateTo(String mainMenu, String subMenu) {
+	/*This method helps in navigating to different links with sublink in the application */
+	public static void navigateTo(String mainMenu, String subMenu) {
 		String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
 		boolean flagsubMenu = false;
 		boolean flagMainMenu = false;
@@ -24,15 +24,15 @@ public class LeftNavigationPane extends BaseClass {
 			List<WebElement> listMainMenu = driver.findElements(By.xpath("//span[@class='menuText']"));
 			String submenuxpath = null;
 			int lengthMainMenu = mainMenu.length();
-			for (int i = 1; i < listMainMenu.size(); i++) {
-				if (listMainMenu.get(i).getText().length() >= lengthMainMenu) {
-					dummy = listMainMenu.get(i).getText().substring(0, lengthMainMenu);
+			for (int listIndex = 1; listIndex < listMainMenu.size(); listIndex++) {
+				if (listMainMenu.get(listIndex).getText().length() >= lengthMainMenu) {
+					dummy = listMainMenu.get(listIndex).getText().substring(0, lengthMainMenu);
 
-					if (listMainMenu.get(i).getText().substring(0, lengthMainMenu).equals(mainMenu)) {
+					if (listMainMenu.get(listIndex).getText().substring(0, lengthMainMenu).equals(mainMenu)) {
 						String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
 						driver.findElement(By.xpath(clickmainmenu)).click();
 						flagMainMenu=true;
-						submenuxpath = "//ul[@id='subMenuContainer" + i + "']//li//span[@class='subMenuText']";
+						submenuxpath = "//ul[@id='subMenuContainer" + listIndex + "']//li//span[@class='subMenuText']";
 						List<WebElement> list12 = driver.findElements(By.xpath(submenuxpath));
 						for (WebElement webElement1 : list12) {
 							int lengthSubMenu = subMenu.length();
@@ -61,8 +61,8 @@ public class LeftNavigationPane extends BaseClass {
 		 // TODO: handle exception
 		 }
 	}
-
-	public static void NavigateTo(String mainMenu) {
+/*This method helps in navigating to link without sublink in the application */
+	public static void navigateTo(String mainMenu) {
 		try {
 
 

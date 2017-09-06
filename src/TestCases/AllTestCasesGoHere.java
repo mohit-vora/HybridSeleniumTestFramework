@@ -17,10 +17,10 @@ public class AllTestCasesGoHere extends BrowserUtils {
     public void EnrollNewMember(String dsid1,String dsid2,String dsid3) throws IOException, InterruptedException {
 
 			Login.performLogin(dsid1);
-	        LeftNavigationPane .NavigateTo("Users & Groups", "Manage Members");
+	        LeftNavigationPane .navigateTo("Users & Groups", "Manage Members");
 	        EnrollMember.RegisterMember(dsid2);
 	        PopUpAccept(dsid3);
-	        LeftNavigationPane.NavigateTo("Logout");
+	        LeftNavigationPane.navigateTo("Logout");
     }
 	
 	@Test(dataProvider = "dp")
@@ -30,21 +30,21 @@ public class AllTestCasesGoHere extends BrowserUtils {
 				Login.performLogin(toMemDSId);
 		    	AccountBalance accnt = new AccountBalance();
 		    	accnt.XtractAccountBalance(TXNDSId,"ToAccount"); 
-		    	LeftNavigationPane.NavigateTo("Logout");
+		    	LeftNavigationPane.navigateTo("Logout");
 		        	        
 		        Login.performLogin(fromMemDSId);
 		    	accnt.XtractAccountBalance(TXNDSId,"FromAccount");   	
-		    	LeftNavigationPane.NavigateTo("Acco", "Member Payment");
+		    	LeftNavigationPane.navigateTo("Acco", "Member Payment");
 		        MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
 		        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
 		        accnt.XtractAccountBalance("FromAccount");
 		    	accnt.verifiyDebitAccount();
-		    	LeftNavigationPane.NavigateTo("Logout");
+		    	LeftNavigationPane.navigateTo("Logout");
 		        
 		        Login.performLogin(toMemDSId);
 		        accnt.XtractAccountBalance("ToAccount");
 		    	accnt.verifiyCreditAccount();
-		    	LeftNavigationPane.NavigateTo("Logout");
+		    	LeftNavigationPane.navigateTo("Logout");
 			
 			
 	}

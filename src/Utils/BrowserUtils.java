@@ -88,7 +88,7 @@ public class BrowserUtils extends BaseClass{
             test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " Test case FAILED due to below issues:",
                                             ExtentColor.RED));
             test.fail(result.getThrowable());
-            LeftNavigationPane.NavigateTo("Logout");
+            LeftNavigationPane.navigateTo("Logout");
 
          } else if (result.getStatus() == ITestResult.SUCCESS) {
             test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " Test Case PASSED", ExtentColor.GREEN));

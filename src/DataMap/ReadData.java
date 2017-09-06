@@ -9,7 +9,7 @@ import Utils.BaseClass;
 import Utils.ReportLogger;
 
 public class ReadData extends BaseClass{    
-
+/*Parameterized constructor which initializes the datasheet name and the data id and fetches the corresponding data*/
     public ReadData(String name, String id) throws IOException {
         dSName = name;
         this.id = id;
@@ -34,10 +34,10 @@ public class ReadData extends BaseClass{
             
         
     }
-
+    /*This method invokes getdata from */
     public String getData(String col) {
  
-        return getdata(col);
+        return getColumnData(col);
     }
 
     
