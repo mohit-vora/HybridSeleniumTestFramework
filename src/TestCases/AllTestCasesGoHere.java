@@ -11,44 +11,46 @@ import Utils.BrowserUtils;
 import Utils.LeftNavigationPane;
 
 public class AllTestCasesGoHere extends BrowserUtils {
+	
+	//enrollNewMember method test case invokes all the methods to enroll new member. 
 
 	@Test(dataProvider = "dp")
-    public void EnrollNewMember(String dsid1,String dsid2) throws IOException, InterruptedException {
-			Login.performLogin(dsid1);
-	        LeftNavigationPane .NavigateTo("Users & Groups", "Manage Members");
-	        EnrollMember.RegisterMember(dsid2);
-	        PopUpAccept();
-	        LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
 
-		
+    public void enrollNewMember(String dsid1,String dsid2,String dsid3) throws IOException, InterruptedException {
+
+			Login.performLogin(dsid1);
+	        LeftNavigationPane .navigateTo("Users & Groups", "Manage Members");
+	        EnrollMember.registerMember(dsid2);
+	        PopUpAccept(dsid3);
+	        LeftNavigationPane.navigateTo("Logout");
     }
 	
+	//memberPayments method test case invokes all the methods to complete a transaction from member. 
+	
 	@Test(dataProvider = "dp")
-    public void MemberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception{
+    public void memberPayments(String fromMemDSId, String toMemDSId, String TXNDSId) throws Exception {
 			
-			Login.performLogin(toMemDSId);
-	    	AccountBalance accnt = new AccountBalance();
-	    	accnt.XtractAccountBalance(TXNDSId,"ToAccount"); 
-	    	LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
-	        
-	        
-	        Login.performLogin(fromMemDSId);
-	    	accnt.XtractAccountBalance(TXNDSId,"FromAccount");   	
-	    	LeftNavigationPane.NavigateTo("Acco", "Member Payment");
-	        MemberPayment.PopulatePaymenttoMember(toMemDSId, TXNDSId);
-	        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
-	        accnt.XtractAccountBalance("FromAccount");
-	    	accnt.verifiyDebitAccount();
-	    	LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
-	        
-	        Login.performLogin(toMemDSId);
-	        accnt.XtractAccountBalance("ToAccount");
-	    	accnt.verifiyCreditAccount();
-	    	LeftNavigationPane.NavigateTo("Logout");
-	        PopUpAccept();
+			
+				Login.performLogin(toMemDSId);
+		    	AccountBalance accnt = new AccountBalance();
+		    	accnt.xtractAccountBalance(TXNDSId,"ToAccount"); 
+		    	LeftNavigationPane.navigateTo("Logout");
+		        	        
+		        Login.performLogin(fromMemDSId);
+		    	accnt.xtractAccountBalance(TXNDSId,"FromAccount");   	
+		    	LeftNavigationPane.navigateTo("Acco", "Member Payment");
+		        MemberPayment.populatePaymenttoMember(toMemDSId, TXNDSId);
+		        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
+		        accnt.xtractAccountBalance("FromAccount");
+		    	accnt.verifiyDebitAccount();
+		    	LeftNavigationPane.navigateTo("Logout");
+		        
+		        Login.performLogin(toMemDSId);
+		        accnt.xtractAccountBalance("ToAccount");
+		    	accnt.verifiyCreditAccount();
+		    	LeftNavigationPane.navigateTo("Logout");
+			
+			
 	}
 
 }

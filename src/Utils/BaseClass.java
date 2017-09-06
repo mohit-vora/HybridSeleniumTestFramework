@@ -1,9 +1,15 @@
 package Utils;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,34 +25,42 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByAll;
 import org.testng.Assert;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
+import DataMap.ReadData;
+
 public class BaseClass {
 	
 	public static WebDriver driver = null;
     public static ExtentTest test;
-
+    protected static int testCaseCount = 0;
     protected static boolean preExecutionCheck = true;
-
+    protected static int testIterationNumber = 0;
+    protected static boolean isLoggedIn = false;
 
 	//reading things go here
     public void openBrowserChrome() {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+getPropVal("chromeDriver"));
-        driver = new ChromeDriver();
-        driver.get(getPropVal("url"));
-        ReportLogger.info("Browser Instance opened");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        ReportLogger.info("Browser Window Maximized");
+    	
+    	if (preExecutionCheck){
+    		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+getPropVal("chromeDriver"));
+            driver = new ChromeDriver();
+            driver.get(getPropVal("url"));
+            ReportLogger.info("Browser Instance opened");
+            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            driver.manage().window().maximize();
+            ReportLogger.info("Browser Window Maximized");
+    	}
+    	
+        
     }
     
     public void readTestCaseSheet() {
 
+    	testCaseCount = 0;
     	try
     	{
     		FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\TestCaseSheet.xlsx");
@@ -59,15 +73,16 @@ public class BaseClass {
             for (currentRow = 1; currentRow <= rowNum; currentRow++) {
                 String runStatus = sheet.getRow(currentRow).getCell(3).getStringCellValue();
                 if (runStatus.equalsIgnoreCase("Yes")) {
+                	testCaseCount++;
                 	String testName = sheet.getRow(currentRow).getCell(1).getStringCellValue();
                 	String dataSetIds = sheet.getRow(currentRow).getCell(2).getStringCellValue();
-                    BaseClass baseClass = new BaseClass(); 
-                    baseClass.setYesTestDetails(testName, dataSetIds);
+                    setYesTestDetails(testName, dataSetIds);
                 }
             }
-            ReportLogger.info("Test Cases to be executed retrieved from Testcase Sheet");
+            ReportLogger.info(testCaseCount+" TestCases to be executed retrieved from Testcase Sheet");
             workBook.close();
             mapSheet.close();
+            
     	}
     	catch (Exception exception)
     	{
@@ -75,6 +90,7 @@ public class BaseClass {
     		ReportLogger.preExecutionFail(exception);
 
     		extent.flush();
+    		
     	}
         
 
@@ -82,13 +98,56 @@ public class BaseClass {
    
 	
 	//reading things ends here
-	public void PopUpAccept() {
-        
-        	String popUpMessage = driver.switchTo().alert().getText();
+	public static void LogoutPopUpAccept() throws IOException {
+		ReadData data = new ReadData("PopupMessages", "MSG002");
+        String popUpMessage = driver.switchTo().alert().getText();
+        if (popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
             driver.switchTo().alert().accept();
             ReportLogger.info("Popup accepted :"+popUpMessage);
+        }
                 
     }
+	public void PopUpAccept(String dsid) throws IOException {
+		ReadData data = new ReadData("PopupMessages", dsid);
+    	String popUpMessage = driver.switchTo().alert().getText();
+    	
+    	if(popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
+    		driver.switchTo().alert().accept();
+    		ReportLogger.info("Popup accepted :"+popUpMessage);
+    	}
+    	else{
+    		driver.switchTo().alert().accept();
+    		ReportLogger.info("Enrollment was not successfull refer to the Stack trace below");
+    		Assert.assertEquals(popUpMessage, data.getData("MESSAGE_TEXT"));    		 
+    	}     
+}
+	
+	protected boolean checkDataProviderSanity(Object[][] obj, Method method){
+		
+		boolean flag = true;
+		
+		for (int i=0;i<obj.length;i++){
+			if (obj[i].length!=method.getParameterCount()){
+				flag=false;
+				test = extent.createTest(method.getName()+": "+getCurrentIterationTestData(method));
+				ReportLogger.skip("skipped this Test");
+				ReportLogger.skip("No of arguments taken by test case ["+method.getName()+"] are not matching test method parameters");
+				break;		
+			}
+		}	
+		return flag;
+	}
+	
+	protected String getCurrentIterationTestData(Method method){
+		testIterationNumber++;
+		Object[] argumentObjectArray = getYesTestDetails(method.getName())[testIterationNumber-1];
+		String testArguments = "";
+		for (int objectIndex=0;objectIndex<argumentObjectArray.length;objectIndex++){
+			testArguments=testArguments+argumentObjectArray[objectIndex]+",";
+		}
+		return testArguments.substring(0, testArguments.length()-1);
+	}
+	
 	
 	////this is where Driver Splitting things go
 	
@@ -100,10 +159,21 @@ public class BaseClass {
 		int col=0;
 		
 		row=dataSetIds.split(";").length;
+		int counter=0;
+		for (int i=0;i<dataSetIds.length();i++)
+		{
+			if (dataSetIds.charAt(i)==';')
+				counter++;
+		}
+
+		if (counter!=row-1){
+			ReportLogger.warn(yesTestName+" ignoring last ; as no dataset ids after that");
+		}
+	
 		col=dataSetIds.split(";")[0].split(",").length;
 		System.out.println("i calculated row col");
 		Object[][] s1 = new String [row][col];
-		
+		System.out.println("row & col"+row+col);
 		for (int rowIterator=0;rowIterator<row;rowIterator++)
 		{			
 			for (int columnIterator=0;columnIterator<col;columnIterator++)
@@ -111,7 +181,7 @@ public class BaseClass {
 				s1[rowIterator][columnIterator] = dataSetIds.split(";")[rowIterator].split(",")[columnIterator];
 			}
 		}
-		ReportLogger.info("Data Set ID for the chosen TestCase"+ yesTestName +"is read");
+		ReportLogger.info("Data Set ID for the chosen TestCase: "+ yesTestName +"is read");
 		System.out.println("read ids");
 		onlyYesTestCases.put(yesTestName,s1);
 	}
@@ -163,59 +233,69 @@ public class BaseClass {
 	//this is where application map reading starts
 	private static HashMap <String,HashMap<String,ByAll>> testSpecificMap = new HashMap<String,HashMap<String,ByAll>>();
 	XSSFCell elementName;
-	
+	XSSFSheet sheet;
 	
 	
 	public void ReadAllLocators(){
-		try
-		{
-			HashMap < String, ByAll > locatorMap = new HashMap < String, ByAll > ();
-	        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
-	        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
+		
+		if (preExecutionCheck){
+			try
+			{
+				HashMap < String, ByAll > locatorMap = new HashMap < String, ByAll > ();
+		        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
+		        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
 
-	        List < By > locators = null;
-	        
-	        int noOfSheets = WorkBook.getNumberOfSheets();
-	        
-	        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
-	        {
-	        
-	        	XSSFSheet sheet = WorkBook.getSheetAt(sheetIndex);
-	        	XSSFCell mainLocator, mainValue, alternateLocator, alternateValue;
-	            int rowIterator;
-	            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
-	            //		System.out.println(sheetName+rownum);
-	            for (rowIterator = 1; rowIterator <= rownum; rowIterator++) {
-	                locators = new ArrayList < By > ();
-	                elementName = sheet.getRow(rowIterator).getCell(0);
-	                mainLocator = sheet.getRow(rowIterator).getCell(1);
-	                mainValue = sheet.getRow(rowIterator).getCell(2);
-	                alternateLocator = sheet.getRow(rowIterator).getCell(3);
-	                alternateValue = sheet.getRow(rowIterator).getCell(4);
-	                if (mainLocator != null && mainValue != null) {
-	                    locators.add(generator(mainLocator.getStringCellValue().toLowerCase(), mainValue.getStringCellValue()));
-	                }
+		        List < By > locators = null;
+		        
+		        int noOfSheets = WorkBook.getNumberOfSheets();
+		        
+		        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
+		        {
+		        
+		        	sheet = WorkBook.getSheetAt(sheetIndex);
+		        	XSSFCell mainLocator, mainValue, alternateLocator, alternateValue;
+		            int rowIterator;
+		            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
 
-	                if (alternateLocator != null && alternateValue != null) {
-	                    locators.add(generator(alternateLocator.getStringCellValue().toLowerCase(), alternateValue.getStringCellValue()));
+		            for (rowIterator = 1; rowIterator <= rownum; rowIterator++) {
+		                locators = new ArrayList < By > ();
+		                elementName = sheet.getRow(rowIterator).getCell(0);
+		                mainLocator = sheet.getRow(rowIterator).getCell(1);
+		                mainValue = sheet.getRow(rowIterator).getCell(2);
+		                alternateLocator = sheet.getRow(rowIterator).getCell(3);
+		                alternateValue = sheet.getRow(rowIterator).getCell(4);
+		                if (mainLocator != null && mainValue != null) {
+		                    locators.add(generator(mainLocator.getStringCellValue().toLowerCase(), mainValue.getStringCellValue()));
+		                }
+		                else{
+		                	ReportLogger.warn("Main Locator cell is empty");
+		                	Assert.fail("Main Locator cell is empty");
+		                }
+		   
 
-	                }
-	                locatorMap.put(elementName.getStringCellValue(), generatorAll(locators));
-	            }
-	            testSpecificMap.put(sheet.getSheetName(), locatorMap);
-	        }
-	        ReportLogger.info("Corresponding Element Locators Fetched");
-	        
-	        
+		                if (alternateLocator != null && alternateValue != null) {
+		                    locators.add(generator(alternateLocator.getStringCellValue().toLowerCase(), alternateValue.getStringCellValue()));
 
-	        WorkBook.close();
+		                }
+		                locatorMap.put(elementName.getStringCellValue(), generatorAll(locators));
+		            }
+		            testSpecificMap.put(sheet.getSheetName(), locatorMap);
+		        }
+		        ReportLogger.info("Corresponding Element Locators Fetched");
+		        
+		        
+
+		        WorkBook.close();
+			}
+			
+			catch (Exception exception)
+			{
+				preExecutionCheck=false;
+				ReportLogger.fatal("problem in ReadAllLocators "+exception);
+			}
 		}
 		
-		catch (Exception exception)
-		{
-			preExecutionCheck=false;
-			ReportLogger.fatal("problem in ReadAllLocators"+exception);
-		}
+		
 		
     }	
 	
@@ -234,7 +314,7 @@ public class BaseClass {
                     break;
 
                 default:
-                    System.out.println("Something is wrong in application map of this object: " + elementName);
+                    ReportLogger.fatal("Something is wrong in application map "+sheet+" of object: " + elementName);
                     break;
 
             }
@@ -246,14 +326,18 @@ public class BaseClass {
     private ByAll generatorAll(List < By >byList) {
         if (byList.size() == 1) {
             return new ByAll(byList.get(0));
-        } else {
+        } else if(byList.size() == 2) {
             return new ByAll(byList.get(0), byList.get(1));
+        }
+        else{
+        	
+        	ReportLogger.fatal("ByAll couldn't be generated");
+        	return null;
         }
 
     }
     
-    protected ByAll getLocator(String sname, String parm)
-    {
+    protected ByAll getLocator(String sname, String parm) {
 		return testSpecificMap.get(sname).get(parm);
     }
     
@@ -262,39 +346,43 @@ public class BaseClass {
     
     
     //this is where data map things start
-    private static LinkedHashMap < String, HashMap<String,List<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,List<String>>> ();
-    public void ReadAllData() throws IOException {
+    protected static LinkedHashMap < String, HashMap<String,ArrayList<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,ArrayList<String>>> ();
+    public void ReadAllData(){
+    	try{
+    		if (preExecutionCheck){
+        		FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
+                XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
-    	System.out.println("finally got id");
+                int noOfSheets = workbook.getNumberOfSheets();
+                
+                
+                for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
+                {  
+                	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+                	LinkedHashMap<String,ArrayList<String>> sheetData = new LinkedHashMap<String, ArrayList<String>>();
+
+        	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        	        int colCount = sheet.getRow(0).getLastCellNum();
+        	
+        	        DataFormatter dataFormatter = new DataFormatter();
+        	
+        	        for (int rowiterater = 0; rowiterater <= rowCount; rowiterater++){
+        	            ArrayList<String> list = new ArrayList<String>();
+        	            for (int coliterater = 1; coliterater < colCount; coliterater++)
+        	            	list.add(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
+        	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
+        	        }
+               
+        	        testSpecificData.put(sheet.getSheetName(),sheetData);
+                }
+                workbook.close();
+        	}
+    	}
     	
-        FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\DataMap\\Data.xlsx");
-        XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
-
-        int noOfSheets = workbook.getNumberOfSheets();
-        
-        
-        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
-        {
-        
-        	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-        	LinkedHashMap<String,List<String>> sheetData = new LinkedHashMap<String, List<String>>();
-
-	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
-	        int colCount = sheet.getRow(0).getLastCellNum();
-	
-	        DataFormatter dataFormatter = new DataFormatter();
-	
-	        for (int rowiterater = 0; rowiterater <= rowCount; rowiterater++){
-	            List<String> list = new ArrayList<String>();
-	            for (int coliterater = 1; coliterater < colCount; coliterater++)
-	            	list.add(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
-	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
-	        }
-       
-	        testSpecificData.put(sheet.getSheetName(),sheetData);
-        }
-        workbook.close();
-       
+    	catch (IOException e){
+    		preExecutionCheck=false;
+			ReportLogger.fatal("problem in ReadAllData "+e);
+    	}   
     }
     
     protected String dSName = null;
@@ -303,7 +391,7 @@ public class BaseClass {
     public String getdata(String col) {
         String dataValue = "";
                
-        List<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
+        ArrayList<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
         int dataColumn = 0;
         boolean flag = false;
         for (; dataColumn < list.size(); dataColumn++) {
@@ -314,19 +402,12 @@ public class BaseClass {
         }
         
         if (flag) {
-            list = testSpecificData.get(dSName).get(id);
-            try{
-            	dataValue = list.get(dataColumn);
-            }
-            catch (Exception e)
-            {
-            	preExecutionCheck=false;
-            	System.out.println(id +" did not match any id in "+ dSName);
-            }
+        	list = testSpecificData.get(dSName).get(id);
+        	dataValue = list.get(dataColumn);
+
         } else {
-        	preExecutionCheck=false;
-            ReportLogger.fail("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
-            Assert.fail();
+        	Assert.fail("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
+
         }
         return dataValue;
     }
@@ -334,20 +415,34 @@ public class BaseClass {
     //this is where datamap related things end
     
     
-    
+    /**
+     * Returns an Image object that can then be painted on the screen. 
+     * The url argument must specify an absolute {@link URL}. The name
+     * argument is a specifier that is relative to the url argument. 
+     * <p>
+     * This method always returns immediately, whether or not the 
+     * image exists. When this applet attempts to draw the image on
+     * the screen, the data will be loaded. The graphics primitives 
+     * that draw the image will incrementally paint on the screen. 
+     *
+     * @param  url  an absolute URL giving the base location of the image
+     * @param  name the location of the image, relative to the url argument
+     * @return      the image at the specified URL
+     * @see         Image
+     */
+     public Image getImage(URL url, String name) {
+            try {
+                return getImage(new URL(url, name),"");
+            } catch (MalformedURLException e) {
+                return null;
+            }
+     }
     
     ////report related things start here
-    
+
     public static ExtentReports extent;
-    
-    
-    public static ExtentReports getInstance() {
-    	if (extent == null){
-    		createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
-    	}
-        return extent;
-    }
-    
+       
+   
     public static ExtentReports createInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
@@ -358,10 +453,14 @@ public class BaseClass {
         htmlReporter.config().setReportName(fileName);
         
         extent = new ExtentReports();
-        extent.setSystemInfo("OS", "Windows 10 x64");
-        extent.setSystemInfo("Host Name", "IVS_ETA");
-        extent.setSystemInfo("Environment", "Test");
-        extent.setSystemInfo("User Name", "FSM");
+        extent.setSystemInfo("OS", System.getProperty("os.name")+" "+System.getProperty("os.arch"));
+        try {
+			extent.setSystemInfo("Host Name", InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e) {
+			ReportLogger.fatal("Host name could not be found: "+e);
+		}
+        extent.setSystemInfo("Environment", System.getProperty("java.runtime.name"));
+        extent.setSystemInfo("User Name", System.getProperty("user.name"));
 
         extent.attachReporter(htmlReporter);
         

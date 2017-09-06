@@ -10,7 +10,12 @@ import Utils.ReportLogger;
 
 public class EnrollMember extends BaseClass {
 
-	public static void RegisterMember(String dsid) throws InterruptedException, IOException {
+	
+	/*
+	 * RegisterMenber method will enroll a new member from admin 
+	 * This method accepts two parameters as details of new members and type of account
+	 *   */
+	public static void registerMember(String dsid) throws InterruptedException, IOException {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
 			ReadData dm = new ReadData("MemberDetails", dsid);
 			WebElement createMember = driver.findElement(rd1.getLocator("LST_CreateMember"));

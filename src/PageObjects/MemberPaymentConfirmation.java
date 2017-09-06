@@ -8,8 +8,12 @@ import Utils.BaseClass;
 import Utils.ReportLogger;
 
 public class MemberPaymentConfirmation extends BaseClass {
+	/*
+	 * verifyPaymentToMember method compares the data's populated from dataset and values generated in cyclos web page for payment confirmation
+	 * -for successful confirmation this method performs payment else it lead back to member payment page.
+	 * */
 	public static void verifyPaymentToMember(String dsid1, String dsid2) throws IOException, Exception {
-		/**/
+		
 		Boolean flag = true;
 		ReadData dm1 = new ReadData("MemberDetails", dsid1);
 		ReadData dm2 = new ReadData("TransactionData", dsid2);
