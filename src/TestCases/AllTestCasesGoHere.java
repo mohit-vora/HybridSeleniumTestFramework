@@ -14,12 +14,12 @@ public class AllTestCasesGoHere extends BrowserUtils {
 
 	@Test(dataProvider = "dp")
 
-    public void EnrollNewMember(String dsid1,String dsid2,String dsid3) throws IOException, InterruptedException {
+    public void EnrollNewMember(String adminCredentials,String memberToBeCreated,String accountType, String successMessage) throws IOException, InterruptedException {
 
-			Login.performLogin(dsid1);
+			Login.performLogin(adminCredentials);
 	        LeftNavigationPane .NavigateTo("Users & Groups", "Manage Members");
-	        EnrollMember.RegisterMember(dsid2);
-	        PopUpAccept(dsid3);
+	        EnrollMember.RegisterMember(memberToBeCreated,accountType);
+	        PopUpAccept(successMessage);
 	        LeftNavigationPane.NavigateTo("Logout");
     }
 	

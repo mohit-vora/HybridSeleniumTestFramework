@@ -10,12 +10,13 @@ import Utils.ReportLogger;
 
 public class EnrollMember extends BaseClass {
 
-	public static void RegisterMember(String dsid) throws InterruptedException, IOException {
+	public static void RegisterMember(String memberDetails, String accountType) throws InterruptedException, IOException {
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
-			ReadData dm = new ReadData("MemberDetails", dsid);
+			ReadData dm = new ReadData("MemberDetails", memberDetails);
+			ReadData permissionGroup = new ReadData("UserAccountTypes",accountType);
 			WebElement createMember = driver.findElement(rd1.getLocator("LST_CreateMember"));
 			
-			new Select(createMember).selectByVisibleText("Savings");
+			new Select(createMember).selectByVisibleText(permissionGroup.getData("ACCOUNT_TYPE"));
 			
 
 			Thread.sleep(1000);

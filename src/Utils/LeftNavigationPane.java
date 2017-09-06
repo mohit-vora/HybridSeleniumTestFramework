@@ -9,7 +9,6 @@ import org.testng.Assert;
 
 public class LeftNavigationPane extends BaseClass {
 	
-
 	public static void NavigateTo(String mainMenu, String subMenu) {
 		String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
 		boolean flagsubMenu = false;
@@ -27,11 +26,12 @@ public class LeftNavigationPane extends BaseClass {
 			for (int i = 1; i < listMainMenu.size(); i++) {
 				if (listMainMenu.get(i).getText().length() >= lengthMainMenu) {
 					dummy = listMainMenu.get(i).getText().substring(0, lengthMainMenu);
-
+					System.out.println(dummy+"***");
 					if (listMainMenu.get(i).getText().substring(0, lengthMainMenu).equals(mainMenu)) {
 						String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
 						driver.findElement(By.xpath(clickmainmenu)).click();
 						flagMainMenu=true;
+						System.out.println("mo"+mainMenu);
 						submenuxpath = "//ul[@id='subMenuContainer" + i + "']//li//span[@class='subMenuText']";
 						List<WebElement> list12 = driver.findElements(By.xpath(submenuxpath));
 						for (WebElement webElement1 : list12) {
@@ -43,8 +43,8 @@ public class LeftNavigationPane extends BaseClass {
 								break;
 							} 
 						}
-						break;
-					} 
+					}
+					break;
 				}
 			}
 		}
