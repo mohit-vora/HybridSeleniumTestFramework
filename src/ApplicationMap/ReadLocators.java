@@ -7,13 +7,13 @@ public class ReadLocators extends Utils.BaseClass{
 
     
     String sheetName = null;
-    
+    /*Parameterized constructor which initializes the sheet name*/
     public ReadLocators(String sname) {
         sheetName = sname; 
     }
-   
-    public ByAll getLocator(String parm) {
-        return getLocator(sheetName, parm);
+   /*This method invokes getLocator from BaseClass to fetch the corresponding Locator values*/
+    public ByAll getLocator(String elementName) {
+        return getLocator(sheetName, elementName);
     }
 
 }

@@ -1,6 +1,5 @@
 package PageObjects;
 
-import java.io.IOException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ApplicationMap.ReadLocators;
@@ -10,7 +9,12 @@ import Utils.ReportLogger;
 
 public class EnrollMember extends BaseClass {
 
-	public static void RegisterMember(String memberDetails, String accountType) throws InterruptedException, IOException {
+	/*
+	 * RegisterMenber method will enroll a new member from admin 
+	 * This method accepts two parameters as details of new members and type of account
+	 *   */
+	public static void registerMember(String memberDetails, String accountType) {
+	
 			ReadLocators rd1 = new ReadLocators("RegisterMember");
 			ReadData dm = new ReadData("MemberDetails", memberDetails);
 			ReadData permissionGroup = new ReadData("UserAccountTypes",accountType);
@@ -19,7 +23,12 @@ public class EnrollMember extends BaseClass {
 			new Select(createMember).selectByVisibleText(permissionGroup.getData("ACCOUNT_TYPE"));
 			
 
-			Thread.sleep(1000);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
 			driver.findElement(rd1.getLocator("TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
@@ -34,9 +43,19 @@ public class EnrollMember extends BaseClass {
 			driver.findElement(rd1.getLocator("Checkbox")).click();
 			driver.findElement(rd1.getLocator("TXB_password")).sendKeys(dm.getData("PASSWORD"));
 			driver.findElement(rd1.getLocator("TXB_confirmpassword")).sendKeys(dm.getData("PASSWORD"));
-			Thread.sleep(1000);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			driver.findElement(rd1.getLocator("BTN_submit")).click();
-			Thread.sleep(1000);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			ReportLogger.info("In EnrollMember PageObjects");
 			ReportLogger.pass("Registration of new member page populated successfully");

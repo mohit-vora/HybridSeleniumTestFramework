@@ -43,6 +43,7 @@ public class BaseClass {
     protected static boolean isLoggedIn = false;
 
 	//reading things go here
+    /*This Method does the driver setup for the execution*/
     public void openBrowserChrome() {
     	
     	if (preExecutionCheck){
@@ -57,7 +58,7 @@ public class BaseClass {
     	
         
     }
-    
+    /*reads the TestCase sheet to fetch the testcases marked with 'yes'*/
     public void readTestCaseSheet() {
 
     	testCaseCount = 0;
@@ -76,7 +77,7 @@ public class BaseClass {
                 	testCaseCount++;
                 	String testName = sheet.getRow(currentRow).getCell(1).getStringCellValue();
                 	String dataSetIds = sheet.getRow(currentRow).getCell(2).getStringCellValue();
-                    setYesTestDetails(testName, dataSetIds);
+                    setYesTestDetails(testName.toLowerCase(), dataSetIds.toLowerCase());
                 }
             }
             ReportLogger.info(testCaseCount+" TestCases to be executed retrieved from Testcase Sheet");
@@ -98,7 +99,8 @@ public class BaseClass {
    
 	
 	//reading things ends here
-	public static void LogoutPopUpAccept() throws IOException {
+    /*This method handles the logout popup that occurs inbetween the scenario execution*/
+	public static void logoutPopUpAccept() {
 		ReadData data = new ReadData("PopupMessages", "MSG002");
         String popUpMessage = driver.switchTo().alert().getText();
         if (popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
@@ -107,7 +109,8 @@ public class BaseClass {
         }
                 
     }
-	public void PopUpAccept(String dsid) throws IOException {
+	/*This method handles the popup that occurs during the scenario execution*/
+	public void validateAndAcceptPopup(String dsid) {
 		ReadData data = new ReadData("PopupMessages", dsid);
     	String popUpMessage = driver.switchTo().alert().getText();
     	
@@ -121,7 +124,7 @@ public class BaseClass {
     		Assert.assertEquals(popUpMessage, data.getData("MESSAGE_TEXT"));    		 
     	}     
 }
-	
+	/*Checks whether the Object Array passed by dataprovider and no of parameter needed by @test method are equal*/
 	protected boolean checkDataProviderSanity(Object[][] obj, Method method){
 		
 		boolean flag = true;
@@ -137,7 +140,7 @@ public class BaseClass {
 		}	
 		return flag;
 	}
-	
+	/*Fetches the data set used for each iteration*/
 	protected String getCurrentIterationTestData(Method method){
 		testIterationNumber++;
 		Object[] argumentObjectArray = getYesTestDetails(method.getName())[testIterationNumber-1];
@@ -152,46 +155,64 @@ public class BaseClass {
 	////this is where Driver Splitting things go
 	
 	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
-	
+	/*Reading the Dataset ids' provided accross each testcase marked as 'Yes'*/
 	private  void setYesTestDetails(String yesTestName, String dataSetIds)
 	{
 		int row=0;
 		int col=0;
 		
-		row=dataSetIds.split(";").length;
-		int counter=0;
-		for (int i=0;i<dataSetIds.length();i++)
+		
+		int length = dataSetIds.length();
+		boolean flag = true;
+		for (int i=0;i<length-1;i++)
 		{
-			if (dataSetIds.charAt(i)==';')
-				counter++;
+			if ((dataSetIds.charAt(i)==';' && dataSetIds.charAt(i+1)==';')||
+					(dataSetIds.charAt(i)==',' && dataSetIds.charAt(i+1)==',')){
+				dataSetIds = dataSetIds.substring(0,i)+dataSetIds.substring(i+1,length);
+				length--;
+				i--;
+				flag=false;
+			}	
+		}	
+		if (dataSetIds.substring(length-1).equals(";")||dataSetIds.substring(length-1).equals(",")){
+			dataSetIds=dataSetIds.substring(0, length-1);
+			flag=false;
 		}
-
-		if (counter!=row-1){
-			ReportLogger.warn(yesTestName+" ignoring last ; as no dataset ids after that");
+		if (dataSetIds.substring(0,1).equals(";")||dataSetIds.substring(0,1).equals(",")){
+			dataSetIds=dataSetIds.substring(1, length);
+			flag=false;
 		}
-	
+		if (!flag){
+			ReportLogger.warn("You have probably extra [;] or [,] somewhere in test data for ["+yesTestName+"], assuming: "+dataSetIds);
+		}
+		row=dataSetIds.split(";").length;
 		col=dataSetIds.split(";")[0].split(",").length;
-		System.out.println("i calculated row col");
+//		System.out.println("i calculated row col");
 		Object[][] s1 = new String [row][col];
-		System.out.println("row & col"+row+col);
+//		System.out.println("row & col"+row+col);
 		for (int rowIterator=0;rowIterator<row;rowIterator++)
 		{			
 			for (int columnIterator=0;columnIterator<col;columnIterator++)
 			{
-				s1[rowIterator][columnIterator] = dataSetIds.split(";")[rowIterator].split(",")[columnIterator];
+				s1[rowIterator][columnIterator] = dataSetIds.split(";")[rowIterator].split(",")[columnIterator].toLowerCase();
 			}
 		}
 		ReportLogger.info("Data Set ID for the chosen TestCase: "+ yesTestName +"is read");
 		System.out.println("read ids");
 		onlyYesTestCases.put(yesTestName,s1);
 	}
-	
+	/*Returns the test data as object array*/
 	public Object[][] getYesTestDetails(String testName)
 	{
+		String lowerCaseTestName = testName.toLowerCase();
 		Object[][] dataSetIds = new Object[][]{};
 		
-		if (onlyYesTestCases.containsKey(testName))
-			dataSetIds = onlyYesTestCases.get(testName);
+		if (onlyYesTestCases.containsKey(lowerCaseTestName)){
+			dataSetIds = onlyYesTestCases.get(lowerCaseTestName);
+		}
+		else{
+			ReportLogger.warn("Skipping ["+testName+"].");
+		}
 		
 		return dataSetIds;
 	}
@@ -199,6 +220,7 @@ public class BaseClass {
 	
 	//this is where driver splitting things end
 	//properties file related code
+	/*read the path of Application map,datamap,Driver setup file*/
 	public static String getPropVal(String parm) {
 //      File file = new File(System.getProperty("user.dir") + "\\resources\\path.properties");
 
@@ -231,6 +253,9 @@ public class BaseClass {
 	//properties file related code ends here
 	
 	//this is where application map reading starts
+	
+	/*ReadAllLocators method reads the application map where the element locators are saved and stores it in a HashMap datastructure*/
+	
 	private static HashMap <String,HashMap<String,ByAll>> testSpecificMap = new HashMap<String,HashMap<String,ByAll>>();
 	XSSFCell elementName;
 	XSSFSheet sheet;
@@ -241,31 +266,28 @@ public class BaseClass {
 		if (preExecutionCheck){
 			try
 			{
-				HashMap < String, ByAll > locatorMap = new HashMap < String, ByAll > ();
-		        FileInputStream mapsheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
-		        XSSFWorkbook WorkBook = new XSSFWorkbook(mapsheet);
-
-		        List < By > locators = null;
+		        FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + "\\TestResources\\ApplicationMap\\AMap.xlsx");
+		        XSSFWorkbook workBook = new XSSFWorkbook(mapSheet);
 		        
-		        int noOfSheets = WorkBook.getNumberOfSheets();
+		        int noOfSheets = workBook.getNumberOfSheets();
 		        
 		        for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
 		        {
-		        
-		        	sheet = WorkBook.getSheetAt(sheetIndex);
+					HashMap < String, ByAll > locatorMap = new HashMap < String, ByAll > ();
+		        	sheet = workBook.getSheetAt(sheetIndex);
 		        	XSSFCell mainLocator, mainValue, alternateLocator, alternateValue;
 		            int rowIterator;
 		            int rownum = sheet.getLastRowNum() - sheet.getFirstRowNum();
 
 		            for (rowIterator = 1; rowIterator <= rownum; rowIterator++) {
-		                locators = new ArrayList < By > ();
+		            	List < By > locators = new ArrayList < By > ();
 		                elementName = sheet.getRow(rowIterator).getCell(0);
 		                mainLocator = sheet.getRow(rowIterator).getCell(1);
 		                mainValue = sheet.getRow(rowIterator).getCell(2);
 		                alternateLocator = sheet.getRow(rowIterator).getCell(3);
 		                alternateValue = sheet.getRow(rowIterator).getCell(4);
 		                if (mainLocator != null && mainValue != null) {
-		                    locators.add(generator(mainLocator.getStringCellValue().toLowerCase(), mainValue.getStringCellValue()));
+		                    locators.add(generator(mainLocator.getStringCellValue(), mainValue.getStringCellValue()));
 		                }
 		                else{
 		                	ReportLogger.warn("Main Locator cell is empty");
@@ -274,18 +296,23 @@ public class BaseClass {
 		   
 
 		                if (alternateLocator != null && alternateValue != null) {
-		                    locators.add(generator(alternateLocator.getStringCellValue().toLowerCase(), alternateValue.getStringCellValue()));
+		                    locators.add(generator(alternateLocator.getStringCellValue(), alternateValue.getStringCellValue()));
 
 		                }
-		                locatorMap.put(elementName.getStringCellValue(), generatorAll(locators));
+		                locatorMap.put(elementName.getStringCellValue().toLowerCase(), generatorAll(locators));
 		            }
-		            testSpecificMap.put(sheet.getSheetName(), locatorMap);
+		            testSpecificMap.put(sheet.getSheetName().toLowerCase(), locatorMap);
+		            
 		        }
 		        ReportLogger.info("Corresponding Element Locators Fetched");
 		        
 		        
 
-		        WorkBook.close();
+		        workBook.close();
+		        mapSheet.close();
+		        workBook = null;
+		        mapSheet = null;
+		        
 			}
 			
 			catch (Exception exception)
@@ -298,7 +325,7 @@ public class BaseClass {
 		
 		
     }	
-	
+	 /* With the value retrieved from the Application Map By instances are created based on its Locator*/
 	private By generator(String locator, String value) {
         By by = null;
         if (!locator.equals("")) {
@@ -322,7 +349,7 @@ public class BaseClass {
 
         return by;
     }
-
+/*with the By instance created from generator method  ByAll insatnce is created*/
     private ByAll generatorAll(List < By >byList) {
         if (byList.size() == 1) {
             return new ByAll(byList.get(0));
@@ -336,9 +363,9 @@ public class BaseClass {
         }
 
     }
-    
-    protected ByAll getLocator(String sname, String parm) {
-		return testSpecificMap.get(sname).get(parm);
+    /*This method fetches the corresponding locator value by taking its corresponding sheet name and element name as parameter*/
+    protected ByAll getLocator(String sheetName, String elementName) {
+		return testSpecificMap.get(sheetName.toLowerCase()).get(elementName.toLowerCase());
     }
     
     //this is where application map related things end
@@ -366,14 +393,15 @@ public class BaseClass {
         	
         	        DataFormatter dataFormatter = new DataFormatter();
         	
-        	        for (int rowiterater = 0; rowiterater <= rowCount; rowiterater++){
-        	            ArrayList<String> list = new ArrayList<String>();
-        	            for (int coliterater = 1; coliterater < colCount; coliterater++)
-        	            	list.add(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(coliterater)));            	
-        	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowiterater).getCell(0)), list);  
+        	        for (int rowIterater = 0; rowIterater <= rowCount; rowIterater++){
+        	            ArrayList<String> dataList = new ArrayList<String>();
+        	            for (int colIterater = 1; colIterater < colCount; colIterater++){
+        	            	dataList.add(dataFormatter.formatCellValue(sheet.getRow(rowIterater).getCell(colIterater)));            	
+        	            }
+        	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowIterater).getCell(0)).toLowerCase(), dataList);  
         	        }
                
-        	        testSpecificData.put(sheet.getSheetName(),sheetData);
+        	        testSpecificData.put(sheet.getSheetName().toLowerCase(),sheetData);
                 }
                 workbook.close();
         	}
@@ -387,23 +415,24 @@ public class BaseClass {
     
     protected String dSName = null;
     protected String id = null;
-    
-    public String getdata(String col) {
+    /*returns the corresponding value by taking column name as parameter*/
+    public String getColumnData(String col) {
         String dataValue = "";
-               
-        ArrayList<String> list = testSpecificData.get(dSName).get(testSpecificData.get(dSName).keySet().toArray()[0]);
+        String lowerCasedSName = dSName.toLowerCase();
+        String lowerCaseId = id.toLowerCase(); 
+        ArrayList<String> listOfColumns = testSpecificData.get(lowerCasedSName).get(testSpecificData.get(lowerCasedSName).keySet().toArray()[0]);
         int dataColumn = 0;
         boolean flag = false;
-        for (; dataColumn < list.size(); dataColumn++) {
-            if (col.equalsIgnoreCase(list.get(dataColumn))) {
+        for (; dataColumn < listOfColumns.size(); dataColumn++) {
+            if (col.equalsIgnoreCase(listOfColumns.get(dataColumn))) {
                 flag = true;
                 break;
             }
         }
         
         if (flag) {
-        	list = testSpecificData.get(dSName).get(id);
-        	dataValue = list.get(dataColumn);
+            ArrayList<String> dataList = testSpecificData.get(dSName.toLowerCase()).get(lowerCaseId);
+        	dataValue = dataList.get(dataColumn);
 
         } else {
         	Assert.fail("There is nothing like " + col + " in " + dSName+ " sheet in file "+ "Data.xlsx in reourxes folder");
@@ -439,10 +468,8 @@ public class BaseClass {
      }
     
     ////report related things start here
-
+/*This method initializes the basic configuration needed for the report generation*/
     public static ExtentReports extent;
-       
-   
     public static ExtentReports createInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
