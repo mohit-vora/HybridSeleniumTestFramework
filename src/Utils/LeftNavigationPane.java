@@ -9,7 +9,9 @@ import org.testng.Assert;
 
 public class LeftNavigationPane extends BaseClass {
 	
+
 	/*This method helps in navigating to different links with sublink in the application */
+
 	public static void navigateTo(String mainMenu, String subMenu) {
 		String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
 		boolean flagsubMenu = false;
@@ -62,6 +64,7 @@ public class LeftNavigationPane extends BaseClass {
 		 }
 	}
 /*This method helps in navigating to link without sublink in the application */
+
 	public static void navigateTo(String mainMenu) {
 		try {
 

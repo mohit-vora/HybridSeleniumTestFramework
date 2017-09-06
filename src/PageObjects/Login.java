@@ -9,7 +9,13 @@ import DataMap.ReadData;
 import Utils.BaseClass;
 import Utils.ReportLogger;
 
+
 public class Login extends BaseClass {
+	
+	/*
+	 *This method performs Login function of cyclos application.
+	 *Parameter - data set id from test case 
+	 * */
 
 	public static void performLogin(String dsid) throws IOException {
 		ReadLocators rd1 = new ReadLocators("Login");
@@ -29,7 +35,7 @@ public class Login extends BaseClass {
 			driver.navigate().back();
 			Assert.fail("LoginFails");
 			// TODO: handle exception
-		}
+		}//handle exception when element not present in web page and when login not performed
 		
 	}
 

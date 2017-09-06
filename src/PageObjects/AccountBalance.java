@@ -1,9 +1,7 @@
 package PageObjects;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -17,10 +15,7 @@ import Utils.ReportLogger;
 
 
 public class AccountBalance extends BaseClass {
-	// account type is hardcoded...
-	// (doubt how the method will be if sender and receiver will have differnt
-	// accnt type????)
-
+    //DecimalFormat will round of the amount to two decimal values
 	DecimalFormat df = new DecimalFormat(".##");
 	static String fromaccnt = null;
 	static String toaccnt = null;
@@ -29,16 +24,14 @@ public class AccountBalance extends BaseClass {
 	static double transactionAmount = 0;
 	static double fromAccountBalance = 0;
 	static double toAccountBalance = 0;
-	static Map<String, Double> fromAccountType = new HashMap<String, Double>();
-	Map<String, Double> toAccountType = new HashMap<String, Double>();
-	ReadLocators rd1 = new ReadLocators("RegisterMember");
 
-	// This is to extract an amount and account type for user who having more
-	// than one account type.
-	// And perform credit and debt from the account.(doubt to be a separate
-	// function or not?????)
-	// for single account user yet to be coded.....
-	public void XtractAccountBalance(String dsid1, String account) throws Exception {
+	ReadLocators rd1 = new ReadLocators("RegisterMember");
+	
+	/*
+	 * XtractAccountBalance method is to extract type of account and its corresponding current balance before transaction
+	 * this method calculates the amount to be in current balance after performing transaction for further verification.
+	 * */
+	public void xtractAccountBalance(String dsid1, String account) throws Exception {
 		if (!((account.contentEquals("FromAccount") || account.contentEquals("ToAccount")))) {
 			ReportLogger.fail("The second argument in xtractAccount Balance method can be either FromAccount or ToAccount");
 			Assert.fail("Fails in argumet passing");
@@ -52,8 +45,8 @@ public class AccountBalance extends BaseClass {
 			if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
 				WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
 				List<WebElement> rows = accnTypes.findElements(By.tagName("tr"));
-				for (int i = 1; i < rows.size(); i++) {
-					List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+				for (int listindex = 1; listindex < rows.size(); listindex++) {
+					List<WebElement> cols = rows.get(listindex).findElements(By.tagName("td"));
 					String amount = cols.get(2).getText();
 					String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 					Double amountDb = Double.parseDouble(subStringAmount);
@@ -93,7 +86,10 @@ public class AccountBalance extends BaseClass {
 
 	}
 
-	public void XtractAccountBalance(String account) throws Exception {
+	/*
+	 * This is the override method
+	 * this method to extract type of account and its corresponding current balance after transaction*/
+	public void xtractAccountBalance(String account) throws Exception {
 
 		if (!((account.contentEquals("FromAccount") || account.contentEquals("ToAccount")))) {
 			ReportLogger.fail("The argument in XtractAccount method can be either FromAccount or ToAccount");
@@ -103,8 +99,8 @@ public class AccountBalance extends BaseClass {
 		if (driver.findElement(rd1.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
 			WebElement accnTypes = driver.findElement(rd1.getLocator("TBL_MyAccountsInner"));
 			List<WebElement> rows = accnTypes.findElements(By.tagName("tr"));
-			for (int i = 1; i < rows.size(); i++) {
-				List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+			for (int listindex = 1; listindex < rows.size(); listindex++) {
+				List<WebElement> cols = rows.get(listindex).findElements(By.tagName("td"));
 				String amount = cols.get(2).getText();
 				String subStringAmount = amount.substring(0, amount.length() - 4).replace(",", "");
 				Double amountDb = Double.parseDouble(subStringAmount);
@@ -136,7 +132,7 @@ public class AccountBalance extends BaseClass {
 	}
    }		
 
-	// to verify amount is debted or not.........
+	// verifiyDebitAccount method verifies that amount has been successfully debited or not after transaction
 	public void verifiyDebitAccount() {
 		if (df.format(amountDebit).equals(df.format(fromAccountBalance))) {
 			ReportLogger.resultPass("Amount has been sucessfully debited from " + fromaccnt);
@@ -150,7 +146,7 @@ public class AccountBalance extends BaseClass {
 		ReportLogger.pass("Verfication of Debit Account Done Successfully");
 	}
 
-	// to verify amount is credited or not.........
+	// verifiyCreditAccount method verifies that amount has been successfully credited or not after transaction
 	public void verifiyCreditAccount() {
 
 		if (df.format(amountCredit).equals(df.format(toAccountBalance))) {

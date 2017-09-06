@@ -3,8 +3,6 @@ package Utils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -17,7 +15,11 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 
 public class BrowserUtils extends BaseClass{
-    
+	
+	
+	/*
+	 * this method annotates testNG data provider which returns two dimensional object array
+	 * It returns the test data object array */
     @DataProvider(name="dp")
     public Object[][] dptryout(Method method){  	
 		testIterationNumber=0;
@@ -42,8 +44,11 @@ public class BrowserUtils extends BaseClass{
     }   
 
     
+    /*executionSetUp method is annotated with @BeforeClass annotation 
+     * and it will be run before the first test method in the current class is invoked. 
+    */
     @BeforeClass
-    public void grounWork() throws IOException {
+    public void executionSetUp() throws IOException {
     	BaseClass.extent = createInstance(System.getProperty("user.dir") + "/test-output/AutomationReport.html");
         test = extent.createTest("preExecution-Log");  
         readTestCaseSheet();
@@ -66,8 +71,8 @@ public class BrowserUtils extends BaseClass{
     
     
     //Annotates methods that will be run before each test method.
-    //This method will run before Register Method.
-    //Operation:- Invoke Login Function
+    //This method will run before each test method
+    //this method creates separate reporting method of each test
 
     @BeforeMethod
     public void beforeMethod(Method method) throws Exception {
@@ -77,8 +82,10 @@ public class BrowserUtils extends BaseClass{
 
     
     //Annotates methods that will be run after each test method.
-    //Operation:- Invoke logout function.
-
+    //this method will invoke after each test method.
+    //ITestResult describes the result of @Test annotation method in testNG 
+    // based on the ItestResult the results are logged in the report
+    
     @AfterMethod
     public void afterMethod(ITestResult result) {
     	
@@ -101,7 +108,7 @@ public class BrowserUtils extends BaseClass{
 
     }
     //This method is executed after executing the all test cases present in the test suite.
-    //Closing the browser is necessary at end of the each test case
+    //This method closes the browser after executing all the test methods
     @AfterClass
     public void closeBrowser() throws InterruptedException, IOException {
     	if (testCaseCount>0 && preExecutionCheck)
