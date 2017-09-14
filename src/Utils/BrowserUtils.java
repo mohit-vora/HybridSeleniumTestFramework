@@ -3,6 +3,8 @@ package Utils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+
+import org.openqa.selenium.By;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -95,8 +97,8 @@ public class BrowserUtils extends BaseClass{
             test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " Test case FAILED due to below issues:",
                                             ExtentColor.RED));
             test.fail(result.getThrowable());
-            extent.flush();
-            LeftNavigationPane.navigateTo("Logout");
+
+            LeftNavigationPane.logOutOfApplication();
 
          } else if (result.getStatus() == ITestResult.SUCCESS) {
             test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " Test Case PASSED", ExtentColor.GREEN));

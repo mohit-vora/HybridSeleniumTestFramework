@@ -16,21 +16,21 @@ public class LeftNavigationPane extends BaseClass {
 		String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
 		boolean flagSubMenu = false;
 		boolean flagMainMenu = false;
-		String dummy = "";
 		try{
 
 		if (driver.findElement(By.xpath(clicksubmenu)).isDisplayed()) {
 			driver.findElement(By.xpath(clicksubmenu)).click();
 			flagSubMenu = true;
 			flagMainMenu = true;
-		} else {
+		} 
+		
+		else {
 			List<WebElement> listMainMenu = driver.findElements(By.xpath("//span[@class='menuText']"));
 			String submenuxpath = null;
 			int lengthMainMenu = mainMenu.length();
 
 			for (int listIndex = 1; listIndex < listMainMenu.size(); listIndex++) {
 				if (listMainMenu.get(listIndex).getText().length() >= lengthMainMenu) {
-					dummy = listMainMenu.get(listIndex).getText().substring(0, lengthMainMenu);
 
 					if (listMainMenu.get(listIndex).getText().substring(0, lengthMainMenu).equals(mainMenu)) {
 						String clickmainmenu = "//span[contains(text(),'" + mainMenu + "')]";
@@ -53,7 +53,6 @@ public class LeftNavigationPane extends BaseClass {
 			}
 		}
 		if (!flagMainMenu) {
-			System.out.println(dummy+"--"+mainMenu);
 			Assert.fail(mainMenu + " " + "might not be a webelement present in cyclos application");
 		}
 		if (!flagSubMenu) {
@@ -67,25 +66,15 @@ public class LeftNavigationPane extends BaseClass {
 	}
 /*This method helps in navigating to link without sublink in the application */
 
-	public static void navigateTo(String mainMenu) {
+	public static void logOutOfApplication() {
 		try {
-
-
-			if (mainMenu.equalsIgnoreCase("Logout")&& isLoggedIn) {
-				String logoutXPath = "//span[contains(text(),'" + "Logout" + "')]";
-				if (driver.findElement(By.xpath(logoutXPath)).isDisplayed()){
+				String logoutXPath = "//span[contains(text(),'Logout')]";
 					driver.findElement(By.xpath(logoutXPath)).click();
-			        logoutPopUpAccept();
+					validateAndAcceptPopup("MSG002");
 					isLoggedIn = false;
-					ReportLogger.info("Clicked " + mainMenu);
-				}else{
-					Assert.fail(mainMenu + " " + "might not be a present in the current page of cyclos application");
-				}
-			} 
+					ReportLogger.info("Successfully logged out"); 
 		} catch (Exception e) {
-			// TODO: handle exception
-			ReportLogger.fail("LeftNavigationPane NosuchElement found error");
-			Assert.fail(mainMenu + " " + "might not be a webelement in cyclos application");
+			ReportLogger.info("User already logged out");
 		}
 	}
 	

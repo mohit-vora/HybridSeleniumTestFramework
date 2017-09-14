@@ -22,14 +22,6 @@ public class EnrollMember extends BaseClass {
 			
 			new Select(createMember).selectByVisibleText(permissionGroup.getData("ACCOUNT_TYPE"));
 			
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			driver.findElement(rd1.getLocator("TXB_LoginName")).sendKeys(dm.getData("LOGIN_NAME"));
 			driver.findElement(rd1.getLocator("TXB_FullName")).sendKeys(dm.getData("FULL_NAME"));
 			driver.findElement(rd1.getLocator("TXB_Email")).sendKeys(dm.getData("EMAIL_ADDRESS"));
@@ -43,19 +35,8 @@ public class EnrollMember extends BaseClass {
 			driver.findElement(rd1.getLocator("Checkbox")).click();
 			driver.findElement(rd1.getLocator("TXB_password")).sendKeys(dm.getData("PASSWORD"));
 			driver.findElement(rd1.getLocator("TXB_confirmpassword")).sendKeys(dm.getData("PASSWORD"));
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 			driver.findElement(rd1.getLocator("BTN_submit")).click();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 			ReportLogger.info("In EnrollMember PageObjects");
 			ReportLogger.pass("Registration of new member page populated successfully");

@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -51,7 +52,7 @@ public class BaseClass {
             driver = new ChromeDriver();
             driver.get(getPropVal("url"));
             ReportLogger.info("Browser Instance opened");
-            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             driver.manage().window().maximize();
             ReportLogger.info("Browser Window Maximized");
     	}
@@ -77,7 +78,7 @@ public class BaseClass {
                 	testCaseCount++;
                 	String testName = sheet.getRow(currentRow).getCell(1).getStringCellValue();
                 	String dataSetIds = sheet.getRow(currentRow).getCell(2).getStringCellValue();
-                    setYesTestDetails(testName.toLowerCase(), dataSetIds.toLowerCase());
+                    setYesTestDatasets(testName.toLowerCase(), dataSetIds.toLowerCase());
                 }
             }
             ReportLogger.info(testCaseCount+" TestCases to be executed retrieved from Testcase Sheet");
@@ -99,27 +100,23 @@ public class BaseClass {
    
 	
 	//reading things ends here
-    /*This method handles the logout popup that occurs inbetween the scenario execution*/
-	public static void logoutPopUpAccept() {
-		ReadData data = new ReadData("PopupMessages", "MSG002");
-        String popUpMessage = driver.switchTo().alert().getText();
-        if (popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
-            driver.switchTo().alert().accept();
-            ReportLogger.info("Popup accepted :"+popUpMessage);
-        }
-                
-    }
+
 	/*This method handles the popup that occurs during the scenario execution*/
-	public void validateAndAcceptPopup(String dsid) {
+	public static void validateAndAcceptPopup(String dsid) {
 		ReadData data = new ReadData("PopupMessages", dsid);
-    	String popUpMessage = driver.switchTo().alert().getText();
+		
+		Alert alert = driver.switchTo().alert();
+		
+    	String popUpMessage = alert.getText();
     	
     	if(popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
-    		driver.switchTo().alert().accept();
+    		alert.accept();
+    		//for dismissing the popup
+    		alert.dismiss();
     		ReportLogger.info("Popup accepted :"+popUpMessage);
     	}
     	else{
-    		driver.switchTo().alert().accept();
+    		alert.accept();
     		ReportLogger.info("Enrollment was not successfull refer to the Stack trace below");
     		Assert.assertEquals(popUpMessage, data.getData("MESSAGE_TEXT"));    		 
     	}     
@@ -156,7 +153,16 @@ public class BaseClass {
 	
 	public static LinkedHashMap<String, Object[][]> onlyYesTestCases = new LinkedHashMap<String, Object[][]>();
 	/*Reading the Dataset ids' provided accross each testcase marked as 'Yes'*/
-	private  void setYesTestDetails(String yesTestName, String dataSetIds)
+	/**
+	 * This method reads the Dataset ids' provided accross each testcase marked as 'Yes'
+	 * in testCaseSheet.xlsx
+	 * <P>
+	 * It also checks for consecutive [,] or [;] and ignores it by giving a 
+	 * 
+	 * @param yesTestName 
+	 * @param dataSetIds
+	 */
+	private  void setYesTestDatasets(String yesTestName, String dataSetIds)
 	{
 		int row=0;
 		int col=0;
@@ -373,7 +379,7 @@ public class BaseClass {
     
     
     //this is where data map things start
-    protected static LinkedHashMap < String, HashMap<String,ArrayList<String>> > testSpecificData = new LinkedHashMap < String, HashMap<String,ArrayList<String>>> ();
+    protected static HashMap < String, LinkedHashMap<String,ArrayList<String>> > testSpecificData = new HashMap < String, LinkedHashMap<String,ArrayList<String>>> ();
     public void ReadAllData(){
     	try{
     		if (preExecutionCheck){
