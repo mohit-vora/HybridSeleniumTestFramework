@@ -13,14 +13,11 @@ public class Demo1 {
 		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
 		WebDriver driver=new ChromeDriver();
 		driver.get("http://sparshv2/");
+		driver.navigate().to("");
 		System.out.println(driver.getTitle());
 		driver.manage().window().maximize();
 		driver.navigate().to("http://sparshv2/");
-//		driver.findElement(By.linkText("Web Apps")).click();
-		
-		driver.findElement(By.partialLinkText("Web A")).click();
-
-		driver.findElement(By.partialLinkText("Web A")).click();
+		driver.findElement(By.linkText("Web Apps")).click();
 		
 		System.out.println(driver.getTitle());
 		Thread.sleep(2000);

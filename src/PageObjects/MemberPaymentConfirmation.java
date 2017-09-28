@@ -52,7 +52,7 @@ public class MemberPaymentConfirmation extends BaseClass {
 		}
 		if (flag) {
 			driver.findElement(rd1.getLocator("BTN_Success_Submit")).click();
-			ReportLogger.resultPass("Payment details Confirmed, clicking on Submit button");
+			ReportLogger.pass("Payment details Confirmed, clicking on Submit button");
 		} else {
 			driver.findElement(rd1.getLocator("BTN_Back")).click();
 			ReportLogger.info("Payment details not matching");

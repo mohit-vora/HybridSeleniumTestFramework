@@ -45,7 +45,7 @@ public class BaseClass {
 
 	//reading things go here
     /*This Method does the driver setup for the execution*/
-    public void openBrowserChrome() {
+    public void openBrowser() {
     	
     	if (preExecutionCheck){
     		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+getPropVal("chromeDriver"));
@@ -111,14 +111,14 @@ public class BaseClass {
     	
     	if(popUpMessage.equals(data.getData("MESSAGE_TEXT"))){
     		alert.accept();
-    		//for dismissing the popup
-    		alert.dismiss();
     		ReportLogger.info("Popup accepted :"+popUpMessage);
     	}
     	else{
-    		alert.accept();
-    		ReportLogger.info("Enrollment was not successfull refer to the Stack trace below");
-    		Assert.assertEquals(popUpMessage, data.getData("MESSAGE_TEXT"));    		 
+    		//for dismissing the popup
+    		alert.dismiss();
+    		Assert.fail("Popup message didn't match. Expected: "+data.getData("MESSAGE_TEXT")
+    		+ "Actual: "+popUpMessage);  
+
     	}     
 }
 	/*Checks whether the Object Array passed by dataprovider and no of parameter needed by @test method are equal*/
@@ -296,8 +296,8 @@ public class BaseClass {
 		                    locators.add(generator(mainLocator.getStringCellValue(), mainValue.getStringCellValue()));
 		                }
 		                else{
-		                	ReportLogger.warn("Main Locator cell is empty");
-		                	Assert.fail("Main Locator cell is empty");
+		                	preExecutionCheck=false;
+		                	ReportLogger.preExecutionFail("Main Locator cell is empty for element["+elementName.getStringCellValue()+"] inside AMap sheet ["+sheet.getSheetName()+"].");
 		                }
 		   
 
@@ -316,15 +316,13 @@ public class BaseClass {
 
 		        workBook.close();
 		        mapSheet.close();
-		        workBook = null;
-		        mapSheet = null;
 		        
 			}
 			
 			catch (Exception exception)
 			{
 				preExecutionCheck=false;
-				ReportLogger.fatal("problem in ReadAllLocators "+exception);
+				ReportLogger.preExecutionFail(exception);
 			}
 		}
 		
@@ -356,18 +354,17 @@ public class BaseClass {
         return by;
     }
 /*with the By instance created from generator method  ByAll insatnce is created*/
-    private ByAll generatorAll(List < By >byList) {
+    private ByAll generatorAll(List<By> byList) {
         if (byList.size() == 1) {
             return new ByAll(byList.get(0));
-        } else if(byList.size() == 2) {
+        } 
+        else if(byList.size() == 2) {
             return new ByAll(byList.get(0), byList.get(1));
         }
-        else{
-        	
+        else{	
         	ReportLogger.fatal("ByAll couldn't be generated");
         	return null;
         }
-
     }
     /*This method fetches the corresponding locator value by taking its corresponding sheet name and element name as parameter*/
     protected ByAll getLocator(String sheetName, String elementName) {
@@ -446,44 +443,18 @@ public class BaseClass {
         }
         return dataValue;
     }
+        
     
-    //this is where datamap related things end
-    
-    
-    /**
-     * Returns an Image object that can then be painted on the screen. 
-     * The url argument must specify an absolute {@link URL}. The name
-     * argument is a specifier that is relative to the url argument. 
-     * <p>
-     * This method always returns immediately, whether or not the 
-     * image exists. When this applet attempts to draw the image on
-     * the screen, the data will be loaded. The graphics primitives 
-     * that draw the image will incrementally paint on the screen. 
-     *
-     * @param  url  an absolute URL giving the base location of the image
-     * @param  name the location of the image, relative to the url argument
-     * @return      the image at the specified URL
-     * @see         Image
-     */
-     public Image getImage(URL url, String name) {
-            try {
-                return getImage(new URL(url, name),"");
-            } catch (MalformedURLException e) {
-                return null;
-            }
-     }
-    
-    ////report related things start here
 /*This method initializes the basic configuration needed for the report generation*/
     public static ExtentReports extent;
-    public static ExtentReports createInstance(String fileName) {
+    public static void createExtentInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setChartVisibilityOnOpen(true);
         htmlReporter.config().setTheme(Theme.DARK);
-        htmlReporter.config().setDocumentTitle(fileName);
+        htmlReporter.config().setDocumentTitle("Test Report");
         htmlReporter.config().setEncoding("utf-8");
-        htmlReporter.config().setReportName(fileName);
+        htmlReporter.config().setReportName("Cyclos Test Run");
         
         extent = new ExtentReports();
         extent.setSystemInfo("OS", System.getProperty("os.name")+" "+System.getProperty("os.arch"));
@@ -497,8 +468,7 @@ public class BaseClass {
 
         extent.attachReporter(htmlReporter);
         
-        return extent;
+
     }
     
-    ////Report related things end here
 }

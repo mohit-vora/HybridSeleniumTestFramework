@@ -63,7 +63,7 @@ public class AllTestCasesGoHere extends BrowserUtils {
 		        	        
 		        Login.performLogin(fromMemDSId);
 		    	accnt.xtractAccountBalance(TXNDSId,"FromAccount");   	
-		    	LeftNavigationPane.navigateTo("Acco", "Member Payment");
+		    	LeftNavigationPane.navigateTo("Acco", "Member Paym");
 		        MemberPayment.populatePaymenttoMember(toMemDSId, TXNDSId);
 		        MemberPaymentConfirmation.verifyPaymentToMember(toMemDSId,TXNDSId);
 		        accnt.xtractAccountBalance("FromAccount");

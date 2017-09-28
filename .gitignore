@@ -5,3 +5,8 @@
 /.git/
 /.TestResources/
 /test-output/
+/Documentation/
+/doc/
+/temp/
+/images/
+/javadoc_stylesheet.css

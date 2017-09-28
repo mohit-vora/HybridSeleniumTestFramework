@@ -134,7 +134,7 @@ public class AccountBalance extends BaseClass {
 	// verifiyDebitAccount method verifies that amount has been successfully debited or not after transaction
 	public void verifiyDebitAccount() {
 		if (df.format(amountDebit).equals(df.format(fromAccountBalance))) {
-			ReportLogger.resultPass("Amount has been sucessfully debited from " + fromaccnt);
+			ReportLogger.pass("Amount has been sucessfully debited from " + fromaccnt);
 		} else {
 			System.out.println(fromAccountBalance + " " + amountDebit);
 
@@ -149,7 +149,7 @@ public class AccountBalance extends BaseClass {
 	public void verifiyCreditAccount() {
 
 		if (df.format(amountCredit).equals(df.format(toAccountBalance))) {
-			ReportLogger.resultPass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
+			ReportLogger.pass("Amount has been sucessfully Credited to" + " " + toaccnt + " " + "account");
 		} else {
 			Assert.assertEquals(df.format(amountCredit), df.format(toAccountBalance));
 		}

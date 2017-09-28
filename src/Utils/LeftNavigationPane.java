@@ -16,14 +16,12 @@ public class LeftNavigationPane extends BaseClass {
 		String clicksubmenu = "//span[contains(text(),'" + subMenu + "')]";
 		boolean flagSubMenu = false;
 		boolean flagMainMenu = false;
-		try{
 
 		if (driver.findElement(By.xpath(clicksubmenu)).isDisplayed()) {
 			driver.findElement(By.xpath(clicksubmenu)).click();
 			flagSubMenu = true;
 			flagMainMenu = true;
 		} 
-		
 		else {
 			List<WebElement> listMainMenu = driver.findElements(By.xpath("//span[@class='menuText']"));
 			String submenuxpath = null;
@@ -37,13 +35,13 @@ public class LeftNavigationPane extends BaseClass {
 						driver.findElement(By.xpath(clickmainmenu)).click();
 						flagMainMenu=true;
 						submenuxpath = "//ul[@id='subMenuContainer" + listIndex + "']//li//span[@class='subMenuText']";
-						List<WebElement> list12 = driver.findElements(By.xpath(submenuxpath));
-						for (WebElement webElement1 : list12) {
+						List<WebElement> allSubMenusInMainMenu = driver.findElements(By.xpath(submenuxpath));
+						for (WebElement webElement : allSubMenusInMainMenu) {
 							int lengthSubMenu = subMenu.length();
-							if (webElement1.getText().substring(0, lengthSubMenu).equals(subMenu)) {
+							if (webElement.getText().substring(0, lengthSubMenu).equals(subMenu)) {
 								driver.findElement(By.xpath(clicksubmenu)).click();
 								flagSubMenu = true;
-								ReportLogger.info("Navigating to " + subMenu + "under" + mainMenu);
+								ReportLogger.info("Navigating to " + subMenu + " under " + mainMenu);
 								break;
 							} 
 						}
@@ -53,19 +51,14 @@ public class LeftNavigationPane extends BaseClass {
 			}
 		}
 		if (!flagMainMenu) {
-			Assert.fail(mainMenu + " " + "might not be a webelement present in cyclos application");
+			Assert.fail(mainMenu + " might not be a webelement present in cyclos application");
 		}
 		if (!flagSubMenu) {
-			Assert.fail(subMenu + " " + "might not be a webelement present in cyclos application");
+			Assert.fail(subMenu + " might not be a webelement present in cyclos application");
 		}
-	    } catch (NoSuchElementException Exception) {
-		 ReportLogger.fail("LeftNavigationPane NosuchElement found error");
-		 Assert.fail(mainMenu + "/" + subMenu + " " + "might not be a webelement in cyclos application");
-		 // TODO: handle exception
-		 }
 	}
+	
 /*This method helps in navigating to link without sublink in the application */
-
 	public static void logOutOfApplication() {
 		try {
 				String logoutXPath = "//span[contains(text(),'Logout')]";
@@ -73,7 +66,8 @@ public class LeftNavigationPane extends BaseClass {
 					validateAndAcceptPopup("MSG002");
 					isLoggedIn = false;
 					ReportLogger.info("Successfully logged out"); 
-		} catch (Exception e) {
+			} 
+		catch (Exception e) {
 			ReportLogger.info("User already logged out");
 		}
 	}
@@ -83,8 +77,8 @@ public class LeftNavigationPane extends BaseClass {
 			driver.findElement(By.xpath("//span[contains(text(),'Logout')]"));
 			ReportLogger.pass("Login Action Performed");
 			isLoggedIn = true;
-		
-		}catch (Exception e) {
+		}
+		catch (Exception e) {
 			driver.navigate().back();
 			Assert.fail("LoginFails");
 		}//handle exception when element not present in web page and when login not performed
