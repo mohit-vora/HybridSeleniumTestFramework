@@ -1,85 +1,80 @@
 package tryOutsGoHere;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 
-import org.testng.annotations.AfterClass;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class dummy {
+public class dummy implements dummy1{
+	
 
-	
-	
-	@DataProvider(name="dp")
-	public Object[][] getmeData(Method m)
-	{	
-		if (m.getName().equalsIgnoreCase("TEST1"))
-			return new Object[][]{};
-		else
-		{		
-		Object[][] dataArray = {
-				{"TEST2"}
-		};
-		return dataArray;
-		}	
-	}
-	@BeforeClass
-	public void bc()
-	{
-		System.out.println("before class");
-		int x=1/0;
+@BeforeClass
+public void bc(){
+	System.out.println("ionside bc");
+	Assert.fail("i am a failure");
+}
+		
+		@BeforeMethod
+		public void bm(Method m){
+			System.out.println("beforemethod");
+			
+			Parameter[] p = m.getParameters();
+//			System.out.println(p[0].);
+		}
+		
+		
+		@AfterMethod
+		public void am(){
+			System.out.println("aftermethod");
+		}
+		
+		@DataProvider(name="dp")
+		public Object[][] dp(Method m){
+			
+			if (m.getName().equalsIgnoreCase("test1")){
+				return new Object[][]{
+					{"one"},
+					{"two"}
+				};
+			}
+			
+			else
+				return new Object[][]{
+				{"one"},
+				{"two"}
+			};
+			
+			
+			
+		}
+		
+		@Test(dataProvider="dp")
+		public void test1(String text){
+			System.out.println("test1"+text);
+			if (text.equalsIgnoreCase("one"))
+				{
+				
+				}
+		}
+		
+		@Test(dataProvider="dp")
+		public void test2(String text){
+			System.out.println("test2");
+		}
 
-	}
+
+		@Override
+		public void gettitle() {
+			// TODO Auto-generated method stub
+			
+		}
 	
-	@AfterClass
-	public void ac()
-	{
-		System.out.println("after class");
-	}
-	
-	@BeforeSuite
-	public void bfs()
-	{
-		System.out.println("inside bfs");
-	}
-	
-	@AfterSuite
-	public void afs()
-	{
-		System.out.println("inside afs");
-	}
-	
-	@BeforeMethod
-	public void bfm(){
-		System.out.println("inside bfm");
-	}
-	
-	@Test(dataProvider="dp")
-	public void TEST1(String parm)
-	{
-		System.out.println("inside TEST1");
-	}
-	
-	@Test(dataProvider="dp")
-	public void TEST2(String parm)
-	{		
-		System.out.println("inside TEST2");
-	}
-	
-	@Test(dataProvider="dp")
-	public void TEST3(String parm)
-	{
-		System.out.println("inside TEST3");
-	}
-	
-	@AfterMethod()
-	public void afm()
-	{
-		System.out.println("inside after method");
-	}
 }
