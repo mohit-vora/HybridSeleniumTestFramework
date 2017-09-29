@@ -85,7 +85,7 @@ public class BrowserUtils extends BaseClass{
     	
     	if (result.getStatus() == ITestResult.FAILURE) {
     		
-    		ReportLogger.fail(result.getName() + " Test case FAILED due to below issues:",result.getThrowable());
+    		ReportLogger.fail(result.getName() + " Test case FAILED due to below issues:", result.getThrowable());
 
             LeftNavigationPane.logOutOfApplication();
 
@@ -107,7 +107,6 @@ public class BrowserUtils extends BaseClass{
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
         }
         extent.flush();
-System.out.println("fummy");
 
     }
 

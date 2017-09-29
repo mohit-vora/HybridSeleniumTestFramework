@@ -1,8 +1,6 @@
 package Utils;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -60,15 +58,15 @@ public class LeftNavigationPane extends BaseClass {
 	
 /*This method helps in navigating to link without sublink in the application */
 	public static void logOutOfApplication() {
-		try {
+		if(isLoggedIn){
 				String logoutXPath = "//span[contains(text(),'Logout')]";
 					driver.findElement(By.xpath(logoutXPath)).click();
 					validateAndAcceptPopup("MSG002");
 					isLoggedIn = false;
 					ReportLogger.info("Successfully logged out"); 
 			} 
-		catch (Exception e) {
-			ReportLogger.info("User already logged out");
+		else{
+			ReportLogger.info("User is not logged in.");
 		}
 	}
 	
@@ -80,7 +78,7 @@ public class LeftNavigationPane extends BaseClass {
 		}
 		catch (Exception e) {
 			driver.navigate().back();
-			Assert.fail("LoginFails");
+			Assert.fail("Login Failed");
 		}//handle exception when element not present in web page and when login not performed
 	}
 }

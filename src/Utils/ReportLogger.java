@@ -51,6 +51,7 @@ public class ReportLogger extends BaseClass{
 	    {
 		 test.log(Status.FATAL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
 	    }
+	 
 	 /*This method logs fail status whenever there is an exception in the execution setup methods of the framework with its exception trace to the Extent report*/
 	 public static void preExecutionFail(Exception exception)
 	    {
@@ -58,6 +59,7 @@ public class ReportLogger extends BaseClass{
 		 
 		 test.log(Status.FATAL, exception);
 	    }
+	 
 	 /*This method logs fatal status when there is intervention in the execution with a message to the Extent report*/
 	 public static void fatal(String logMessage)
 	    {
@@ -65,6 +67,7 @@ public class ReportLogger extends BaseClass{
 	        		MarkupHelper.createLabel(logMessage,
 	        				ExtentColor.RED));
 	    }
+	 
 	 /*This method logs skip status along with a message to the Extent report and skips the further execution of the testcase*/
 	 public static void skip(String logMessage)
 	    {
@@ -72,6 +75,7 @@ public class ReportLogger extends BaseClass{
 	        		MarkupHelper.createLabel(logMessage,
 	        				ExtentColor.TEAL));
 	    }
+	 
 	 /*This method logs skip status along with a message to the Extent report and skips the further execution of the testcase*/
 	 public static void skip(String logMessage, Throwable t)
 	    {
@@ -80,6 +84,7 @@ public class ReportLogger extends BaseClass{
 	        				ExtentColor.TEAL));
 	    	test.skip(t);
 	    }
+	 
 	 /*This method logs warning with a message to the Extent report*/
 	 public static void warn(String logMessage)
 	    {
