@@ -1,6 +1,6 @@
 package tryOutsGoHere;
 
-public class Indica implements Car{
+public class Indica implements Cars{
 	
 	String name="Indica";
 	String color = "Red";

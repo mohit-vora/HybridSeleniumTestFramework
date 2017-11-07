@@ -1,9 +1,9 @@
 package PageObjects;
 
-import ApplicationMap.ReadLocators;
-import DataMap.ReadData;
-import Utils.BaseClass;
-import Utils.ReportLogger;
+import applicationMap.Locator;
+import dataMap.Data;
+import utils.BaseClass;
+import utils.ReportLogger;
 
 public class MemberPaymentConfirmation extends BaseClass {
 	/*
@@ -13,15 +13,10 @@ public class MemberPaymentConfirmation extends BaseClass {
 	public static void verifyPaymentToMember(String dsid1, String dsid2) {
 		
 		Boolean flag = true;
-		ReadData dm1 = new ReadData("MemberDetails", dsid1);
-		ReadData dm2 = new ReadData("TransactionData", dsid2);
-		ReadLocators rd1 = new ReadLocators("MemberPayment");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Data dm1 = new Data("MemberDetails", dsid1);
+		Data dm2 = new Data("TransactionData", dsid2);
+		Locator rd1 = new Locator("MemberPayment");
+		
 		String name[] = driver.findElement(rd1.getLocator("ELM_To")).getText().split("-");
 		String appValue = driver.findElement(rd1.getLocator("ELM_TransactionAmount")).getText();
 		if (flag){			

@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class dummy implements dummy1{
+public class dummy {
 	
 
 @BeforeClass
@@ -26,8 +26,6 @@ public void bc(){
 		public void bm(Method m){
 			System.out.println("beforemethod");
 			
-			Parameter[] p = m.getParameters();
-//			System.out.println(p[0].);
 		}
 		
 		
@@ -68,13 +66,6 @@ public void bc(){
 		@Test(dataProvider="dp")
 		public void test2(String text){
 			System.out.println("test2");
-		}
-
-
-		@Override
-		public void gettitle() {
-			// TODO Auto-generated method stub
-			
 		}
 	
 }

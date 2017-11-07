@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import java.util.List;
 import org.openqa.selenium.By;
@@ -61,7 +61,7 @@ public class LeftNavigationPane extends BaseClass {
 		if(isLoggedIn){
 				String logoutXPath = "//span[contains(text(),'Logout')]";
 					driver.findElement(By.xpath(logoutXPath)).click();
-					validateAndAcceptPopup("MSG002");
+					Validate.popupAndAccept("MSG002");
 					isLoggedIn = false;
 					ReportLogger.info("Successfully logged out"); 
 			} 

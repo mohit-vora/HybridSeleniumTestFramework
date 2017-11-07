@@ -2,10 +2,12 @@ package PageObjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import ApplicationMap.ReadLocators;
-import DataMap.ReadData;
-import Utils.BaseClass;
-import Utils.ReportLogger;
+
+import applicationMap.Locator;
+import dataMap.Data;
+import utils.BaseClass;
+import utils.ReportLogger;
+import utils.Validate;
 
 public class EnrollMember extends BaseClass {
 
@@ -13,11 +15,11 @@ public class EnrollMember extends BaseClass {
 	 * RegisterMenber method will enroll a new member from admin 
 	 * This method accepts two parameters as details of new members and type of account
 	 *   */
-	public static void registerMember(String memberDetails, String accountType) {
+	public static void registerMember(String memberDetails, String accountType, String successMessage) {
 	
-			ReadLocators rd1 = new ReadLocators("RegisterMember");
-			ReadData dm = new ReadData("MemberDetails", memberDetails);
-			ReadData permissionGroup = new ReadData("UserAccountTypes",accountType);
+			Locator rd1 = new Locator("RegisterMember");
+			Data dm = new Data("MemberDetails", memberDetails);
+			Data permissionGroup = new Data("UserAccountTypes",accountType);
 			WebElement createMember = driver.findElement(rd1.getLocator("LST_CreateMember"));
 			
 			new Select(createMember).selectByVisibleText(permissionGroup.getData("ACCOUNT_TYPE"));
@@ -40,5 +42,7 @@ public class EnrollMember extends BaseClass {
 
 			ReportLogger.info("In EnrollMember PageObjects");
 			ReportLogger.pass("Registration of new member page populated successfully");
+			
+			Validate.popupAndAccept(successMessage);
 	}
 }

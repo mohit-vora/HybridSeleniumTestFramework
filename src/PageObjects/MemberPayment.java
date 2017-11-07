@@ -2,10 +2,11 @@ package PageObjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import ApplicationMap.ReadLocators;
-import DataMap.ReadData;
-import Utils.BaseClass;
-import Utils.ReportLogger;
+
+import applicationMap.Locator;
+import dataMap.Data;
+import utils.BaseClass;
+import utils.ReportLogger;
 
 public class MemberPayment extends BaseClass {
 	
@@ -14,11 +15,11 @@ public class MemberPayment extends BaseClass {
    */
 	
 	public static void populatePaymenttoMember(String dsid1, String dsid2){
-		ReadLocators rd1 = new ReadLocators("MemberPayment");
+		Locator rd1 = new Locator("MemberPayment");
 
-		ReadData dm1 = new ReadData("MemberDetails", dsid1);
+		Data dm1 = new Data("MemberDetails", dsid1);
 
-		ReadData dm2 = new ReadData("TransactionData", dsid2);	
+		Data dm2 = new Data("TransactionData", dsid2);	
 		driver.findElement(rd1.getLocator("TXB_Name")).sendKeys(dm1.getData("LOGIN_NAME"));
 		try {
 			Thread.sleep(1000);

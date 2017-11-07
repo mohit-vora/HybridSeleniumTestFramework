@@ -1,11 +1,41 @@
-package Utils;
+package utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ReportLogger extends BaseClass{
+	
 
+	static void createExtentInstance(String fileName) {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setChartVisibilityOnOpen(true);
+        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setDocumentTitle("Test Report");
+        htmlReporter.config().setEncoding("utf-8");
+        htmlReporter.config().setReportName("Cyclos Test Run");
+        
+        extent = new ExtentReports();
+        extent.setSystemInfo("OS", System.getProperty("os.name")+" "+System.getProperty("os.arch"));
+        try {
+			extent.setSystemInfo("Host Name", InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e) {
+			ReportLogger.fatal("Host name could not be found: "+e);
+		}
+        extent.setSystemInfo("Environment", System.getProperty("java.runtime.name"));
+        extent.setSystemInfo("User Name", System.getProperty("user.name"));
+
+        extent.attachReporter(htmlReporter);
+        
+
+    }
 	
 	/*This method logs a particular information with a message to the Extent report*/
 	 public static void info(String logMessage)
