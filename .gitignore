@@ -1,12 +1,7 @@
 /bin/
-.classpath
-.project
 /.settings/
 /.git/
 /.TestResources/
 /test-output/
-/Documentation/
-/doc/
-/temp/
-/images/
 /javadoc_stylesheet.css
+/
