@@ -1,4 +1,4 @@
-package PageObjects;
+package pageObjects;
 
 import applicationMap.Locator;
 import dataMap.Data;

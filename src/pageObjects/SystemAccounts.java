@@ -1,4 +1,4 @@
-package PageObjects;
+package pageObjects;
 
 import org.openqa.selenium.WebElement;
 import applicationMap.Locator;

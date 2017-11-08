@@ -1,15 +1,16 @@
 package testScripts;
 
 import org.testng.annotations.Test;
-import PageObjects.MemberAccounts;
-import PageObjects.EnrollMember;
-import PageObjects.Login;
-import PageObjects.MemberPayment;
-import PageObjects.MemberPaymentConfirmation;
-import PageObjects.PaymentSystemToMember;
-import PageObjects.SystemAccounts;
-import PageObjects.SystemToMemberPaymentConfirmation;
-import PageObjects.SystemToMemberSuccessfulPayment;
+
+import pageObjects.EnrollMember;
+import pageObjects.Login;
+import pageObjects.MemberAccounts;
+import pageObjects.MemberPayment;
+import pageObjects.MemberPaymentConfirmation;
+import pageObjects.PaymentSystemToMember;
+import pageObjects.SystemAccounts;
+import pageObjects.SystemToMemberPaymentConfirmation;
+import pageObjects.SystemToMemberSuccessfulPayment;
 import utils.LeftNavigationPane;
 import utils.TestNGHelper;
 import utils.Validate;
@@ -20,7 +21,7 @@ public class TestCases extends TestNGHelper{
 	 * This method contains test steps for enrolling new Member into Cyclos application
 	 * It logs in with Admin credentials.
 	 * <p>
-	 * Navigates to Manage members, populates member details in {@link PageObjects.EnrollMember#registerMember} method.
+	 * Navigates to Manage members, populates member details in {@link pageObjects.EnrollMember#registerMember} method.
 	 * Accepts and validates popup
 	 * Logs out. 
 	 * 
