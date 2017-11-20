@@ -33,7 +33,7 @@ public class MemberAccounts extends BaseClass {
 		}
 				
 		if (driver.findElement(accountLocators.getLocator("ELM_AccountPane")).getText().contains("My accounts")) {
-			WebTable accnTypes = new WebTable(driver.findElement(accountLocators.getLocator("TBL_MyAccountsInner")));
+			WebTable accnTypes = new WebTable(accountLocators.getLocator("TBL_MyAccountsInner"));
 			for (int listindex = 1; listindex < accnTypes.getRowSize(); listindex++) {
 				
 				if (accnTypes.getData(listindex, 0).equalsIgnoreCase(account)) {

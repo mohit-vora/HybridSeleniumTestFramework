@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.Assert;
 
 import utils.BaseClass;
+import utils.Property;
 import utils.ReportLogger;
 
 public class Data extends BaseClass{ 
@@ -76,7 +77,7 @@ public class Data extends BaseClass{
     public static void readAll(){
     	try{
     		if (preExecutionCheck){
-        		FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + getPropVal("DataMap"));
+        		FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + Property.getValueOf("DataMap"));
                 XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
                 int noOfSheets = workbook.getNumberOfSheets();

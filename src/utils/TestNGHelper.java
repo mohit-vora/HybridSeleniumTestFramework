@@ -10,38 +10,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import applicationMap.Locator;
 import dataMap.Data;
 
-public class TestNGHelper extends BaseClass{
+public class TestNGHelper extends DataProviderHelper{
 	
 	
-	/*
-	 * this method annotates testNG data provider which returns two dimensional object array
-	 * It returns the test data object array */
-    @DataProvider(name="dp")
-    public static Object[][] dptryout(Method method){  	
-		testIterationNumber=0;
-    	
-    	Object[][] returnObject = new Object[][]{};
-    	
-    	try
-    	{
-    		if(preExecutionCheck){
-    			Object[][] obj = TestCaseSelector.getYesTestDetails(method.getName());
-    			if (DataProviderHelper.checkDataProviderSanity(obj, method)){
-    				System.out.println(method.getName());
-    				returnObject = obj;
-    			}
-        	}
-    	}
-    	catch(Exception e){
-    		ReportLogger.preExecutionFail(e);   		
-    	}
-    		
-    	return returnObject; 	
-    }   
+	 
 
     
     /*executionSetUp method is annotated with @BeforeClass annotation 
@@ -75,7 +50,7 @@ public class TestNGHelper extends BaseClass{
         if (testCaseCount>0){
             Locator.readAll();
          	Data.readAll();
-         	openBrowser();
+         	Browser.open();
         }
         
         else{
@@ -118,13 +93,10 @@ public class TestNGHelper extends BaseClass{
     //This method is executed after executing the all test cases present in the test suite.
     //This method closes the browser after executing all the test methods
     @AfterClass
-    public void closeBrowser() throws InterruptedException, IOException {
+    public void exit() throws InterruptedException, IOException {
     	if (testCaseCount>0 && preExecutionCheck)
         {
-    		Thread.sleep(3000);
-            driver.quit();
-            ReportLogger.info("WebDriver Session ended");
-            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+    		Browser.close();
         }
         extent.flush();
 

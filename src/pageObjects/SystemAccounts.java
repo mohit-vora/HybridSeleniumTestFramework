@@ -1,6 +1,5 @@
 package pageObjects;
 
-import org.openqa.selenium.WebElement;
 import applicationMap.Locator;
 import utils.BaseClass;
 import utils.WebTable;
@@ -11,8 +10,7 @@ public class SystemAccounts extends BaseClass {
 		
 		Locator rd1 = new Locator("SystemAccounts");
 		
-		WebElement allAccountsTable = driver.findElement(rd1.getLocator("TBL_SYSTEM_ACCOUNTS")); 
-		WebTable table = new WebTable(allAccountsTable);
+		WebTable table = new WebTable(rd1.getLocator("TBL_SYSTEM_ACCOUNTS"));
 				
 		double debitAccountBalance=0.0;
 				

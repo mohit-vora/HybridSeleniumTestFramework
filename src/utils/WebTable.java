@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.pagefactory.ByAll;
 
 public class WebTable extends BaseClass{
 	
 	WebElement table = null;
 	List<WebElement> rows = null;
 
-	public WebTable(WebElement table) {
-		this.table = table;
+	public WebTable(ByAll bys) {
+		table = driver.findElement(bys);
 		rows = table.findElements(By.tagName("tr"));
 	}
 	
@@ -25,6 +26,10 @@ public class WebTable extends BaseClass{
 		
 		return rowData;
 	}	
+	
+	
+	
+
 	
 	public String getData(int rowIndex, int columnIndex){
 		return rows.get(rowIndex).findElements(By.tagName("td"))
