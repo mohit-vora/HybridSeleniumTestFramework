@@ -118,4 +118,12 @@ public class TestCases extends TestNGHelper{
     	Validate.balance(TXNDSId, systemBalanceBeforeDeposit, systemBalanceAfterDeposit, "decreased");    	
 
 	}
+	
+	
+	
+	
+	@Test
+	public void someOtherTestCase(){
+		
+	}
 }
