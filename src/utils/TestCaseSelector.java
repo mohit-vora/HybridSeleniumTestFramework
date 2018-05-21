@@ -14,7 +14,7 @@ public class TestCaseSelector extends BaseClass{
     	testCaseCount = 0;
     	try
     	{
-    		FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + getPropVal("TestCaseSelector"));
+    		FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + Property.getValueOf("TestCaseSelector"));
             XSSFWorkbook workBook = new XSSFWorkbook(mapSheet);
 
             XSSFSheet sheet = workBook.getSheet("TestCases");

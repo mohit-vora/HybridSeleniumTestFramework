@@ -25,5 +25,6 @@
 			<attribute name="javadoc_location" value="http://seleniumhq.github.io/selenium/docs/api/java/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="TestResources/jarDependencies/WebDriverManager/webdrivermanager-1.2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

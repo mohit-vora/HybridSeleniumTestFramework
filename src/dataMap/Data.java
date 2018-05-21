@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.Assert;
 
 import utils.BaseClass;
+import utils.Property;
 import utils.ReportLogger;
 
 public class Data extends BaseClass{ 
@@ -74,42 +75,41 @@ public class Data extends BaseClass{
   //this is where data map things start
     
     public static void readAll(){
-    	try{
-    		if (preExecutionCheck){
-        		FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + getPropVal("DataMap"));
+        try{
+            if (preExecutionCheck){
+                FileInputStream fileStream = new FileInputStream(System.getProperty("user.dir") + Property.getValueOf("DataMap"));
                 XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
 
                 int noOfSheets = workbook.getNumberOfSheets();
                 
-                
                 for (int sheetIndex=0;sheetIndex<noOfSheets;sheetIndex++)
                 {  
-                	XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-                	LinkedHashMap<String,ArrayList<String>> sheetData = new LinkedHashMap<String, ArrayList<String>>();
+                    XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+                    LinkedHashMap<String,ArrayList<String>> sheetData = new LinkedHashMap<String, ArrayList<String>>();
 
-        	        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
-        	        int colCount = sheet.getRow(0).getLastCellNum();
-        	
-        	        DataFormatter dataFormatter = new DataFormatter();
-        	
-        	        for (int rowIterater = 0; rowIterater <= rowCount; rowIterater++){
-        	            ArrayList<String> dataList = new ArrayList<String>();
-        	            for (int colIterater = 1; colIterater < colCount; colIterater++){
-        	            	dataList.add(dataFormatter.formatCellValue(sheet.getRow(rowIterater).getCell(colIterater)));            	
-        	            }
-        	            sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowIterater).getCell(0)).toLowerCase(), dataList);  
-        	        }
+                    int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+                    int colCount = sheet.getRow(0).getLastCellNum();
+            
+                    DataFormatter dataFormatter = new DataFormatter();
+            
+                    for (int rowIterater = 0; rowIterater <= rowCount; rowIterater++){
+                        ArrayList<String> dataList = new ArrayList<String>();
+                        for (int colIterater = 1; colIterater < colCount; colIterater++){
+                            dataList.add(dataFormatter.formatCellValue(sheet.getRow(rowIterater).getCell(colIterater)));                
+                        }
+                        sheetData.put(dataFormatter.formatCellValue(sheet.getRow(rowIterater).getCell(0)).toLowerCase(), dataList);  
+                    }
                
-        	        testSpecificData.put(sheet.getSheetName().toLowerCase(),sheetData);
+                    testSpecificData.put(sheet.getSheetName().toLowerCase(),sheetData);
                 }
                 workbook.close();
-        	}
-    	}
-    	
-    	catch (IOException e){
-    		preExecutionCheck=false;
-			ReportLogger.fatal("problem in ReadAllData "+e);
-    	}   
+            }
+        }
+        
+        catch (IOException e){
+            preExecutionCheck=false;
+            ReportLogger.fatal("problem in ReadAllData "+e);
+        }   
     }
 
     

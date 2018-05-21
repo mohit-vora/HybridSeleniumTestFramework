@@ -2,7 +2,34 @@ package utils;
 
 import java.lang.reflect.Method;
 
+import org.testng.annotations.DataProvider;
+
 public class DataProviderHelper extends BaseClass{
+	
+	/*
+	 * this method annotates testNG data provider which returns two dimensional object array
+	 * It returns the test data object array */
+    @DataProvider(name="dp")
+    public static Object[][] dptryout(Method method){  	
+		testIterationNumber=0;
+    	
+    	Object[][] returnObject = new Object[][]{};
+    	
+    	try
+    	{
+    		if(preExecutionCheck){
+    			Object[][] obj = TestCaseSelector.getYesTestDetails(method.getName());
+    			if (DataProviderHelper.checkDataProviderSanity(obj, method)){
+    				returnObject = obj;
+    			}
+        	}
+    	}
+    	catch(Exception e){
+    		ReportLogger.preExecutionFail(e);   		
+    	}
+    		
+    	return returnObject; 	
+    }  
 	
 	/*Checks whether the Object Array passed by dataprovider and no of parameter needed by @test method are equal*/
 	static boolean checkDataProviderSanity(Object[][] obj, Method method){

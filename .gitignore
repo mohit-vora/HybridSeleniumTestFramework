@@ -1,6 +1,5 @@
 /bin/
 /.settings/
 /.git/
-/.TestResources/
 /test-output/
-/javadoc_stylesheet.css
+/TestReports/

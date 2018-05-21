@@ -16,7 +16,7 @@ public class SystemToMemberPaymentConfirmation extends BaseClass {
 		Data dm2 = new Data("TransactionData", transactionId);
 		Locator rd1 = new Locator("PaymentSystemToMember");
 			
-		WebTable table = createWebTable(rd1.getLocator("TBL_Transaction_confirmation"));
+		WebTable table = new WebTable(rd1.getLocator("TBL_Transaction_confirmation"));
 						
 		String actualTransactionType = "";
 		String actualLoginName = "";

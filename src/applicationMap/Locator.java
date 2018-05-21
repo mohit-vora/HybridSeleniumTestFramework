@@ -12,10 +12,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByAll;
 
 import utils.BaseClass;
+import utils.Property;
 import utils.ReportLogger;
 
 public class Locator extends BaseClass{
-    private static HashMap <String, HashMap<String,ByAll>> testSpecificMap = new HashMap<String,HashMap<String,ByAll>>();
+    private static HashMap <String, HashMap<String,ByAll>> testSpecificMap = new HashMap<>();
 
     
     String sheetName = null;
@@ -36,7 +37,7 @@ public class Locator extends BaseClass{
 		if (preExecutionCheck){
 			try
 			{
-		        FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + getPropVal("ApplicationMap"));
+		        FileInputStream mapSheet = new FileInputStream(System.getProperty("user.dir") + Property.getValueOf("ApplicationMap"));
 		        XSSFWorkbook workBook = new XSSFWorkbook(mapSheet);
 		        
 		        int noOfSheets = workBook.getNumberOfSheets();
